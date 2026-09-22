@@ -1,6 +1,7 @@
 
 import streamlit as st
 import networkx as nx
+import random
 from collections import defaultdict
 
 st.set_page_config(page_title="Protótipo SIGAMAES – Recomendação", page_icon="🧩", layout="wide")
@@ -213,6 +214,15 @@ st.info(
     "A recomendação não substitui avaliação profissional e as regras "
     "devem ser validadas por especialistas."
 )
+
+with st.sidebar.expander("Ferramentas de teste"):
+    st.caption("Preenche o formulário com uma configuração aleatória.")
+    if st.button("Gerar configuração aleatória", use_container_width=True):
+        random_options = list(STATUS_WEIGHT) + [None]
+        for i in range(len(SKILLS)):
+            st.session_state[f"skill_v2_{i}"] = random.choice(random_options)
+        st.session_state["processed"] = False
+        st.success("Configuração gerada.")
 
 tab1, tab2, tab3 = st.tabs(["1. Formulário", "2. Resultado", "3. Grafo"])
 
