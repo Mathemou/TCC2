@@ -206,6 +206,10 @@ def classify_case(answers):
     return "Dificuldades distribuídas entre os dois domínios", scores
 
 
+def show_results():
+    st.session_state["active_tab"] = "2. Resultado"
+
+
 st.title("🧩 Protótipo — Sistema de Apoio à Recomendação")
 st.caption("Protótipo acadêmico baseado em formulário + grafo de habilidades + regras determinísticas.")
 
@@ -216,13 +220,7 @@ st.info(
 )
 
 tab_labels = ["1. Formulário", "2. Resultado", "3. Grafo"]
-tab_slugs = ["formulario", "resultado", "grafo"]
-requested_tab = st.query_params.get("aba")
-
-if requested_tab in tab_slugs and st.session_state.get("last_query_tab") != requested_tab:
-    st.session_state["active_tab"] = tab_labels[tab_slugs.index(requested_tab)]
-    st.session_state["last_query_tab"] = requested_tab
-elif "active_tab" not in st.session_state:
+if "active_tab" not in st.session_state:
     st.session_state["active_tab"] = tab_labels[0]
 
 with st.sidebar.expander("Ferramentas de teste"):
@@ -243,8 +241,6 @@ active_tab = st.radio(
     key="active_tab",
 )
 active_tab_index = tab_labels.index(active_tab)
-st.query_params["aba"] = tab_slugs[active_tab_index]
-st.session_state["last_query_tab"] = tab_slugs[active_tab_index]
 
 if active_tab_index == 0:
     st.subheader("Classificação das habilidades")
@@ -273,9 +269,10 @@ if active_tab_index == 0:
         st.session_state["answers"] = answers
         st.session_state["processed"] = True
         st.success(
-            "Classificação processada. Veja a aba "
-            "[Resultado](?aba=resultado)."
+            "Classificação processada. Veja a aba Resultado acima "
+            "ou clique no botão abaixo."
         )
+        st.button("Resultado", type="tertiary", on_click=show_results)
 
 if active_tab_index == 1:
     st.subheader("Inferência baseada em regras")
