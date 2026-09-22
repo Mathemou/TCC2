@@ -252,9 +252,13 @@ with tab1:
     if st.button("Processar classificação", type="primary"):
         st.session_state["answers"] = answers
         st.session_state["processed"] = True
-        st.success("Classificação processada. Veja a aba Resultado.")
+        st.success(
+            "Classificação processada. Veja a aba "
+            "[Resultado](#resultado)."
+        )
 
 with tab2:
+    st.markdown('<span id="resultado"></span>', unsafe_allow_html=True)
     st.subheader("Inferência baseada em regras")
 
     if not st.session_state.get("processed"):
