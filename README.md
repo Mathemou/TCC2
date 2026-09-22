@@ -25,7 +25,10 @@ Para cada habilidade do domínio de autocuidado ou motor, o avaliador informa:
 - Independente = 0
 - Realiza com auxílio = 1
 - Não realiza = 2
-- Em branco = 0 (habilidade não trabalhada ou pergunta não preenchida)
+
+Todas as habilidades começam sem seleção. Quando uma pergunta permanece sem
+preenchimento, ela é considerada uma habilidade que não foi trabalhada e não
+contribui para a pontuação do grafo.
 
 O formulário contém 25 habilidades:
 

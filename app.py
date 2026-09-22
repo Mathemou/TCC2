@@ -94,7 +94,6 @@ STATUS_WEIGHT = {
     "Independente": 0,
     "Realiza com auxílio": 1,
     "Não realiza": 2,
-    "Em branco": 0,
 }
 
 def build_graph():
@@ -132,6 +131,9 @@ def calculate_recommendations(answers):
     explanations = defaultdict(list)
 
     for skill, status in answers.items():
+        if status is None:
+            continue
+
         weight = STATUS_WEIGHT[status]
         if weight == 0:
             continue
@@ -185,11 +187,11 @@ def classify_case(answers):
     scores = {
         "autocuidado": sum(
             STATUS_WEIGHT[v] for k, v in answers.items()
-            if SKILLS[k] == "autocuidado"
+            if v is not None and SKILLS[k] == "autocuidado"
         ),
         "motor": sum(
             STATUS_WEIGHT[v] for k, v in answers.items()
-            if SKILLS[k] == "motor"
+            if v is not None and SKILLS[k] == "motor"
         ),
     }
 
@@ -232,8 +234,9 @@ with tab1:
             answers[skill] = st.radio(
                 f"{skill} ({domain})",
                 list(STATUS_WEIGHT.keys()),
+                index=None,
                 horizontal=False,
-                key=f"skill_{i}",
+                key=f"skill_v2_{i}",
             )
 
     if st.button("Processar classificação", type="primary"):
