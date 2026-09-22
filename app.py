@@ -16,31 +16,54 @@ st.set_page_config(page_title="Protótipo SIGAMAES – Recomendação", page_ico
 # No TCC, devem ser substituídos pelos tratamentos reais disponibilizados
 # pela AMAES e validados pelas orientadoras/profissionais.
 SKILLS = {
-    "Higiene das mãos": "autocuidado",
-    "Higiene oral": "autocuidado",
-    "Higiene corporal": "autocuidado",
-    "Vestir-se": "autocuidado",
-    "Uso do banheiro": "autocuidado",
     "Alimentação": "autocuidado",
-    "Caminhar": "motor",
-    "Correr": "motor",
-    "Subir e descer escadas": "motor",
-    "Sentar e levantar": "motor",
-    "Rolar": "motor",
-    "Engatinhar": "motor",
+    "Escovação": "autocuidado",
+    "Fio dental": "autocuidado",
+    "Cuidado com o corpo": "autocuidado",
+    "Cuidado com o cabelo": "autocuidado",
+    "Cuidado com o rosto": "autocuidado",
+    "Cuidado com as mãos": "autocuidado",
+    "Vestuário": "autocuidado",
+    "Manuseio de ajustes": "autocuidado",
+    "Tarefas de banheiro": "autocuidado",
+    "Locomoção geral": "motor",
+    "Locomoção específica": "motor",
+    "Equilíbrio estático": "motor",
+    "Equilíbrio dinâmico": "motor",
+    "Arremessar, receber, rolar e chutar bolas": "motor",
+    "Preensão": "motor",
+    "Encaixe de pinos e argolas": "motor",
+    "Empilhar peças": "motor",
+    "Enfiagem de contas": "motor",
+    "Dobrar papel": "motor",
+    "Montagem de quebra-cabeças": "motor",
+    "Preensão e controle de lápis": "motor",
+    "Escrita, cópia de letras e desenho": "motor",
+    "Uso de tesoura": "motor",
+    "Manipulação de fechos, trincos e maçanetas": "motor",
 }
 
 TREATMENTS = {
     "Treino de habilidades de autocuidado": {
         "domain": "autocuidado",
-        "skills": ["Higiene das mãos", "Higiene oral", "Higiene corporal",
-                   "Vestir-se", "Uso do banheiro", "Alimentação"],
+        "skills": [skill for skill, domain in SKILLS.items()
+                   if domain == "autocuidado"],
         "priority": 1,
     },
     "Treino de habilidades motoras grossas": {
         "domain": "motor",
-        "skills": ["Caminhar", "Correr", "Subir e descer escadas",
-                   "Sentar e levantar", "Rolar", "Engatinhar"],
+        "skills": ["Locomoção geral", "Locomoção específica",
+                   "Equilíbrio estático", "Equilíbrio dinâmico",
+                   "Arremessar, receber, rolar e chutar bolas"],
+        "priority": 1,
+    },
+    "Treino de habilidades motoras finas": {
+        "domain": "motor",
+        "skills": ["Preensão", "Encaixe de pinos e argolas",
+                   "Empilhar peças", "Enfiagem de contas", "Dobrar papel",
+                   "Montagem de quebra-cabeças", "Preensão e controle de lápis",
+                   "Escrita, cópia de letras e desenho", "Uso de tesoura",
+                   "Manipulação de fechos, trincos e maçanetas"],
         "priority": 1,
     },
     "Intervenção integrada autocuidado + motor": {
@@ -52,21 +75,26 @@ TREATMENTS = {
 
 # Relações simplificadas de dependência/apoio.
 DEPENDENCIES = [
-    ("Sentar e levantar", "Uso do banheiro"),
-    ("Sentar e levantar", "Vestir-se"),
-    ("Higiene das mãos", "Uso do banheiro"),
-    ("Higiene das mãos", "Alimentação"),
-    ("Caminhar", "Uso do banheiro"),
-    ("Caminhar", "Vestir-se"),
-    ("Subir e descer escadas", "Caminhar"),
-    ("Rolar", "Engatinhar"),
-    ("Engatinhar", "Caminhar"),
+    ("Cuidado com as mãos", "Alimentação"),
+    ("Cuidado com as mãos", "Fio dental"),
+    ("Preensão", "Alimentação"),
+    ("Preensão", "Vestuário"),
+    ("Locomoção geral", "Tarefas de banheiro"),
+    ("Locomoção geral", "Vestuário"),
+    ("Equilíbrio dinâmico", "Locomoção específica"),
+    ("Equilíbrio estático", "Vestuário"),
+    ("Preensão e controle de lápis", "Escrita, cópia de letras e desenho"),
+    ("Preensão", "Encaixe de pinos e argolas"),
+    ("Preensão", "Enfiagem de contas"),
+    ("Preensão", "Uso de tesoura"),
+    ("Manipulação de fechos, trincos e maçanetas", "Vestuário"),
 ]
 
 STATUS_WEIGHT = {
     "Independente": 0,
     "Realiza com auxílio": 1,
     "Não realiza": 2,
+    "Em branco": 0,
 }
 
 def build_graph():
