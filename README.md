@@ -1,2 +1,70 @@
-# TCC2
-TCC2
+# Protótipo TCC — Recomendação baseada em regras e grafo
+
+## Objetivo
+
+Demonstrar uma alternativa mais simples e explicável ao uso de uma rede neural:
+
+**Prontuário → Formulário de classificação → Grafo de habilidades → Motor de regras → Tratamentos ordenados**
+
+O protótipo não pretende realizar diagnóstico nem substituir avaliação profissional.
+
+## Executar
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Depois abra o endereço indicado pelo Streamlit no navegador.
+
+## Estrutura conceitual
+
+### Entrada
+Para cada habilidade do domínio de autocuidado ou motor, o avaliador informa:
+
+- Independente = 0
+- Realiza com auxílio = 1
+- Não realiza = 2
+
+### Grafo
+
+Existem três tipos principais de relação:
+
+1. **habilidade → tratamento**
+   - indica que determinado tratamento trabalha aquela habilidade.
+
+2. **habilidade → habilidade**
+   - representa uma relação de apoio/dependência entre habilidades.
+
+3. **resposta → peso**
+   - a resposta do formulário transforma a classificação em uma evidência quantitativa.
+
+### Motor de regras
+
+O sistema soma os pesos das dificuldades relacionadas a cada tratamento.
+
+Exemplo:
+
+- Higiene oral = "Não realiza" → peso 2
+- Tratamento de autocuidado trabalha higiene oral
+- tratamento recebe +2
+
+Uma relação indireta pode receber peso parcial:
+
+- Caminhar = "Realiza com auxílio" → peso 1
+- Caminhar apoia Uso do banheiro
+- tratamento recebe +0,5 se trabalha Uso do banheiro
+
+## O que deve ser validado no TCC
+
+Os nomes e pesos deste protótipo são apenas ilustrativos. Para a versão acadêmica, recomenda-se levantar com profissionais:
+
+- quais habilidades entram no formulário;
+- como cada habilidade deve ser classificada;
+- quais tratamentos trabalham cada habilidade;
+- quais habilidades possuem relações de dependência;
+- quais regras determinam prioridade;
+- como lidar com empate;
+- quais resultados devem ser considerados "sem indicação suficiente".
+
+Uma etapa particularmente importante é validar as regras com especialistas e registrar o racional de cada regra.
