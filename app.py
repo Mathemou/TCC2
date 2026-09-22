@@ -210,6 +210,10 @@ def show_results():
     st.session_state["active_tab"] = "2. Resultado"
 
 
+def save_form_answer(skill, widget_key):
+    st.session_state["form_answers"][skill] = st.session_state[widget_key]
+
+
 st.title("🧩 Protótipo — Sistema de Apoio à Recomendação")
 st.caption("Protótipo acadêmico baseado em formulário + grafo de habilidades + regras determinísticas.")
 
@@ -222,13 +226,17 @@ st.info(
 tab_labels = ["1. Formulário", "2. Resultado", "3. Grafo"]
 if "active_tab" not in st.session_state:
     st.session_state["active_tab"] = tab_labels[0]
+if "form_answers" not in st.session_state:
+    st.session_state["form_answers"] = {}
 
 with st.sidebar.expander("Ferramentas de teste"):
     st.caption("Preenche o formulário com uma configuração aleatória.")
     if st.button("Gerar configuração aleatória", use_container_width=True):
         random_options = list(STATUS_WEIGHT) + [None]
-        for i in range(len(SKILLS)):
-            st.session_state[f"skill_v2_{i}"] = random.choice(random_options)
+        for i, skill in enumerate(SKILLS):
+            random_value = random.choice(random_options)
+            st.session_state[f"skill_v2_{i}"] = random_value
+            st.session_state["form_answers"][skill] = random_value
         st.session_state["processed"] = False
         st.session_state["active_tab"] = tab_labels[0]
         st.success("Configuração gerada.")
@@ -256,17 +264,27 @@ if active_tab_index == 0:
 
     for i, (skill, domain) in enumerate(SKILLS.items()):
         container = col1 if i % 2 == 0 else col2
+        widget_key = f"skill_v2_{i}"
+        saved_answer = st.session_state["form_answers"].get(skill)
+        answer_index = (
+            list(STATUS_WEIGHT).index(saved_answer)
+            if saved_answer in STATUS_WEIGHT
+            else None
+        )
         with container:
             answers[skill] = st.radio(
                 f"{skill} ({domain})",
                 list(STATUS_WEIGHT.keys()),
-                index=None,
+                index=answer_index,
                 horizontal=False,
-                key=f"skill_v2_{i}",
+                key=widget_key,
+                on_change=save_form_answer,
+                args=(skill, widget_key),
             )
 
     if st.button("Processar classificação", type="primary"):
         st.session_state["answers"] = answers
+        st.session_state["form_answers"].update(answers)
         st.session_state["processed"] = True
         st.success(
             "Classificação processada. Veja a aba Resultado acima "
