@@ -215,6 +215,16 @@ st.info(
     "devem ser validadas por especialistas."
 )
 
+tab_labels = ["1. Formulário", "2. Resultado", "3. Grafo"]
+tab_slugs = ["formulario", "resultado", "grafo"]
+requested_tab = st.query_params.get("aba")
+
+if requested_tab in tab_slugs and st.session_state.get("last_query_tab") != requested_tab:
+    st.session_state["active_tab"] = tab_labels[tab_slugs.index(requested_tab)]
+    st.session_state["last_query_tab"] = requested_tab
+elif "active_tab" not in st.session_state:
+    st.session_state["active_tab"] = tab_labels[0]
+
 with st.sidebar.expander("Ferramentas de teste"):
     st.caption("Preenche o formulário com uma configuração aleatória.")
     if st.button("Gerar configuração aleatória", use_container_width=True):
@@ -222,11 +232,21 @@ with st.sidebar.expander("Ferramentas de teste"):
         for i in range(len(SKILLS)):
             st.session_state[f"skill_v2_{i}"] = random.choice(random_options)
         st.session_state["processed"] = False
+        st.session_state["active_tab"] = tab_labels[0]
         st.success("Configuração gerada.")
 
-tab1, tab2, tab3 = st.tabs(["1. Formulário", "2. Resultado", "3. Grafo"])
+active_tab = st.radio(
+    "Navegação",
+    tab_labels,
+    horizontal=True,
+    label_visibility="collapsed",
+    key="active_tab",
+)
+active_tab_index = tab_labels.index(active_tab)
+st.query_params["aba"] = tab_slugs[active_tab_index]
+st.session_state["last_query_tab"] = tab_slugs[active_tab_index]
 
-with tab1:
+if active_tab_index == 0:
     st.subheader("Classificação das habilidades")
 
     st.write(
@@ -254,11 +274,10 @@ with tab1:
         st.session_state["processed"] = True
         st.success(
             "Classificação processada. Veja a aba "
-            "[Resultado](#resultado)."
+            "[Resultado](?aba=resultado)."
         )
 
-with tab2:
-    st.markdown('<span id="resultado"></span>', unsafe_allow_html=True)
+if active_tab_index == 1:
     st.subheader("Inferência baseada em regras")
 
     if not st.session_state.get("processed"):
@@ -307,7 +326,7 @@ R4 — o sistema mantém uma justificativa rastreável,
             language="text"
         )
 
-with tab3:
+if active_tab_index == 2:
     st.subheader("Representação do conhecimento")
 
     st.write(
