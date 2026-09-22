@@ -115,6 +115,33 @@ def build_graph():
 
 GRAPH = build_graph()
 
+def calculate_skill_contributions(answers):
+    contributions = {
+        treatment: defaultdict(float)
+        for treatment in TREATMENTS
+    }
+
+    for skill, status in answers.items():
+        if status is None:
+            continue
+
+        weight = STATUS_WEIGHT[status]
+        if weight == 0:
+            continue
+
+        for treatment, data in TREATMENTS.items():
+            if skill in data["skills"]:
+                contributions[treatment][skill] += weight
+
+            for source, target in DEPENDENCIES:
+                if source == skill and target in data["skills"]:
+                    contributions[treatment][skill] += weight * 0.5
+
+    return {
+        treatment: dict(skill_scores)
+        for treatment, skill_scores in contributions.items()
+    }
+
 def calculate_recommendations(answers):
     """
     Motor de regras determinístico.
@@ -214,6 +241,15 @@ def save_form_answer(skill, widget_key):
     st.session_state["form_answers"][skill] = st.session_state[widget_key]
 
 
+def apply_form_preset(value, domain=None):
+    for i, skill in enumerate(SKILLS):
+        if domain is None or SKILLS[skill] == domain:
+            st.session_state[f"skill_v2_{i}"] = value
+            st.session_state["form_answers"][skill] = value
+    st.session_state["processed"] = False
+    st.session_state["active_tab"] = tab_labels[0]
+
+
 st.title("🧩 Protótipo — Sistema de Apoio à Recomendação")
 st.caption("Protótipo acadêmico baseado em formulário + grafo de habilidades + regras determinísticas.")
 
@@ -223,7 +259,7 @@ st.info(
     "devem ser validadas por especialistas."
 )
 
-tab_labels = ["1. Formulário", "2. Resultado", "3. Grafo"]
+tab_labels = ["1. Formulário", "2. Resultado", "3. Explicação", "4. Grafo"]
 if "active_tab" not in st.session_state:
     st.session_state["active_tab"] = tab_labels[0]
 if "form_answers" not in st.session_state:
@@ -240,6 +276,26 @@ with st.sidebar.expander("Ferramentas de teste"):
         st.session_state["processed"] = False
         st.session_state["active_tab"] = tab_labels[0]
         st.success("Configuração gerada.")
+
+    st.caption("Preenchimento rápido por categoria e desempenho")
+    preset_options = [
+        ("Autocuidado: tudo em branco", None, "autocuidado"),
+        ("Autocuidado: tudo independente", "Independente", "autocuidado"),
+        ("Autocuidado: tudo com auxílio", "Realiza com auxílio", "autocuidado"),
+        ("Autocuidado: nada realiza", "Não realiza", "autocuidado"),
+        ("Motor: tudo em branco", None, "motor"),
+        ("Motor: tudo independente", "Independente", "motor"),
+        ("Motor: tudo com auxílio", "Realiza com auxílio", "motor"),
+        ("Motor: nada realiza", "Não realiza", "motor"),
+        ("Todas: tudo em branco", None, None),
+        ("Todas: tudo independente", "Independente", None),
+        ("Todas: tudo com auxílio", "Realiza com auxílio", None),
+        ("Todas: nada realiza", "Não realiza", None),
+    ]
+    for label, value, domain in preset_options:
+        if st.button(label, use_container_width=True, key=f"preset_{label}"):
+            apply_form_preset(value, domain)
+            st.success("Configuração aplicada.")
 
 active_tab = st.radio(
     "Navegação",
@@ -367,6 +423,114 @@ if active_tab_index == 2:
         "atribuem pesos às habilidades e o motor de regras percorre "
         "essas relações para produzir uma ordenação explicável."
     )
+
+if active_tab_index == 3:
+    st.subheader("Grafo do formulário do paciente")
+    st.write(
+        "A visualização relaciona o paciente às categorias e às habilidades "
+        "preenchidas no formulário. A cor de cada habilidade representa o "
+        "desempenho informado."
+    )
+
+    graph_answers = st.session_state.get("form_answers", {})
+    graph_results = calculate_recommendations(graph_answers)
+    recommended_treatment = graph_results[0]["treatment"]
+    skill_contributions = calculate_skill_contributions(graph_answers)
+    recommended_contributions = skill_contributions[recommended_treatment]
+    graph = nx.DiGraph()
+    graph.add_node("paciente", label="Paciente", node_type="paciente")
+    graph.add_node("autocuidado", label="Autocuidado", node_type="categoria")
+    graph.add_node("motor", label="Motor", node_type="categoria")
+    graph.add_node(
+        recommended_treatment,
+        label=recommended_treatment,
+        node_type="intervencao",
+    )
+    graph.add_edge("paciente", "autocuidado")
+    graph.add_edge("paciente", "motor")
+
+    for skill, domain in SKILLS.items():
+        graph.add_node(
+            skill,
+            label=skill,
+            node_type="habilidade",
+            status=graph_answers.get(skill),
+        )
+        graph.add_edge(domain, skill)
+
+        contribution = recommended_contributions.get(skill, 0)
+        graph.add_edge(skill, recommended_treatment, contribution=contribution)
+
+    status_colors = {
+        None: "#E5E7EB",
+        "Independente": "#BBF7D0",
+        "Realiza com auxílio": "#FEF08A",
+        "Não realiza": "#FECACA",
+    }
+
+    def dot_text(value):
+        return str(value).replace("\\", "\\\\").replace('"', '\\"')
+
+    dot_lines = [
+        "digraph paciente {",
+        '  graph [rankdir=LR, bgcolor="white", pad="0.3", nodesep="0.35", ranksep="1.1"];',
+        '  node [fontname="Arial", fontsize=11, style="filled", color="#64748B"];',
+        '  edge [color="#94A3B8", arrowsize=0.7];',
+        '  "paciente" [label="Paciente", shape=ellipse, fillcolor="#BFDBFE", fontsize=14];',
+        '  "autocuidado" [label="Autocuidado", shape=box, fillcolor="#DDD6FE", fontsize=13];',
+        '  "motor" [label="Motor", shape=box, fillcolor="#DDD6FE", fontsize=13];',
+        f'  "{dot_text(recommended_treatment)}" [label="Intervenção sugerida\\n{dot_text(recommended_treatment)}", '
+        'shape=box, fillcolor="#86EFAC", color="#166534", penwidth=2];',
+    ]
+
+    for skill, domain in SKILLS.items():
+        status = graph_answers.get(skill)
+        status_label = status if status is not None else "Em branco"
+        dot_lines.append(
+            f'  "{dot_text(skill)}" [label="{dot_text(skill)}\\n{dot_text(status_label)}", '
+            f'fillcolor="{status_colors.get(status, status_colors[None])}"];'
+        )
+
+    for source, target in graph.edges:
+        edge_data = graph.edges[source, target]
+        contribution = edge_data.get("contribution")
+        edge_style = (
+            'color="#166534", penwidth=2'
+            if contribution is not None and contribution > 0
+            else 'color="#CBD5E1", style=dashed'
+        )
+        edge_label = (
+            f', label="contribuição: {contribution:g}"'
+            if contribution is not None
+            else ""
+        )
+        dot_lines.append(
+            f'  "{dot_text(source)}" -> "{dot_text(target)}" '
+            f'[{edge_style}{edge_label}];'
+        )
+
+    dot_lines.append("}")
+    st.graphviz_chart("\n".join(dot_lines), use_container_width=True)
+
+    st.markdown(
+        f"**Intervenção sugerida:** {recommended_treatment}  "
+        f"(pontuação total: {graph_results[0]['score']})"
+    )
+    st.caption(
+        "As setas verdes mostram contribuições positivas. As setas tracejadas "
+        "representam habilidades sem contribuição para esta intervenção."
+    )
+
+    st.markdown("**Legenda**")
+    legend_columns = st.columns(4)
+    for column, (status, color) in zip(legend_columns, status_colors.items()):
+        label = status if status is not None else "Em branco"
+        column.markdown(
+            f'<span style="display:inline-block;width:12px;height:12px;'
+            f'background:{color};border:1px solid #64748B;margin-right:6px;">'
+            f'</span>{label}',
+            unsafe_allow_html=True,
+        )
 
 st.divider()
 st.caption("Protótipo para TCC — substitua os nomes das intervenções e valide as regras com profissionais da AMAES.")
