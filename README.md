@@ -25,6 +25,18 @@ Para cada habilidade do domínio de autocuidado ou motor, o avaliador informa:
 - Independente = 0
 - Realiza com auxílio = 1
 - Não realiza = 2
+- Em branco = 0 (habilidade não trabalhada ou pergunta não preenchida)
+
+O formulário contém 25 habilidades:
+
+- Autocuidado: Alimentação, Escovação, Fio dental, Cuidado com o corpo,
+  Cuidado com o cabelo, Cuidado com o rosto, Cuidado com as mãos, Vestuário,
+  Manuseio de ajustes e Tarefas de banheiro.
+- Motor: Locomoção geral, Locomoção específica, Equilíbrio estático,
+  Equilíbrio dinâmico, Arremessar, receber, rolar e chutar bolas, Preensão,
+  Encaixe de pinos e argolas, Empilhar peças, Enfiagem de contas, Dobrar papel,
+  Montagem de quebra-cabeças, Preensão e controle de lápis, Escrita, cópia de
+  letras e desenho, Uso de tesoura e Manipulação de fechos, trincos e maçanetas.
 
 ### Grafo
 
