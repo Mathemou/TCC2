@@ -2,6 +2,8 @@
 import streamlit as st
 import networkx as nx
 import random
+import csv
+import io
 from collections import defaultdict
 
 st.set_page_config(page_title="Protótipo SIGAMAES – Recomendação", page_icon="🧩", layout="wide")
@@ -42,6 +44,44 @@ SKILLS = {
     "Escrita, cópia de letras e desenho": "motor",
     "Uso de tesoura": "motor",
     "Manipulação de fechos, trincos e maçanetas": "motor",
+}
+
+SKILL_CATALOG = {
+    "AC01": "Alimentação",
+    "AC02": "Escovação",
+    "AC03": "Fio dental",
+    "AC04": "Cuidado com o corpo",
+    "AC05": "Cuidado com o cabelo",
+    "AC06": "Cuidado com o rosto",
+    "AC07": "Cuidado com as mãos",
+    "AC08": "Vestuário",
+    "AC09": "Manuseio de ajustes",
+    "AC10": "Tarefas de banheiro",
+    "MO01": "Locomoção geral",
+    "MO02": "Locomoção específica",
+    "MO03": "Equilíbrio estático",
+    "MO04": "Equilíbrio dinâmico",
+    "MO05": "Arremessar, receber, rolar e chutar bolas",
+    "MO06": "Preensão",
+    "MO07": "Encaixe de pinos e argolas",
+    "MO08": "Empilhar peças",
+    "MO09": "Enfiagem de contas",
+    "MO10": "Dobrar papel",
+    "MO11": "Montagem de quebra-cabeças",
+    "MO12": "Preensão e controle de lápis",
+    "MO13": "Escrita, cópia de letras e desenho",
+    "MO14": "Uso de tesoura",
+    "MO15": "Manipulação de fechos, trincos e maçanetas",
+}
+
+IMPORT_CODE_TO_STATUS = {
+    0: None,
+    1: "Independente",
+    2: "Realiza com auxílio",
+    3: "Não realiza",
+}
+STATUS_TO_IMPORT_CODE = {
+    status: code for code, status in IMPORT_CODE_TO_STATUS.items()
 }
 
 TREATMENTS = {
@@ -233,6 +273,116 @@ def classify_case(answers):
     return "Dificuldades distribuídas entre os dois domínios", scores
 
 
+def get_skill_catalog():
+    return SKILL_CATALOG.copy()
+
+
+def parse_imported_form(file_bytes):
+    errors = []
+    try:
+        text = file_bytes.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        try:
+            text = file_bytes.decode("latin-1")
+        except UnicodeDecodeError:
+            return {"forms": {}, "errors": ["O arquivo não está em UTF-8 ou Latin-1."]}
+
+    try:
+        sample = text[:4096]
+        delimiter = csv.Sniffer().sniff(sample, delimiters=",;").delimiter
+    except csv.Error:
+        delimiter = ","
+
+    reader = csv.DictReader(io.StringIO(text), delimiter=delimiter)
+    fieldnames = [field.strip().lower() for field in (reader.fieldnames or [])]
+    required_fields = {"habilidade_id", "resposta"}
+    if not required_fields.issubset(fieldnames):
+        return {
+            "forms": {},
+            "errors": [
+                "O arquivo deve conter as colunas 'habilidade_id' e 'resposta'."
+            ],
+        }
+
+    field_map = {
+        original: normalized
+        for original, normalized in zip(reader.fieldnames, fieldnames)
+    }
+    has_patient = "paciente_id" in fieldnames
+    forms = defaultdict(dict)
+    row_numbers = defaultdict(dict)
+
+    for line_number, raw_row in enumerate(reader, start=2):
+        row = {
+            field_map[key]: (value.strip() if value is not None else "")
+            for key, value in raw_row.items()
+            if key is not None
+        }
+        skill_id = row.get("habilidade_id", "").upper()
+        patient_id = row.get("paciente_id", "geral") if has_patient else "geral"
+        response_text = row.get("resposta", "")
+
+        if skill_id not in SKILL_CATALOG:
+            errors.append(
+                f"Linha {line_number}: habilidade_id inválido '{skill_id}'."
+            )
+            continue
+        if not response_text.isdigit() or int(response_text) not in IMPORT_CODE_TO_STATUS:
+            errors.append(
+                f"Linha {line_number}: resposta deve ser um código entre 0 e 3."
+            )
+            continue
+        if not patient_id:
+            errors.append(f"Linha {line_number}: paciente_id não pode ser vazio.")
+            continue
+        if skill_id in forms[patient_id]:
+            errors.append(
+                f"Linha {line_number}: habilidade {skill_id} duplicada para o paciente '{patient_id}'."
+            )
+            continue
+
+        forms[patient_id][skill_id] = IMPORT_CODE_TO_STATUS[int(response_text)]
+        row_numbers[patient_id][skill_id] = line_number
+
+    expected_ids = set(SKILL_CATALOG)
+    for patient_id, answers in forms.items():
+        missing_ids = expected_ids - set(answers)
+        if missing_ids:
+            errors.append(
+                f"Paciente '{patient_id}': habilidades ausentes: "
+                f"{', '.join(sorted(missing_ids))}."
+            )
+
+    return {"forms": dict(forms), "errors": errors}
+
+
+def apply_imported_answers(answers):
+    for index, (skill_id, skill) in enumerate(SKILL_CATALOG.items()):
+        value = answers[skill_id]
+        st.session_state[f"skill_v2_{index}"] = value
+        st.session_state["form_answers"][skill] = value
+    st.session_state["processed"] = False
+    st.session_state["active_tab"] = tab_labels[0]
+
+
+def create_template_csv():
+    output = io.StringIO()
+    writer = csv.writer(output, lineterminator="\n")
+    writer.writerow(["habilidade_id", "resposta"])
+    for skill_id in SKILL_CATALOG:
+        writer.writerow([skill_id, ""])
+    return output.getvalue()
+
+
+def create_answers_csv(answers):
+    output = io.StringIO()
+    writer = csv.writer(output, lineterminator="\n")
+    writer.writerow(["habilidade_id", "resposta"])
+    for skill_id, skill in SKILL_CATALOG.items():
+        writer.writerow([skill_id, STATUS_TO_IMPORT_CODE[answers.get(skill)]])
+    return output.getvalue()
+
+
 def show_results():
     st.session_state["active_tab"] = "2. Resultado"
 
@@ -276,6 +426,53 @@ with st.sidebar.expander("Ferramentas de teste"):
         st.session_state["processed"] = False
         st.session_state["active_tab"] = tab_labels[0]
         st.success("Configuração gerada.")
+
+    st.caption("Importar formulário preenchido")
+    st.download_button(
+        "Baixar modelo CSV vazio",
+        data=create_template_csv(),
+        file_name="modelo_formulario_vazio.csv",
+        mime="text/csv",
+        use_container_width=True,
+    )
+    st.download_button(
+        "Baixar respostas atuais",
+        data=create_answers_csv(st.session_state["form_answers"]),
+        file_name="respostas_formulario.csv",
+        mime="text/csv",
+        use_container_width=True,
+        help="Exporta as respostas atuais, usando 0 para habilidades em branco.",
+    )
+    imported_file = st.file_uploader(
+        "Selecione um arquivo CSV ou TXT",
+        type=["csv", "txt"],
+        help="Use habilidade_id,resposta ou paciente_id,habilidade_id,resposta.",
+    )
+    if imported_file is not None:
+        imported_data = parse_imported_form(imported_file.getvalue())
+        if imported_data["errors"]:
+            st.error("O formulário não foi aplicado porque existem erros:")
+            for error in imported_data["errors"]:
+                st.write(f"- {error}")
+        elif imported_data["forms"]:
+            patient_ids = list(imported_data["forms"])
+            selected_patient = patient_ids[0]
+            if len(patient_ids) > 1:
+                selected_patient = st.selectbox(
+                    "Selecione o paciente",
+                    patient_ids,
+                    key="import_patient",
+                )
+            if st.button(
+                "Aplicar formulário importado",
+                use_container_width=True,
+                key="apply_imported_form",
+            ):
+                apply_imported_answers(imported_data["forms"][selected_patient])
+                st.success(
+                    f"{len(SKILL_CATALOG)} respostas importadas para o paciente "
+                    f"'{selected_patient}'. Revise o formulário antes de processar."
+                )
 
     st.caption("Preenchimento rápido por categoria e desempenho")
     preset_options = [
