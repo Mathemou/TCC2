@@ -12,7 +12,7 @@ O protótipo não pretende realizar diagnóstico nem substituir avaliação prof
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
 Depois abra o endereço indicado pelo Streamlit no navegador.
@@ -69,6 +69,20 @@ Uma relação indireta pode receber peso parcial:
 - Caminhar = "Realiza com auxílio" → peso 1
 - Caminhar apoia Uso do banheiro
 - tratamento recebe +0,5 se trabalha Uso do banheiro
+
+A soma é **normalizada** pela pontuação máxima que o tratamento poderia atingir, considerando
+só as habilidades avaliadas. Assim, tratamentos que cobrem muitas habilidades não ficam em
+vantagem só por serem maiores.
+
+- Um tratamento abaixo de **15%** não é indicado. Se nenhum for indicado, o resultado é
+  "sem indicação suficiente".
+- A **intervenção integrada** não pontua por habilidade. Ela é indicada quando pelo menos
+  **2 tratamentos específicos atingem 30%**, ou seja, quando a dificuldade está distribuída
+  entre domínios. Nesse caso aparece em 1º lugar.
+
+Os dados e as regras ficam em `motor_regras.py`, incluindo os limiares no topo do arquivo.
+Esse módulo é usado pelo `app.py` e pelo gerador do grafo de conhecimento
+(`grafo de conhecimento/`), então os dois sempre produzem o mesmo resultado.
 
 ## O que deve ser validado no TCC
 

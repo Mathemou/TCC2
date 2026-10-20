@@ -9,70 +9,25 @@ from collections import defaultdict
 st.set_page_config(page_title="Protótipo SIGAMAES – Recomendação", page_icon="🧩", layout="wide")
 
 # ---------------------------------------------------------------------
-# MODELO DO GRAFO
+# DADOS E MOTOR DE REGRAS
 # ---------------------------------------------------------------------
-# A ideia é representar:
-# habilidade -> domínio -> objetivo/intervenção
-# e relações de dependência entre habilidades.
-#
-# Os nomes dos tratamentos abaixo são exemplos para o protótipo.
-# No TCC, devem ser substituídos pelos tratamentos reais disponibilizados
-# pela AMAES e validados pelas orientadoras/profissionais.
-SKILLS = {
-    "Alimentação": "autocuidado",
-    "Escovação": "autocuidado",
-    "Fio dental": "autocuidado",
-    "Cuidado com o corpo": "autocuidado",
-    "Cuidado com o cabelo": "autocuidado",
-    "Cuidado com o rosto": "autocuidado",
-    "Cuidado com as mãos": "autocuidado",
-    "Vestuário": "autocuidado",
-    "Manuseio de ajustes": "autocuidado",
-    "Tarefas de banheiro": "autocuidado",
-    "Locomoção geral": "motor",
-    "Locomoção específica": "motor",
-    "Equilíbrio estático": "motor",
-    "Equilíbrio dinâmico": "motor",
-    "Arremessar, receber, rolar e chutar bolas": "motor",
-    "Preensão": "motor",
-    "Encaixe de pinos e argolas": "motor",
-    "Empilhar peças": "motor",
-    "Enfiagem de contas": "motor",
-    "Dobrar papel": "motor",
-    "Montagem de quebra-cabeças": "motor",
-    "Preensão e controle de lápis": "motor",
-    "Escrita, cópia de letras e desenho": "motor",
-    "Uso de tesoura": "motor",
-    "Manipulação de fechos, trincos e maçanetas": "motor",
-}
-
-SKILL_CATALOG = {
-    "AC01": "Alimentação",
-    "AC02": "Escovação",
-    "AC03": "Fio dental",
-    "AC04": "Cuidado com o corpo",
-    "AC05": "Cuidado com o cabelo",
-    "AC06": "Cuidado com o rosto",
-    "AC07": "Cuidado com as mãos",
-    "AC08": "Vestuário",
-    "AC09": "Manuseio de ajustes",
-    "AC10": "Tarefas de banheiro",
-    "MO01": "Locomoção geral",
-    "MO02": "Locomoção específica",
-    "MO03": "Equilíbrio estático",
-    "MO04": "Equilíbrio dinâmico",
-    "MO05": "Arremessar, receber, rolar e chutar bolas",
-    "MO06": "Preensão",
-    "MO07": "Encaixe de pinos e argolas",
-    "MO08": "Empilhar peças",
-    "MO09": "Enfiagem de contas",
-    "MO10": "Dobrar papel",
-    "MO11": "Montagem de quebra-cabeças",
-    "MO12": "Preensão e controle de lápis",
-    "MO13": "Escrita, cópia de letras e desenho",
-    "MO14": "Uso de tesoura",
-    "MO15": "Manipulação de fechos, trincos e maçanetas",
-}
+# Habilidades, tratamentos, dependências e regras ficam em motor_regras.py,
+# compartilhado com o gerador do grafo de conhecimento.
+from motor_regras import (
+    INTEGRADA,
+    LIMIAR_INTEGRADA,
+    LIMIAR_MINIMO,
+    MIN_TRATAMENTOS_INTEGRADA,
+    DEPENDENCIES,
+    RULES_TEXT,
+    SKILL_CATALOG,
+    SKILLS,
+    STATUS_WEIGHT,
+    TREATMENTS,
+    calculate_recommendations,
+    calculate_skill_contributions,
+    classify_case,
+)
 
 IMPORT_CODE_TO_STATUS = {
     0: None,
@@ -83,194 +38,6 @@ IMPORT_CODE_TO_STATUS = {
 STATUS_TO_IMPORT_CODE = {
     status: code for code, status in IMPORT_CODE_TO_STATUS.items()
 }
-
-TREATMENTS = {
-    "Treino de habilidades de autocuidado": {
-        "domain": "autocuidado",
-        "skills": [skill for skill, domain in SKILLS.items()
-                   if domain == "autocuidado"],
-        "priority": 1,
-    },
-    "Treino de habilidades motoras grossas": {
-        "domain": "motor",
-        "skills": ["Locomoção geral", "Locomoção específica",
-                   "Equilíbrio estático", "Equilíbrio dinâmico",
-                   "Arremessar, receber, rolar e chutar bolas"],
-        "priority": 1,
-    },
-    "Treino de habilidades motoras finas": {
-        "domain": "motor",
-        "skills": ["Preensão", "Encaixe de pinos e argolas",
-                   "Empilhar peças", "Enfiagem de contas", "Dobrar papel",
-                   "Montagem de quebra-cabeças", "Preensão e controle de lápis",
-                   "Escrita, cópia de letras e desenho", "Uso de tesoura",
-                   "Manipulação de fechos, trincos e maçanetas"],
-        "priority": 1,
-    },
-    "Intervenção integrada autocuidado + motor": {
-        "domain": "integrado",
-        "skills": list(SKILLS.keys()),
-        "priority": 2,
-    },
-}
-
-# Relações simplificadas de dependência/apoio.
-DEPENDENCIES = [
-    ("Cuidado com as mãos", "Alimentação"),
-    ("Cuidado com as mãos", "Fio dental"),
-    ("Preensão", "Alimentação"),
-    ("Preensão", "Vestuário"),
-    ("Locomoção geral", "Tarefas de banheiro"),
-    ("Locomoção geral", "Vestuário"),
-    ("Equilíbrio dinâmico", "Locomoção específica"),
-    ("Equilíbrio estático", "Vestuário"),
-    ("Preensão e controle de lápis", "Escrita, cópia de letras e desenho"),
-    ("Preensão", "Encaixe de pinos e argolas"),
-    ("Preensão", "Enfiagem de contas"),
-    ("Preensão", "Uso de tesoura"),
-    ("Manipulação de fechos, trincos e maçanetas", "Vestuário"),
-]
-
-STATUS_WEIGHT = {
-    "Independente": 0,
-    "Realiza com auxílio": 1,
-    "Não realiza": 2,
-}
-
-def build_graph():
-    g = nx.DiGraph()
-
-    for skill, domain in SKILLS.items():
-        g.add_node(skill, type="habilidade", domain=domain)
-
-    for treatment, data in TREATMENTS.items():
-        g.add_node(treatment, type="tratamento", domain=data["domain"])
-        for skill in data["skills"]:
-            g.add_edge(skill, treatment, relation="indica")
-
-    for parent, child in DEPENDENCIES:
-        g.add_edge(parent, child, relation="apoia")
-
-    return g
-
-GRAPH = build_graph()
-
-def calculate_skill_contributions(answers):
-    contributions = {
-        treatment: defaultdict(float)
-        for treatment in TREATMENTS
-    }
-
-    for skill, status in answers.items():
-        if status is None:
-            continue
-
-        weight = STATUS_WEIGHT[status]
-        if weight == 0:
-            continue
-
-        for treatment, data in TREATMENTS.items():
-            if skill in data["skills"]:
-                contributions[treatment][skill] += weight
-
-            for source, target in DEPENDENCIES:
-                if source == skill and target in data["skills"]:
-                    contributions[treatment][skill] += weight * 0.5
-
-    return {
-        treatment: dict(skill_scores)
-        for treatment, skill_scores in contributions.items()
-    }
-
-def calculate_recommendations(answers):
-    """
-    Motor de regras determinístico.
-
-    Regra básica:
-      - soma-se a gravidade das dificuldades das habilidades de cada tratamento;
-      - dificuldades diretamente relacionadas ao tratamento têm peso 1;
-      - dificuldades em habilidades que apoiam outra habilidade têm peso 0.5;
-      - empate é resolvido pela prioridade configurada no tratamento.
-
-    Isso torna o resultado explicável: cada ponto pode ser rastreado
-    até uma resposta do formulário.
-    """
-    direct = defaultdict(float)
-    explanations = defaultdict(list)
-
-    for skill, status in answers.items():
-        if status is None:
-            continue
-
-        weight = STATUS_WEIGHT[status]
-        if weight == 0:
-            continue
-
-        for treatment, data in TREATMENTS.items():
-            if skill in data["skills"]:
-                direct[treatment] += weight
-                explanations[treatment].append(
-                    f"{skill}: {status} (peso {weight})"
-                )
-
-            # Propagação simples pelo grafo: se a habilidade é pré-requisito
-            # de outra habilidade contemplada no tratamento, ela contribui
-            # parcialmente para a pontuação.
-            for source, target in DEPENDENCIES:
-                if source == skill and target in data["skills"]:
-                    direct[treatment] += weight * 0.5
-                    explanations[treatment].append(
-                        f"{skill} influencia {target}: {status} "
-                        f"(peso indireto {weight * 0.5:g})"
-                    )
-
-    results = []
-    for treatment, score in direct.items():
-        results.append({
-            "treatment": treatment,
-            "score": round(score, 2),
-            "explanations": explanations[treatment],
-        })
-
-    # Inclui tratamentos sem dificuldade, para permitir comparação.
-    for treatment in TREATMENTS:
-        if not any(r["treatment"] == treatment for r in results):
-            results.append({
-                "treatment": treatment,
-                "score": 0,
-                "explanations": [],
-            })
-
-    results.sort(
-        key=lambda x: (
-            x["score"],
-            -TREATMENTS[x["treatment"]]["priority"]
-        ),
-        reverse=True
-    )
-
-    return results
-
-def classify_case(answers):
-    scores = {
-        "autocuidado": sum(
-            STATUS_WEIGHT[v] for k, v in answers.items()
-            if v is not None and SKILLS[k] == "autocuidado"
-        ),
-        "motor": sum(
-            STATUS_WEIGHT[v] for k, v in answers.items()
-            if v is not None and SKILLS[k] == "motor"
-        ),
-    }
-
-    if scores["autocuidado"] == 0 and scores["motor"] == 0:
-        return "Sem dificuldades identificadas", scores
-
-    if scores["autocuidado"] > scores["motor"]:
-        return "Predomínio de dificuldades de autocuidado", scores
-    if scores["motor"] > scores["autocuidado"]:
-        return "Predomínio de dificuldades motoras", scores
-    return "Dificuldades distribuídas entre os dois domínios", scores
 
 
 def get_skill_catalog():
@@ -562,37 +329,50 @@ if active_tab_index == 1:
         c1.metric("Pontuação — autocuidado", domain_scores["autocuidado"])
         c2.metric("Pontuação — motor", domain_scores["motor"])
 
-        st.markdown("### Tratamentos ordenados")
+        indicated = [r for r in results if r["indicated"]]
+        not_indicated = [r for r in results if not r["indicated"]]
 
-        for idx, result in enumerate(results, start=1):
-            treatment = result["treatment"]
-            score = result["score"]
+        def describe_score(result):
+            if result["type"] == "integrado":
+                if result["indicated"]:
+                    return (f"Pontuação: **{result['score']:.0%}** "
+                            f"(R5 — combina {len(result['combined'])} tratamentos "
+                            f"≥ {LIMIAR_INTEGRADA:.0%})")
+                return "Não indicada pela regra R5"
+            return (f"Pontuação: **{result['score']:.0%}** "
+                    f"({result['raw']:g} de {result['max']:g} pontos possíveis; "
+                    f"{result['evaluated']}/{result['total_skills']} habilidades avaliadas)")
 
-            if idx == 1 and score > 0:
-                st.success(f"**{idx}º — {treatment}**  \nPontuação: **{score}**")
-            else:
-                st.write(f"**{idx}º — {treatment}** — pontuação: **{score}**")
-
+        def show_explanations(result):
             if result["explanations"]:
                 with st.expander("Por que este tratamento recebeu essa pontuação?"):
                     for explanation in result["explanations"]:
                         st.write("• " + explanation)
 
-        st.markdown("### Regras acionadas")
-        st.code(
-            """R1 — dificuldade em uma habilidade aumenta a pontuação
-     dos tratamentos que trabalham essa habilidade.
+        st.markdown("### Tratamentos indicados")
+        if not indicated:
+            st.info(
+                "**Sem indicação suficiente.** Nenhum tratamento atingiu o "
+                f"limiar mínimo de {LIMIAR_MINIMO:.0%} (regra R6)."
+            )
+        for idx, result in enumerate(indicated, start=1):
+            prioridade = {1: "Alta", 2: "Média"}.get(idx, "Baixa")
+            text = (f"**{idx}º — {result['treatment']}** · prioridade {prioridade}  \n"
+                    f"{describe_score(result)}")
+            if idx == 1:
+                st.success(text)
+            else:
+                st.write(text)
+            show_explanations(result)
 
-R2 — dificuldade em uma habilidade que apoia outra habilidade
-     recebe contribuição indireta (0,5 × peso da dificuldade).
+        if not_indicated:
+            st.markdown("### Não indicados")
+            for result in not_indicated:
+                st.write(f"{result['treatment']} — {describe_score(result)}")
+                show_explanations(result)
 
-R3 — quanto maior a soma das dificuldades relacionadas,
-     maior a prioridade do tratamento.
-
-R4 — o sistema mantém uma justificativa rastreável,
-     mostrando quais respostas contribuíram para o resultado.""",
-            language="text"
-        )
+        st.markdown("### Regras do motor")
+        st.code(RULES_TEXT, language="text")
 
 if active_tab_index == 2:
     st.subheader("Representação do conhecimento")
@@ -606,7 +386,14 @@ if active_tab_index == 2:
     st.markdown("**Habilidades → tratamentos**")
     for treatment, data in TREATMENTS.items():
         st.write(f"**{treatment}**")
-        st.write(", ".join(data["skills"]))
+        if data["type"] == "integrado":
+            st.write(
+                f"Não pontua por habilidade. É indicada quando pelo menos "
+                f"{MIN_TRATAMENTOS_INTEGRADA} destes tratamentos atingem "
+                f"{LIMIAR_INTEGRADA:.0%}: " + ", ".join(data["combines"]) + "."
+            )
+        else:
+            st.write(", ".join(data["skills"]))
 
     st.markdown("**Dependências/relacionamentos usados no protótipo**")
     for source, target in DEPENDENCIES:
@@ -631,18 +418,22 @@ if active_tab_index == 3:
 
     graph_answers = st.session_state.get("form_answers", {})
     graph_results = calculate_recommendations(graph_answers)
-    recommended_treatment = graph_results[0]["treatment"]
+    top_result = graph_results[0] if graph_results[0]["indicated"] else None
+    recommended_treatment = top_result["treatment"] if top_result else None
     skill_contributions = calculate_skill_contributions(graph_answers)
-    recommended_contributions = skill_contributions[recommended_treatment]
+    recommended_contributions = (
+        skill_contributions[recommended_treatment] if top_result else {}
+    )
     graph = nx.DiGraph()
     graph.add_node("paciente", label="Paciente", node_type="paciente")
     graph.add_node("autocuidado", label="Autocuidado", node_type="categoria")
     graph.add_node("motor", label="Motor", node_type="categoria")
-    graph.add_node(
-        recommended_treatment,
-        label=recommended_treatment,
-        node_type="intervencao",
-    )
+    if top_result:
+        graph.add_node(
+            recommended_treatment,
+            label=recommended_treatment,
+            node_type="intervencao",
+        )
     graph.add_edge("paciente", "autocuidado")
     graph.add_edge("paciente", "motor")
 
@@ -655,8 +446,9 @@ if active_tab_index == 3:
         )
         graph.add_edge(domain, skill)
 
-        contribution = recommended_contributions.get(skill, 0)
-        graph.add_edge(skill, recommended_treatment, contribution=contribution)
+        if top_result:
+            contribution = recommended_contributions.get(skill, 0)
+            graph.add_edge(skill, recommended_treatment, contribution=contribution)
 
     status_colors = {
         None: "#E5E7EB",
@@ -676,9 +468,13 @@ if active_tab_index == 3:
         '  "paciente" [label="Paciente", shape=ellipse, fillcolor="#BFDBFE", fontsize=14];',
         '  "autocuidado" [label="Autocuidado", shape=box, fillcolor="#DDD6FE", fontsize=13];',
         '  "motor" [label="Motor", shape=box, fillcolor="#DDD6FE", fontsize=13];',
-        f'  "{dot_text(recommended_treatment)}" [label="Intervenção sugerida\\n{dot_text(recommended_treatment)}", '
-        'shape=box, fillcolor="#86EFAC", color="#166534", penwidth=2];',
     ]
+    if top_result:
+        dot_lines.append(
+            f'  "{dot_text(recommended_treatment)}" [label="Intervenção sugerida\\n'
+            f'{dot_text(recommended_treatment)}\\n{top_result["score"]:.0%}", '
+            'shape=box, fillcolor="#86EFAC", color="#166534", penwidth=2];'
+        )
 
     for skill, domain in SKILLS.items():
         status = graph_answers.get(skill)
@@ -709,10 +505,16 @@ if active_tab_index == 3:
     dot_lines.append("}")
     st.graphviz_chart("\n".join(dot_lines), use_container_width=True)
 
-    st.markdown(
-        f"**Intervenção sugerida:** {recommended_treatment}  "
-        f"(pontuação total: {graph_results[0]['score']})"
-    )
+    if top_result:
+        st.markdown(
+            f"**Intervenção sugerida:** {recommended_treatment}  "
+            f"(pontuação normalizada: {top_result['score']:.0%})"
+        )
+    else:
+        st.markdown(
+            "**Sem indicação suficiente:** nenhum tratamento atingiu o limiar "
+            f"mínimo de {LIMIAR_MINIMO:.0%}."
+        )
     st.caption(
         "As setas verdes mostram contribuições positivas. As setas tracejadas "
         "representam habilidades sem contribuição para esta intervenção."

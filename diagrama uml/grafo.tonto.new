@@ -1,0 +1,377 @@
+package main
+
+// ============================================================
+// ENTIDADES PRINCIPAIS
+// ============================================================
+
+/**
+ * @pt-br Representa uma pessoa com TEA acompanhada no contexto do sistema.
+ * @en Represents a person with ASD monitored in the system context.
+ */
+kind Pessoa {
+    label {
+        @en "Person"
+        @pt-br "Pessoa"
+    }
+
+    nome : string
+    dataDeNascimento : date
+}
+
+/**
+ * @pt-br Representa o prontuário associado a uma pessoa.
+ * @en Represents the clinical record associated with a person.
+ */
+kind Prontuario {
+    label {
+        @en "Medical Record"
+        @pt-br "Prontuário"
+    }
+
+    identificador : string
+}
+
+/**
+ * @pt-br Representa uma habilidade que pode ser avaliada no contexto
+ * do acompanhamento da pessoa.
+ * @en Represents a skill that can be assessed in the person's monitoring.
+ */
+kind Habilidade {
+    label {
+        @en "Skill"
+        @pt-br "Habilidade"
+    }
+
+    codigo : string
+    nome : string
+}
+
+/**
+ * @pt-br Representa uma habilidade relacionada ao autocuidado.
+ * @en Represents a self-care skill.
+ */
+kind HabilidadeAutocuidado specializes Habilidade {
+    label {
+        @en "Self-Care Skill"
+        @pt-br "Habilidade de Autocuidado"
+    }
+}
+
+/**
+ * @pt-br Representa uma habilidade relacionada ao desenvolvimento motor.
+ * @en Represents a motor skill.
+ */
+kind HabilidadeMotora specializes Habilidade {
+    label {
+        @en "Motor Skill"
+        @pt-br "Habilidade Motora"
+    }
+}
+
+// ============================================================
+// HABILIDADES DE AUTOCUIDADO
+// ============================================================
+
+kind Alimentacao specializes HabilidadeAutocuidado {
+    label {
+        @en "Feeding"
+        @pt-br "Alimentação"
+    }
+}
+
+kind Escovacao specializes HabilidadeAutocuidado {
+    label {
+        @en "Brushing"
+        @pt-br "Escovação"
+    }
+}
+
+kind FioDental specializes HabilidadeAutocuidado {
+    label {
+        @en "Dental Floss"
+        @pt-br "Fio Dental"
+    }
+}
+
+kind CuidadoCorpo specializes HabilidadeAutocuidado {
+    label {
+        @en "Body Care"
+        @pt-br "Cuidado com o Corpo"
+    }
+}
+
+kind CuidadoCabelos specializes HabilidadeAutocuidado {
+    label {
+        @en "Hair Care"
+        @pt-br "Cuidado com o Cabelo"
+    }
+}
+
+kind CuidadoRosto specializes HabilidadeAutocuidado {
+    label {
+        @en "Face Care"
+        @pt-br "Cuidado com o Rosto"
+    }
+}
+
+kind CuidadoMaos specializes HabilidadeAutocuidado {
+    label {
+        @en "Hand Care"
+        @pt-br "Cuidado com as Mãos"
+    }
+}
+
+kind Vestuario specializes HabilidadeAutocuidado {
+    label {
+        @en "Dressing"
+        @pt-br "Vestuário"
+    }
+}
+
+kind ManuseioAjustes specializes HabilidadeAutocuidado {
+    label {
+        @en "Adjustments"
+        @pt-br "Manuseio de Ajustes"
+    }
+}
+
+kind TarefasBanheiro specializes HabilidadeAutocuidado {
+    label {
+        @en "Toileting"
+        @pt-br "Tarefas de Banheiro"
+    }
+}
+
+// ============================================================
+// HABILIDADES MOTORES
+// ============================================================
+
+kind LocomocaoGeral specializes HabilidadeMotora {
+    label {
+        @en "General Locomotion"
+        @pt-br "Locomoção Geral"
+    }
+}
+
+kind LocomocaoEspecifica specializes HabilidadeMotora {
+    label {
+        @en "Specific Locomotion"
+        @pt-br "Locomoção Específica"
+    }
+}
+
+kind EquilibrioEstatico specializes HabilidadeMotora {
+    label {
+        @en "Static Balance"
+        @pt-br "Equilíbrio Estático"
+    }
+}
+
+kind EquilibrioDinamico specializes HabilidadeMotora {
+    label {
+        @en "Dynamic Balance"
+        @pt-br "Equilíbrio Dinâmico"
+    }
+}
+
+kind ArremessarReceberRolarChutar specializes HabilidadeMotora {
+    label {
+        @en "Throw, Catch, Roll and Kick"
+        @pt-br "Arremessar, Receber, Rolar e Chutar"
+    }
+}
+
+kind Preensao specializes HabilidadeMotora {
+    label {
+        @en "Prehension"
+        @pt-br "Preensão"
+    }
+}
+
+kind EncaixePinosArgolas specializes HabilidadeMotora {
+    label {
+        @en "Pin and Ring Insertion"
+        @pt-br "Encaixe de Pinos e Argolas"
+    }
+}
+
+kind EmpilharPecas specializes HabilidadeMotora {
+    label {
+        @en "Stacking Pieces"
+        @pt-br "Empilhar Peças"
+    }
+}
+
+kind EnfiagemContas specializes HabilidadeMotora {
+    label {
+        @en "Bead Stringing"
+        @pt-br "Enfiagem de Contas"
+    }
+}
+
+kind DobrarPapel specializes HabilidadeMotora {
+    label {
+        @en "Paper Folding"
+        @pt-br "Dobrar Papel"
+    }
+}
+
+kind MontagemQuebraCabecas specializes HabilidadeMotora {
+    label {
+        @en "Puzzle Assembly"
+        @pt-br "Montagem de Quebra-Cabeças"
+    }
+}
+
+kind PreensaoControleLapis specializes HabilidadeMotora {
+    label {
+        @en "Pencil Prehension and Control"
+        @pt-br "Preensão e Controle de Lápis"
+    }
+}
+
+kind EscritaCopiaLetrasDesenho specializes HabilidadeMotora {
+    label {
+        @en "Writing, Copying and Drawing"
+        @pt-br "Escrita, Cópia de Letras e Desenho"
+    }
+}
+
+kind UsoTesoura specializes HabilidadeMotora {
+    label {
+        @en "Scissors Usage"
+        @pt-br "Uso de Tesoura"
+    }
+}
+
+kind ManipulacaoFechosTrincosMacanetas specializes HabilidadeMotora {
+    label {
+        @en "Manipulation of Clips, Pins and Knobs"
+        @pt-br "Manipulação de Fechos, Trincos e Maçanetas"
+    }
+}
+
+// ============================================================
+// AVALIAÇÃO
+// ============================================================
+
+/**
+ * @pt-br Representa a avaliação de uma habilidade de uma pessoa.
+ * @en Represents the assessment of a person's skill.
+ */
+relator AvaliacaoHabilidade {
+    label {
+        @en "Skill Assessment"
+        @pt-br "Avaliação de Habilidade"
+    }
+
+    dataAvaliacao : date
+    nivel : NivelHabilidade
+
+    @mediation [1] -- pertenceA -- [0..*] (pessoa) Pessoa
+    @mediation [1] -- avalia -- [0..*] (habilidade) Habilidade
+}
+
+// ============================================================
+// TRATAMENTOS
+// ============================================================
+
+/**
+ * @pt-br Representa um tratamento disponível no contexto do sistema.
+ * @en Represents a treatment available in the system context.
+ */
+kind Tratamento {
+    label {
+        @en "Treatment"
+        @pt-br "Tratamento"
+    }
+
+    nome : string
+    descricao : string
+}
+
+// ============================================================
+// RECOMENDAÇÃO
+// ============================================================
+
+/**
+ * @pt-br Representa uma recomendação produzida a partir das avaliações.
+ * @en Represents a recommendation produced from skill assessments.
+ */
+relator Recomendacao {
+    label {
+        @en "Recommendation"
+        @pt-br "Recomendação"
+    }
+
+    dataRecomendacao : date
+    justificativa : string
+    prioridade : NivelPrioridade
+
+    @mediation [1] -- destinadaA -- [0..*] (pessoa) Pessoa
+    @mediation [1] -- recomenda -- [0..*] (tratamento) Tratamento
+    @mediation [1..*] -- baseadaEm -- [0..*] (avaliacao) AvaliacaoHabilidade
+}
+
+// ============================================================
+// CONHECIMENTO DO GRAFO
+// ============================================================
+
+/**
+ * @pt-br Relaciona uma habilidade a um tratamento que trabalha com ela.
+ * @en Relates a skill to a treatment that works with it.
+ */
+relator HabilidadeTratamento {
+    label {
+        @en "Skill Treatment Association"
+        @pt-br "Associação de Habilidade e Tratamento"
+    }
+
+    @mediation [1] -- envolve -- [0..*] (habilidade) Habilidade
+    @mediation [1] -- apontaPara -- [0..*] (tratamento) Tratamento
+}
+
+/**
+ * @pt-br Representa uma dependência de apoio entre duas habilidades.
+ * @en Represents a support dependency between two skills.
+ */
+relator DependenciaHabilidade {
+    label {
+        @en "Skill Support Dependency"
+        @pt-br "Dependência de Apoio entre Habilidades"
+    }
+
+    @mediation [1] -- dependeDe -- [0..*] (habilidadeAnterior) Habilidade
+    @mediation [1] -- apoia -- [0..*] (habilidadePosterior) Habilidade
+}
+
+/**
+ * @pt-br Relaciona um prontuário a uma pessoa.
+ * @en Relates a clinical record to a person.
+ */
+relator ProntuarioPessoa {
+    label {
+        @en "Clinical Record Association"
+        @pt-br "Associação de Prontuário e Pessoa"
+    }
+
+    @mediation [1] -- pertenceA -- [0..*] (pessoa) Pessoa
+    @mediation [1] -- registra -- [0..*] (prontuario) Prontuario
+}
+
+// ============================================================
+// TIPOS DE DADOS
+// ============================================================
+
+enum NivelHabilidade {
+    NaoAvaliado,
+    Baixo,
+    Moderado,
+    Alto
+}
+
+enum NivelPrioridade {
+    Baixa,
+    Media,
+    Alta
+}

@@ -1,0 +1,35 @@
+Triplas no grafo: 1317
+Parâmetros: limiar mínimo 15% (R6), limiar da integrada 30% com mínimo de 2 tratamentos (R5)
+
+== Validação SHACL ==
+Conforme: True
+Validation Report
+Conforms: True
+
+== Pontuações: SPARQL sobre o grafo x motor_regras.py (app.py) ==
+
+P001 — dificuldades predominantes de autocuidado
+  Treino de habilidades de autocuidado          motor= 58.9%  sparql= 58.9%  1º indicado, prioridade Alta   OK
+  Treino de habilidades motoras finas           motor= 15.0%  sparql= 15.0%  2º indicado, prioridade Media  OK
+  Treino de habilidades motoras grossas         motor= 13.6%  sparql= 13.6%  não indicado                   OK
+  Intervenção integrada autocuidado + motor     motor=  0.0%  sparql=  0.0%  não indicado                   OK
+
+P002 — dificuldades predominantes de motricidade fina
+  Treino de habilidades motoras finas           motor= 83.3%  sparql= 83.3%  1º indicado, prioridade Alta   OK
+  Treino de habilidades de autocuidado          motor= 21.1%  sparql= 21.2%  2º indicado, prioridade Media  OK
+  Treino de habilidades motoras grossas         motor= 13.6%  sparql= 13.6%  não indicado                   OK
+  Intervenção integrada autocuidado + motor     motor=  0.0%  sparql=  0.0%  não indicado                   OK
+
+P003 — sem dificuldades identificadas (caso controle)
+  Treino de habilidades de autocuidado          motor=  0.0%  sparql=  0.0%  não indicado                   OK
+  Treino de habilidades motoras grossas         motor=  0.0%  sparql=  0.0%  não indicado                   OK
+  Treino de habilidades motoras finas           motor=  0.0%  sparql=  0.0%  não indicado                   OK
+  Intervenção integrada autocuidado + motor     motor=  0.0%  sparql=  0.0%  não indicado                   OK
+
+P004 — dificuldades distribuídas entre autocuidado e motricidade fina
+  Intervenção integrada autocuidado + motor     motor= 32.1%  sparql= 32.1%  1º indicado, prioridade Alta   OK
+  Treino de habilidades motoras finas           motor= 37.5%  sparql= 37.5%  2º indicado, prioridade Media  OK
+  Treino de habilidades de autocuidado          motor= 32.1%  sparql= 32.1%  3º indicado, prioridade Baixa  OK
+  Treino de habilidades motoras grossas         motor= 13.6%  sparql= 13.6%  não indicado                   OK
+
+Divergências: 0

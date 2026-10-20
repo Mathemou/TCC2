@@ -1,0 +1,171 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tcc:  <http://example.org/sigamaes/ontologia#> .
+@prefix shp:  <http://example.org/sigamaes/shapes#> .
+
+# =====================================================================
+# Regras de validação do grafo de conhecimento (SHACL)
+# Cardinalidades = leitura pretendida do grafo.png (ver README, seção
+# "Correções sugeridas na ontologia").
+# =====================================================================
+
+shp:Pessoa a sh:NodeShape ;
+    sh:targetClass tcc:Pessoa ;
+    sh:property [ sh:path tcc:nome ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path tcc:dataDeNascimento ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path [ sh:inversePath tcc:registra ] ; sh:maxCount 1 ;
+                  sh:message "Uma pessoa possui no máximo um prontuário." ] .
+
+shp:Prontuario a sh:NodeShape ;
+    sh:targetClass tcc:Prontuario ;
+    sh:property [ sh:path tcc:identificador ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path tcc:registra ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Pessoa ] .
+
+# Toda habilidade pertence a exatamente um domínio (autocuidado XOR motor)
+shp:Habilidade a sh:NodeShape ;
+    sh:targetClass tcc:Habilidade ;
+    sh:property [ sh:path tcc:nome ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:xone ( [ sh:class tcc:HabilidadeAutocuidado ] [ sh:class tcc:HabilidadeMotora ] ) .
+
+shp:Tratamento a sh:NodeShape ;
+    sh:targetClass tcc:Tratamento ;
+    sh:property [ sh:path tcc:nome ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path tcc:descricao ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+# «relator» AvaliacaoHabilidade: 1 pessoa, 1 habilidade, 1 nível (enum)
+shp:AvaliacaoHabilidade a sh:NodeShape ;
+    sh:targetClass tcc:AvaliacaoHabilidade ;
+    sh:property [ sh:path tcc:pertenceA ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Pessoa ] ;
+    sh:property [ sh:path tcc:avalia ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Habilidade ] ;
+    sh:property [ sh:path tcc:dataAvaliacao ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path tcc:nivel ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( "NaoAvaliado" "Baixo" "Moderado" "Alto" ) ] ;
+    sh:sparql [
+        sh:message "Avaliação duplicada: mesma pessoa, habilidade e data." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this WHERE {
+              $this tcc:pertenceA ?p ; tcc:avalia ?h ; tcc:dataAvaliacao ?d .
+              ?o tcc:pertenceA ?p ; tcc:avalia ?h ; tcc:dataAvaliacao ?d .
+              FILTER (?o != $this)
+            }""" ] .
+
+# «relator» Recomendacao
+shp:Recomendacao a sh:NodeShape ;
+    sh:targetClass tcc:Recomendacao ;
+    sh:property [ sh:path tcc:destinadaA ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Pessoa ] ;
+    sh:property [ sh:path tcc:recomenda ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Tratamento ] ;
+    sh:property [ sh:path tcc:baseadaEm ; sh:minCount 1 ; sh:class tcc:AvaliacaoHabilidade ] ;
+    sh:property [ sh:path tcc:dataRecomendacao ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:date ] ;
+    sh:property [ sh:path tcc:justificativa ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path tcc:prioridade ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( "Baixa" "Media" "Alta" ) ] ;
+    sh:property [ sh:path tcc:pontuacao ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:datatype xsd:decimal ; sh:minInclusive 0 ; sh:maxInclusive 1 ] ;
+    # R5/R6: só existe recomendação se a pontuação atinge o limiar do Conhecimento
+    sh:sparql [
+        sh:message "Pontuação abaixo do limiar de indicação do Conhecimento (R5/R6)." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this ?value WHERE {
+              $this tcc:recomenda ?t ; tcc:pontuacao ?value .
+              ?k tcc:podeIndicar ?t ; tcc:limiarIndicacao ?l .
+              FILTER (?value < ?l)
+            }""" ] ;
+    # R5: tratamento composto exige que ao menos N tratamentos requeridos tenham
+    # sido recomendados à mesma pessoa, na mesma data, com pontuação >= limiar
+    sh:sparql [
+        sh:message "Intervenção integrada sem tratamentos requeridos suficientes acima do limiar (R5)." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this WHERE {
+              $this tcc:recomenda ?t .
+              ?k tcc:podeIndicar ?t ; tcc:minimoRequeridos ?min .
+              {
+                SELECT $this (COUNT(DISTINCT ?r2) AS ?n) WHERE {
+                  $this tcc:recomenda ?t ; tcc:destinadaA ?p ; tcc:dataRecomendacao ?d .
+                  ?k tcc:podeIndicar ?t ; tcc:requer ?k2 ; tcc:limiarIndicacao ?lim .
+                  ?k2 tcc:podeIndicar ?t2 .
+                  OPTIONAL {
+                    ?r2 tcc:recomenda ?t2 ; tcc:destinadaA ?p ;
+                        tcc:dataRecomendacao ?d ; tcc:pontuacao ?s .
+                    FILTER (?s >= ?lim)
+                  }
+                } GROUP BY $this
+              }
+              FILTER (?n < ?min)
+            }""" ] ;
+    # Coerência: só se baseia em avaliações da própria pessoa
+    sh:sparql [
+        sh:message "Recomendação baseada em avaliação de outra pessoa." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this ?value WHERE {
+              $this tcc:destinadaA ?p ; tcc:baseadaEm ?value .
+              ?value tcc:pertenceA ?q . FILTER (?p != ?q)
+            }""" ] ;
+    # Explicabilidade (R4): toda avaliação usada mostra dificuldade e está
+    # ligada ao tratamento pelo Conhecimento (direto R1 ou via dependência R2)
+    sh:sparql [
+        sh:message "Avaliação sem dificuldade ou sem caminho de conhecimento até o tratamento recomendado." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this ?value WHERE {
+              $this tcc:recomenda ?t ; tcc:baseadaEm ?value .
+              ?value tcc:avalia ?h ; tcc:nivel ?n .
+              FILTER (
+                ?n IN ("Alto", "NaoAvaliado") ||
+                NOT EXISTS {
+                  ?k tcc:podeIndicar ?t ; tcc:requer? ?kh .
+                  { ?kh tcc:refereSe ?h }
+                  UNION
+                  { ?d tcc:habilidadeBase ?h ; tcc:habilidadeApoiada ?h2 . ?kh tcc:refereSe ?h2 }
+                }
+              )
+            }""" ] ;
+    # Uma pessoa não recebe duas recomendações do mesmo tratamento na mesma data
+    sh:sparql [
+        sh:message "Recomendação duplicada para a mesma pessoa, tratamento e data." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this WHERE {
+              $this tcc:destinadaA ?p ; tcc:recomenda ?t ; tcc:dataRecomendacao ?d .
+              ?o tcc:destinadaA ?p ; tcc:recomenda ?t ; tcc:dataRecomendacao ?d .
+              FILTER (?o != $this)
+            }""" ] .
+
+# «kind» Especialista e «relator» Conhecimento
+shp:Conhecimento a sh:NodeShape ;
+    sh:targetClass tcc:Conhecimento ;
+    sh:property [ sh:path [ sh:inversePath tcc:aplica ] ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:class tcc:Especialista ;
+                  sh:message "Cada Conhecimento é aplicado por exatamente um Especialista." ] ;
+    sh:property [ sh:path tcc:podeIndicar ; sh:minCount 1 ; sh:class tcc:Tratamento ;
+                  sh:message "Um relator Conhecimento precisa mediar ao menos um Tratamento." ] ;
+    sh:property [ sh:path tcc:limiarIndicacao ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:minInclusive 0 ; sh:maxInclusive 1 ] ;
+    # Todo Conhecimento é Simples XOR Composto (genset disjoint complete)
+    sh:xone ( [ sh:class tcc:ConhecimentoSimples ] [ sh:class tcc:ConhecimentoComposto ] ) ;
+    sh:message "Conhecimento deve ser Simples ou Composto (exatamente um)." .
+
+shp:ConhecimentoSimples a sh:NodeShape ;
+    sh:targetClass tcc:ConhecimentoSimples ;
+    sh:property [ sh:path tcc:refereSe ; sh:minCount 1 ; sh:class tcc:Habilidade ;
+                  sh:message "Conhecimento simples precisa mediar ao menos uma Habilidade." ] ;
+    sh:property [ sh:path tcc:requer ; sh:maxCount 0 ] .
+
+shp:ConhecimentoComposto a sh:NodeShape ;
+    sh:targetClass tcc:ConhecimentoComposto ;
+    sh:property [ sh:path tcc:requer ; sh:minCount 2 ; sh:class tcc:ConhecimentoSimples ;
+                  sh:message "Conhecimento composto precisa requerer ao menos dois conhecimentos simples." ] ;
+    sh:property [ sh:path tcc:refereSe ; sh:maxCount 0 ] ;
+    sh:property [ sh:path tcc:minimoRequeridos ; sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 1 ] .
+
+shp:DependenciaHabilidade a sh:NodeShape ;
+    sh:targetClass tcc:DependenciaHabilidade ;
+    sh:property [ sh:path tcc:habilidadeBase ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Habilidade ] ;
+    sh:property [ sh:path tcc:habilidadeApoiada ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Habilidade ;
+                  sh:disjoint tcc:habilidadeBase ] ;
+    sh:property [ sh:path tcc:pesoIndireto ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:minExclusive 0 ; sh:maxInclusive 1 ] .
