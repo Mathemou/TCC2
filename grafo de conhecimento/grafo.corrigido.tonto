@@ -2,7 +2,7 @@ package main
 
 // ====================================================================
 // VERSÃO SUGERIDA de grafo.tonto, compatível com o grafo de
-// conhecimento instanciado (grafo_conhecimento.ttl).
+// conhecimento instanciado (saida/grafo_conhecimento.ttl).
 //
 // Alterações em relação ao grafo.tonto / grafo.png:
 //  (1) Cardinalidades das mediações invertidas: em Tonto a 1ª
@@ -10,12 +10,12 @@ package main
 //      Pessoa" significa "cada Pessoa tem exatamente 1 avaliação" e
 //      "uma avaliação pode não ter pessoa" — o oposto do pretendido e
 //      inválido em OntoUML (o lado mediado precisa de mínimo >= 1).
-//  (2) Conhecimento passa a mediar Especialista, Tratamento E Habilidade.
-//      No original ele só tinha uma associação comum com Tratamento, o
-//      que (a) não é válido para um «relator» e (b) não permite saber
-//      QUAL habilidade indica o tratamento (regra R1 do motor).
-//  (3) Novo relator DependenciaHabilidade (regra R2: "habilidade apoia
-//      habilidade", com peso indireto 0,5).
+//  (2) Conhecimento passa a mediar Especialista e Tratamento e, via
+//      ConhecimentoSimples, Habilidade (regra R1 do motor).
+//  (3) Relações entre habilidades derivadas do Inventário Portage
+//      Operacionalizado (IPO): relator RelacaoHabilidade especializado em
+//      PreRequisito, Facilitacao e Composicao (regra R2, peso por tipo).
+//      Causalidade fica para trabalho futuro (genset incompleto).
 //  (4) Prontuario ligado à Pessoa (no original estava isolado).
 //  (5) Atributos nivel/prioridade tipados com os enums já existentes.
 //  (6) Generalization sets declarados.
@@ -23,6 +23,10 @@ package main
 //      é especializado em ConhecimentoSimples (refereSe habilidades) e
 //      ConhecimentoComposto (requer >= 2 conhecimentos simples), com
 //      limiarIndicacao/minimoRequeridos; Recomendacao ganha pontuacao (0–1).
+//  (8) Inconsistências (regra R7): relator Inconsistencia liga a Pessoa,
+//      as duas avaliações contraditórias e a relação (pré-requisito ou
+//      composição) que elas violam. Apenas alerta; não altera pontuação.
+//  (9) Habilidade registra os itens do IPO correspondentes.
 // ====================================================================
 
 kind Pessoa {
@@ -34,12 +38,14 @@ kind Pessoa {
 kind Prontuario {
     label { @en "Medical Record" @pt-br "Prontuário" }
     identificador : string
-    [0..1] -- registra -- [1] (pessoa) Pessoa            // (4)
+    [0..1] -- registra -- [1] (pessoa) Pessoa                        // (4)
 }
 
 kind Habilidade {
     label { @en "Skill" @pt-br "Habilidade" }
     nome : string
+    itemIPO : string                                                 // (9) ex.: "A-36 (2-3)"; vários valores
+    idadeInicialIPO : number                                         // (9) início da 1ª faixa etária no IPO
 }
 
 subkind HabilidadeAutocuidado specializes Habilidade {
@@ -138,122 +144,57 @@ disjoint complete genset TipoConhecimento {
     specifics ConhecimentoSimples, ConhecimentoComposto
 }
 
-relator DependenciaHabilidade (regra R2: "habilidade apoia
-//      habilidade", com peso indireto 0,5).
-//  (4) Prontuario ligado à Pessoa (no original estava isolado).
-//  (5) Atributos nivel/prioridade tipados com os enums já existentes.
-//  (6) Generalization sets declarados.
-//  (7) Regra da intervenção integrada (R5) e limiares (R6): Conhecimento
-//      é especializado em ConhecimentoSimples (refereSe habilidades) e
-//      ConhecimentoComposto (requer >= 2 conhecimentos simples), com
-//      limiarIndicacao/minimoRequeridos; Recomendacao ganha pontuacao (0–1).
+// ====================================================================
+// (3) RELAÇÕES ENTRE HABILIDADES — derivadas do IPO
 // ====================================================================
 
-kind Pessoa {
-    label { @en "Person" @pt-br "Pessoa" }
-    nome : string
-    dataDeNascimento : date
+relator RelacaoHabilidade {
+    label { @en "Skill Relation" @pt-br "Relação entre Habilidades" }
+    pesoIndireto : number            // R2: 0,5 (pré-requisito, composição) ou 0,25 (facilitação)
+    fundamentacao : string           // justificativa com os itens do IPO
+    evidencia : string               // conteúdo do item, sequência etária ou funcional
+    statusValidacao : string
+    @mediation [0..*] -- origem -- [1] (habilidadeOrigem) Habilidade
+    @mediation [0..*] -- destino -- [1] (habilidadeDestino) Habilidade
 }
 
-kind Prontuario {
-    label { @en "Medical Record" @pt-br "Prontuário" }
-    identificador : string
-    [0..1] -- registra -- [1] (pessoa) Pessoa            // (4)
+// Origem é condição necessária para o destino (ex.: Preensão → Escovação).
+subkind PreRequisito specializes RelacaoHabilidade {
+    label { @en "Prerequisite" @pt-br "Pré-requisito" }
 }
 
-kind Habilidade {
-    label { @en "Skill" @pt-br "Habilidade" }
-    nome : string
+// Origem favorece o destino, mas não é necessária (ex.: Equilíbrio dinâmico → Locomoção específica).
+subkind Facilitacao specializes RelacaoHabilidade {
+    label { @en "Facilitation" @pt-br "Facilitação" }
 }
 
-subkind HabilidadeAutocuidado specializes Habilidade {
-    label { @en "Self-Care Skill" @pt-br "Habilidade de Autocuidado" }
-}
-subkind HabilidadeMotora specializes Habilidade {
-    label { @en "Motor Skill" @pt-br "Habilidade Motora" }
+// Origem é parte do destino (ex.: Manuseio de ajustes é parte de Vestuário, IPO A-54/A-81).
+subkind Composicao specializes RelacaoHabilidade {
+    label { @en "Composition" @pt-br "Composição" }
 }
 
-subkind Alimentacao     specializes HabilidadeAutocuidado { label { @en "Feeding"      @pt-br "Alimentação" } }
-subkind HigieneCorporal specializes HabilidadeAutocuidado { label { @en "Body Hygiene" @pt-br "Higiene Corporal" } }
-subkind HigieneBucal    specializes HabilidadeAutocuidado { label { @en "Oral Hygiene" @pt-br "Higiene Bucal" } }
-subkind HigieneCabelos  specializes HabilidadeAutocuidado { label { @en "Hair Hygiene" @pt-br "Higiene dos Cabelos" } }
-subkind HigieneRosto    specializes HabilidadeAutocuidado { label { @en "Face Hygiene" @pt-br "Higiene do Rosto" } }
-subkind HigieneMaos     specializes HabilidadeAutocuidado { label { @en "Hand Hygiene" @pt-br "Higiene das Mãos" } }
-subkind Vestuario       specializes HabilidadeAutocuidado { label { @en "Dressing"     @pt-br "Vestuário" } }
-subkind Calcados        specializes HabilidadeAutocuidado { label { @en "Footwear"     @pt-br "Calçados" } }
-subkind UsoBanheiro     specializes HabilidadeAutocuidado { label { @en "Toileting"    @pt-br "Uso do Banheiro" } }
-
-subkind Caminhar     specializes HabilidadeMotora { label { @en "Walking"         @pt-br "Caminhar" } }
-subkind Correr       specializes HabilidadeMotora { label { @en "Running"         @pt-br "Correr" } }
-subkind SubirEscadas specializes HabilidadeMotora { label { @en "Climbing Stairs" @pt-br "Subir Escadas" } }
-subkind Rolar        specializes HabilidadeMotora { label { @en "Rolling"         @pt-br "Rolar" } }
-subkind Sentar       specializes HabilidadeMotora { label { @en "Sitting"         @pt-br "Sentar" } }
-subkind Engatinhar   specializes HabilidadeMotora { label { @en "Crawling"        @pt-br "Engatinhar" } }
-
-// (6) Toda habilidade é de autocuidado OU motora.
-disjoint complete genset DominioHabilidade {
-    general Habilidade
-    specifics HabilidadeAutocuidado, HabilidadeMotora
-}
-// Incompletos: permitem itens do formulário ainda sem subkind próprio
-// (ex.: Preensão, Equilíbrio estático) como instâncias diretas.
-disjoint genset TipoAutocuidado {
-    general HabilidadeAutocuidado
-    specifics Alimentacao, HigieneCorporal, HigieneBucal, HigieneCabelos,
-              HigieneRosto, HigieneMaos, Vestuario, Calcados, UsoBanheiro
-}
-disjoint genset TipoMotora {
-    general HabilidadeMotora
-    specifics Caminhar, Correr, SubirEscadas, Rolar, Sentar, Engatinhar
+// Incompleto: Causalidade poderá ser acrescentada depois.
+disjoint genset TipoRelacaoHabilidade {
+    general RelacaoHabilidade
+    specifics PreRequisito, Facilitacao, Composicao
 }
 
-relator AvaliacaoHabilidade {
-    label { @en "Skill Assessment" @pt-br "Avaliação de Habilidade" }
-    dataAvaliacao : date
-    nivel : NivelHabilidade                                          // (5)
-    @mediation [0..*] -- pertenceA -- [1] (pessoa) Pessoa            // (1)
-    @mediation [0..*] -- avalia -- [1] (habilidade) Habilidade       // (1)
-}
+// ====================================================================
+// (8) INCONSISTÊNCIAS — regra R7 (somente alerta)
+// Destino "Independente" com origem "Não realiza" (Alta) ou
+// "Realiza com auxílio" (Moderada), em PreRequisito ou Composicao.
+// ====================================================================
 
-kind Tratamento {
-    label { @en "Treatment" @pt-br "Tratamento" }
-    nome : string
+relator Inconsistencia {
+    label { @en "Inconsistency" @pt-br "Inconsistência" }
+    severidade : NivelInconsistencia
     descricao : string
-}
-
-relator Recomendacao {
-    label { @en "Recommendation" @pt-br "Recomendação" }
-    dataRecomendacao : date
-    justificativa : string
-    prioridade : NivelPrioridade                                     // (5)
-    pontuacao : number                                               // (7) normalizada 0–1
-    @mediation [0..*] -- destinadaA -- [1] (pessoa) Pessoa           // (1)
-    @mediation [0..*] -- recomenda -- [1] (tratamento) Tratamento    // (1)
-    @mediation [0..*] -- baseadaEm -- [1..*] (avaliacao) AvaliacaoHabilidade  // (1)
-}
-
-kind Especialista {
-    label { @en "Specialist" @pt-br "Especialista" }
-}
-
-relator Conhecimento {                                               // (2)
-    label { @en "Knowledge" @pt-br "Conhecimento" }
-    limiarIndicacao : number                                         // (7) R6 ou R5
-    minimoRequeridos : number                                        // (7) só no composto
-    @mediation [0..*] -- aplica -- [1] (especialista) Especialista
-    @mediation [0..*] -- podeIndicar -- [1..*] (tratamento) Tratamento
-    // Conhecimento SIMPLES refere-se a habilidades; COMPOSTO requer >= 2
-    // outros conhecimentos (exatamente um dos dois — validado em shapes.ttl).
-    @mediation [0..*] -- refereSe -- [0..*] (habilidade) Habilidade
-    [0..*] -- requer -- [0..*] (requeridos) Conhecimento             // (7)
-}
-
-relator DependenciaHabilidade {                                      // (3)
-    label { @en "Skill Dependency" @pt-br "Dependência entre Habilidades" }
-    pesoIndireto : number
-    @mediation [0..*] -- habilidadeBase -- [1] (base) Habilidade
-    @mediation [0..*] -- habilidadeApoiada -- [1] (apoiada) Habilidade
+    @mediation [0..*] -- inconsistenciaDe -- [1] (pessoa) Pessoa
+    @mediation [0..*] -- avaliacaoOrigem -- [1] (avaliacaoDaOrigem) AvaliacaoHabilidade
+    @mediation [0..*] -- avaliacaoDestino -- [1] (avaliacaoDoDestino) AvaliacaoHabilidade
+    @mediation [0..*] -- violaRelacao -- [1] (relacao) RelacaoHabilidade
 }
 
 enum NivelHabilidade { NaoAvaliado, Baixo, Moderado, Alto }
 enum NivelPrioridade { Baixa, Media, Alta }
+enum NivelInconsistencia { Moderada, Alta }

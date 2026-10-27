@@ -49,7 +49,13 @@ Existem três tipos principais de relação:
    - indica que determinado tratamento trabalha aquela habilidade.
 
 2. **habilidade → habilidade**
-   - representa uma relação de apoio/dependência entre habilidades.
+   - relações derivadas do *Inventário Portage Operacionalizado* (IPO), de três tipos:
+     **pré-requisito** (a origem é necessária para o destino), **composição** (a origem é
+     parte do destino) e **facilitação** (a origem favorece o destino). Causalidade ainda
+     não é modelada.
+   - ficam em `base_conhecimento/relacoes_habilidades.csv`, com os itens do IPO e a
+     justificativa de cada uma, e podem ser editadas no Excel (separador `;`). O mapeamento
+     das 25 habilidades para os itens do IPO está em `base_conhecimento/habilidades_ipo.csv`.
 
 3. **resposta → peso**
    - a resposta do formulário transforma a classificação em uma evidência quantitativa.
@@ -66,9 +72,9 @@ Exemplo:
 
 Uma relação indireta pode receber peso parcial:
 
-- Caminhar = "Realiza com auxílio" → peso 1
-- Caminhar apoia Uso do banheiro
-- tratamento recebe +0,5 se trabalha Uso do banheiro
+- Preensão = "Realiza com auxílio" → peso 1
+- Preensão é pré-requisito de Escovação
+- tratamento recebe +0,5 se trabalha Escovação (0,25 se a relação for de facilitação)
 
 A soma é **normalizada** pela pontuação máxima que o tratamento poderia atingir, considerando
 só as habilidades avaliadas. Assim, tratamentos que cobrem muitas habilidades não ficam em
@@ -79,6 +85,16 @@ vantagem só por serem maiores.
 - A **intervenção integrada** não pontua por habilidade. Ela é indicada quando pelo menos
   **2 tratamentos específicos atingem 30%**, ou seja, quando a dificuldade está distribuída
   entre domínios. Nesse caso aparece em 1º lugar.
+
+### Inconsistências
+
+O sistema avisa quando as respostas se contradizem segundo as relações. Por exemplo, Escovação
+"Independente" com o pré-requisito Preensão "Não realiza" gera um alerta **alto**. Se o
+pré-requisito estiver "com auxílio", o alerta é **moderado**. Vale o mesmo para composição,
+com o todo "Independente" e a parte com dificuldade. Facilitação não gera alerta.
+
+As inconsistências aparecem na aba Resultado e no grafo do paciente, com a fundamentação no IPO.
+**São apenas alertas: não alteram a pontuação nem a recomendação.**
 
 Os dados e as regras ficam em `motor_regras.py`, incluindo os limiares no topo do arquivo.
 Esse módulo é usado pelo `app.py` e pelo gerador do grafo de conhecimento
@@ -91,7 +107,8 @@ Os nomes e pesos deste protótipo são apenas ilustrativos. Para a versão acad�
 - quais habilidades entram no formulário;
 - como cada habilidade deve ser classificada;
 - quais tratamentos trabalham cada habilidade;
-- quais habilidades possuem relações de dependência;
+- as relações entre habilidades e o tipo de cada uma (`base_conhecimento/relacoes_habilidades.csv`);
+- a numeração dos itens do IPO na edição do Manual usada no TCC;
 - quais regras determinam prioridade;
 - como lidar com empate;
 - quais resultados devem ser considerados "sem indicação suficiente".

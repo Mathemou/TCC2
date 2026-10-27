@@ -1,0 +1,63 @@
+digraph relacoes {
+  graph [rankdir=LR, fontname="Helvetica", nodesep=0.25, ranksep=0.9, newrank=true, label="Relações entre habilidades derivadas do Inventário Portage Operacionalizado (IPO)", labelloc=t, fontsize=18];
+  node [fontname="Helvetica", fontsize=10, style="filled,rounded", shape=box, color="#555555"];
+  edge [fontname="Helvetica", fontsize=8];
+  subgraph cluster_autocuidado { label="Autocuidado"; style="rounded,dashed"; color="#999999"; fontsize=12;
+    hab_AC01 [label="Alimentação\nA-10 (0-1), A-12 (0-1), A-14 (1-2) …", fillcolor="#FFE4E6"];
+    hab_AC02 [label="Escovação\nA-36 (2-3), A-63 (3-4), A-84 (4-5)", fillcolor="#FFE4E6"];
+    hab_AC03 [label="Fio dental\nsem item no IPO", fillcolor="#FFE4E6"];
+    hab_AC04 [label="Cuidado com o corpo\nA-49 (2-3), A-78 (4-5), A-97 (5-6)", fillcolor="#FFE4E6"];
+    hab_AC05 [label="Cuidado com o cabelo\nA-86 (4-5)", fillcolor="#FFE4E6"];
+    hab_AC06 [label="Cuidado com o rosto\nA-16 (1-2), A-27 (2-3), A-40 (2-3) …", fillcolor="#FFE4E6"];
+    hab_AC07 [label="Cuidado com as mãos\nA-27 (2-3), A-31 (2-3), A-39 (2-3) …", fillcolor="#FFE4E6"];
+    hab_AC08 [label="Vestuário\nA-13 (0-1), A-18 (1-2), A-19 (1-2) …", fillcolor="#FFE4E6"];
+    hab_AC09 [label="Manuseio de ajustes\nA-24 (1-2), A-48 (2-3), A-59 (3-4) …", fillcolor="#FFE4E6"];
+    hab_AC10 [label="Tarefas de banheiro\nA-17 (1-2), A-25 (1-2), A-32 (2-3) …", fillcolor="#FFE4E6"];
+  }
+  subgraph cluster_grosso { label="Motor grosso"; style="rounded,dashed"; color="#999999"; fontsize=12;
+    hab_MO01 [label="Locomoção geral\nM-44 (0-1), M-45 (0-1), M-55 (1-2) …", fillcolor="#E0F2FE"];
+    hab_MO02 [label="Locomoção específica\nM-46 (1-2), M-56 (1-2), M-61 (1-2) …", fillcolor="#E0F2FE"];
+    hab_MO03 [label="Equilíbrio estático\nM-37 (0-1), M-96 (4-5), M-139 (5-6)", fillcolor="#E0F2FE"];
+    hab_MO04 [label="Equilíbrio dinâmico\nM-85 (3-4), M-98 (4-5), M-113 (5-6)", fillcolor="#E0F2FE"];
+    hab_MO05 [label="Arremessar, receber, rolar e chutar bolas\nM-48 (1-2), M-69 (2-3), M-76 (2-3) …", fillcolor="#E0F2FE"];
+  }
+  subgraph cluster_fino { label="Motor fino"; style="rounded,dashed"; color="#999999"; fontsize=12;
+    hab_MO06 [label="Preensão\nM-02 (0-1), M-28 (0-1), M-29 (0-1) …", fillcolor="#EDE9FE"];
+    hab_MO07 [label="Encaixe de pinos e argolas\nM-50 (1-2), M-51 (1-2), M-52 (1-2) …", fillcolor="#EDE9FE"];
+    hab_MO08 [label="Empilhar peças\nM-53 (1-2), M-70 (2-3)", fillcolor="#EDE9FE"];
+    hab_MO09 [label="Enfiagem de contas\nM-64 (2-3)", fillcolor="#EDE9FE"];
+    hab_MO10 [label="Dobrar papel\nM-73 (2-3), M-126 (5-6)", fillcolor="#EDE9FE"];
+    hab_MO11 [label="Montagem de quebra-cabeças\nM-81 (3-4)", fillcolor="#EDE9FE"];
+    hab_MO12 [label="Preensão e controle de lápis\nM-54 (1-2), M-78 (2-3), M-123 (5-6)", fillcolor="#EDE9FE"];
+    hab_MO13 [label="Escrita, cópia de letras e desenho\nM-94 (3-4), M-110 (4-5), M-112 (5-6) …", fillcolor="#EDE9FE"];
+    hab_MO14 [label="Uso de tesoura\nM-82 (3-4), M-95 (3-4), M-104 (4-5) …", fillcolor="#EDE9FE"];
+    hab_MO15 [label="Manipulação de fechos, trincos e maçanetas\nM-65 (2-3), M-75 (2-3), M-105 (4-5)", fillcolor="#EDE9FE"];
+  }
+  hab_MO06 -> hab_AC02 [label="PR01", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_AC01 [label="PR02", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_AC03 [label="PR03", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_AC05 [label="PR04", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_AC09 [label="PR05", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_MO12 [label="PR06", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO12 -> hab_MO13 [label="PR07", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_MO07 [label="PR08", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_MO08 [label="PR09", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_MO09 [label="PR10", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_MO10 [label="PR11", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_MO11 [label="PR12", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_MO14 [label="PR13", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO06 -> hab_MO15 [label="PR14", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO03 -> hab_MO01 [label="PR15", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO01 -> hab_MO02 [label="PR16", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_MO03 -> hab_MO04 [label="PR17", color="#DC2626", fontcolor="#DC2626", penwidth=1.6];
+  hab_AC09 -> hab_AC08 [label="CO01", color="#7C3AED", fontcolor="#7C3AED", penwidth=1.8, arrowhead=diamond];
+  hab_AC08 -> hab_AC10 [label="CO02", color="#7C3AED", fontcolor="#7C3AED", penwidth=1.8, arrowhead=diamond];
+  hab_MO04 -> hab_MO02 [label="FA01", color="#D97706", fontcolor="#D97706", style=dashed, constraint=false];
+  hab_MO03 -> hab_AC08 [label="FA02", color="#D97706", fontcolor="#D97706", style=dashed, constraint=false];
+  hab_MO01 -> hab_AC10 [label="FA03", color="#D97706", fontcolor="#D97706", style=dashed, constraint=false];
+  hab_MO15 -> hab_AC09 [label="FA04", color="#D97706", fontcolor="#D97706", style=dashed, constraint=false];
+  hab_MO12 -> hab_MO14 [label="FA05", color="#D97706", fontcolor="#D97706", style=dashed, constraint=false];
+  hab_MO08 -> hab_MO11 [label="FA06", color="#D97706", fontcolor="#D97706", style=dashed, constraint=false];
+  hab_MO07 -> hab_MO11 [label="FA07", color="#D97706", fontcolor="#D97706", style=dashed, constraint=false];
+  leg [shape=note, fillcolor="#FFFFFF", fontsize=10, label="Legenda\l— vermelho (PR): pré-requisito — origem é condição para o destino\l◆ roxo (CO): composição — origem é parte do destino (losango no todo)\l- - laranja (FA): facilitação — origem favorece o destino\lItens: A = Autocuidados, M = Desenvolvimento Motor (faixa etária)\l"];
+}

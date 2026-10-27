@@ -1,4 +1,4 @@
-Triplas no grafo: 1317
+Triplas no grafo: 2041
 Parâmetros: limiar mínimo 15% (R6), limiar da integrada 30% com mínimo de 2 tratamentos (R5)
 
 == Validação SHACL ==
@@ -9,16 +9,16 @@ Conforms: True
 == Pontuações: SPARQL sobre o grafo x motor_regras.py (app.py) ==
 
 P001 — dificuldades predominantes de autocuidado
-  Treino de habilidades de autocuidado          motor= 58.9%  sparql= 58.9%  1º indicado, prioridade Alta   OK
-  Treino de habilidades motoras finas           motor= 15.0%  sparql= 15.0%  2º indicado, prioridade Media  OK
-  Treino de habilidades motoras grossas         motor= 13.6%  sparql= 13.6%  não indicado                   OK
+  Treino de habilidades de autocuidado          motor= 60.5%  sparql= 60.5%  1º indicado, prioridade Alta   OK
+  Treino de habilidades motoras finas           motor= 11.3%  sparql= 11.3%  não indicado                   OK
+  Treino de habilidades motoras grossas         motor=  9.3%  sparql=  9.3%  não indicado                   OK
   Intervenção integrada autocuidado + motor     motor=  0.0%  sparql=  0.0%  não indicado                   OK
 
 P002 — dificuldades predominantes de motricidade fina
-  Treino de habilidades motoras finas           motor= 83.3%  sparql= 83.3%  1º indicado, prioridade Alta   OK
-  Treino de habilidades de autocuidado          motor= 21.1%  sparql= 21.2%  2º indicado, prioridade Media  OK
-  Treino de habilidades motoras grossas         motor= 13.6%  sparql= 13.6%  não indicado                   OK
-  Intervenção integrada autocuidado + motor     motor=  0.0%  sparql=  0.0%  não indicado                   OK
+  Intervenção integrada autocuidado + motor     motor= 34.9%  sparql= 34.9%  1º indicado, prioridade Alta   OK
+  Treino de habilidades motoras finas           motor= 86.1%  sparql= 86.1%  2º indicado, prioridade Media  OK
+  Treino de habilidades de autocuidado          motor= 34.9%  sparql= 34.9%  3º indicado, prioridade Baixa  OK
+  Treino de habilidades motoras grossas         motor=  9.3%  sparql=  9.3%  não indicado                   OK
 
 P003 — sem dificuldades identificadas (caso controle)
   Treino de habilidades de autocuidado          motor=  0.0%  sparql=  0.0%  não indicado                   OK
@@ -27,9 +27,40 @@ P003 — sem dificuldades identificadas (caso controle)
   Intervenção integrada autocuidado + motor     motor=  0.0%  sparql=  0.0%  não indicado                   OK
 
 P004 — dificuldades distribuídas entre autocuidado e motricidade fina
-  Intervenção integrada autocuidado + motor     motor= 32.1%  sparql= 32.1%  1º indicado, prioridade Alta   OK
-  Treino de habilidades motoras finas           motor= 37.5%  sparql= 37.5%  2º indicado, prioridade Media  OK
-  Treino de habilidades de autocuidado          motor= 32.1%  sparql= 32.1%  3º indicado, prioridade Baixa  OK
-  Treino de habilidades motoras grossas         motor= 13.6%  sparql= 13.6%  não indicado                   OK
+  Intervenção integrada autocuidado + motor     motor= 38.5%  sparql= 38.5%  1º indicado, prioridade Alta   OK
+  Treino de habilidades de autocuidado          motor= 42.1%  sparql= 42.1%  2º indicado, prioridade Media  OK
+  Treino de habilidades motoras finas           motor= 38.5%  sparql= 38.5%  3º indicado, prioridade Baixa  OK
+  Treino de habilidades motoras grossas         motor=  9.3%  sparql=  9.3%  não indicado                   OK
 
+P005 — formulário com respostas inconsistentes
+  Intervenção integrada autocuidado + motor     motor= 40.4%  sparql= 40.4%  1º indicado, prioridade Alta   OK
+  Treino de habilidades motoras finas           motor= 85.2%  sparql= 85.2%  2º indicado, prioridade Media  OK
+  Treino de habilidades de autocuidado          motor= 40.4%  sparql= 40.4%  3º indicado, prioridade Baixa  OK
+  Treino de habilidades motoras grossas         motor= 24.1%  sparql= 24.1%  4º indicado, prioridade Baixa  OK
+
+Divergências: 0
+
+== Base de conhecimento (relações derivadas do IPO) ==
+Relações: Pré-requisito = 17, Composição = 2, Facilitação = 7
+  Sem problemas (ciclos, duplicatas, ordem das faixas etárias do IPO).
+
+== Inconsistências (R7): SPARQL sobre o grafo x motor ==
+P001: 0 inconsistência(s)
+P002: 3 inconsistência(s)
+  [Moderada] CO02 Vestuário → Tarefas de banheiro
+  [Alta] PR01 Preensão → Escovação
+  [Alta] PR04 Preensão → Cuidado com o cabelo
+P003: 0 inconsistência(s)
+P004: 7 inconsistência(s)
+  [Moderada] CO02 Vestuário → Tarefas de banheiro
+  [Moderada] PR02 Preensão → Alimentação
+  [Moderada] PR08 Preensão → Encaixe de pinos e argolas
+  [Moderada] PR09 Preensão → Empilhar peças
+  [Moderada] PR11 Preensão → Dobrar papel
+  [Moderada] PR12 Preensão → Montagem de quebra-cabeças
+  [Moderada] PR14 Preensão → Manipulação de fechos, trincos e maçanetas
+P005: 3 inconsistência(s)
+  [Alta] CO01 Manuseio de ajustes → Vestuário
+  [Alta] PR01 Preensão → Escovação
+  [Moderada] PR15 Equilíbrio estático → Locomoção geral
 Divergências: 0

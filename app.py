@@ -11,22 +11,26 @@ st.set_page_config(page_title="Protótipo SIGAMAES – Recomendação", page_ico
 # ---------------------------------------------------------------------
 # DADOS E MOTOR DE REGRAS
 # ---------------------------------------------------------------------
-# Habilidades, tratamentos, dependências e regras ficam em motor_regras.py,
-# compartilhado com o gerador do grafo de conhecimento.
+# Habilidades, tratamentos, relações entre habilidades e regras ficam em
+# motor_regras.py (que lê base_conhecimento/*.csv), compartilhado com o
+# gerador do grafo de conhecimento.
 from motor_regras import (
     INTEGRADA,
     LIMIAR_INTEGRADA,
     LIMIAR_MINIMO,
     MIN_TRATAMENTOS_INTEGRADA,
-    DEPENDENCIES,
+    RELATION_TYPES,
+    RELATIONS,
     RULES_TEXT,
     SKILL_CATALOG,
+    SKILL_IPO,
     SKILLS,
     STATUS_WEIGHT,
     TREATMENTS,
     calculate_recommendations,
     calculate_skill_contributions,
     classify_case,
+    detect_inconsistencies,
 )
 
 IMPORT_CODE_TO_STATUS = {
@@ -38,6 +42,43 @@ IMPORT_CODE_TO_STATUS = {
 STATUS_TO_IMPORT_CODE = {
     status: code for code, status in IMPORT_CODE_TO_STATUS.items()
 }
+
+
+def show_inconsistencies(answers):
+    """R7: mostra as inconsistências agrupadas pela habilidade de origem."""
+    inconsistencies = detect_inconsistencies(answers)
+    if not inconsistencies:
+        st.success("Nenhuma inconsistência encontrada entre as respostas.")
+        return inconsistencies
+
+    groups = defaultdict(list)
+    for item in inconsistencies:
+        key = (item["severity"], item["origem"], item["status_origem"],
+               item["relation"]["tipo"])
+        groups[key].append(item)
+
+    for (severity, origem, status, tipo), items in sorted(
+            groups.items(), key=lambda g: (g[0][0] != "Alta", g[0][1])):
+        destinos = ", ".join(i["destino"] for i in items)
+        if tipo == "PreRequisito":
+            texto = (f"**{origem}** está como “{status}”, mas é **pré-requisito** de: "
+                     f"{destinos} — marcada(s) como “Independente”.")
+        else:
+            texto = (f"**{origem}** está como “{status}”, mas é **parte** de: "
+                     f"{destinos} — marcada(s) como “Independente”.")
+        alerta = st.error if severity == "Alta" else st.warning
+        alerta(f"Inconsistência {severity.lower()} · {texto}", icon="⚠️")
+        with st.expander("Fundamentação no Inventário Portage Operacionalizado"):
+            for item in items:
+                rel = item["relation"]
+                st.markdown(
+                    f"- **{rel['id']}** — {rel['origem']} "
+                    f"({rel['itens_origem'] or 'sem item no IPO'}) "
+                    f"{RELATION_TYPES[rel['tipo']]['verbo']} {rel['destino']} "
+                    f"({rel['itens_destino'] or 'sem item no IPO'}).  \n"
+                    f"  {rel['justificativa']}  \n  _{rel['status']}_"
+                )
+    return inconsistencies
 
 
 def get_skill_catalog():
@@ -310,6 +351,14 @@ if active_tab_index == 0:
             "Classificação processada. Veja a aba Resultado acima "
             "ou clique no botão abaixo."
         )
+        n_inconsistencias = len(detect_inconsistencies(answers))
+        if n_inconsistencias:
+            st.warning(
+                f"Foram encontradas {n_inconsistencias} inconsistência(s) entre as "
+                "respostas. Elas estão detalhadas na aba Resultado; revise o "
+                "formulário se necessário.",
+                icon="⚠️",
+            )
         st.button("Resultado", type="tertiary", on_click=show_results)
 
 if active_tab_index == 1:
@@ -328,6 +377,14 @@ if active_tab_index == 1:
         c1, c2 = st.columns(2)
         c1.metric("Pontuação — autocuidado", domain_scores["autocuidado"])
         c2.metric("Pontuação — motor", domain_scores["motor"])
+
+        st.markdown("### Inconsistências nas respostas")
+        st.caption(
+            "Respostas que contradizem relações de pré-requisito ou composição "
+            "entre habilidades (regra R7). Servem apenas de alerta: não alteram "
+            "a pontuação nem a recomendação."
+        )
+        show_inconsistencies(answers)
 
         indicated = [r for r in results if r["indicated"]]
         not_indicated = [r for r in results if not r["indicated"]]
@@ -395,14 +452,54 @@ if active_tab_index == 2:
         else:
             st.write(", ".join(data["skills"]))
 
-    st.markdown("**Dependências/relacionamentos usados no protótipo**")
-    for source, target in DEPENDENCIES:
-        st.write(f"{source} → {target}")
+    st.markdown("### Relações entre habilidades")
+    st.write(
+        "As relações foram derivadas do Inventário Portage Operacionalizado (IPO): "
+        "do conteúdo dos itens e da sequência das faixas etárias. Ficam em "
+        "`base_conhecimento/relacoes_habilidades.csv` e podem ser editadas."
+    )
+    descricoes = {
+        "PreRequisito": "a habilidade de origem é condição necessária para a de "
+                        "destino. Gera inconsistência e peso indireto 0,5.",
+        "Composicao": "a habilidade de origem é parte da de destino. Gera "
+                      "inconsistência e peso indireto 0,5.",
+        "Facilitacao": "a habilidade de origem favorece a de destino, mas não é "
+                       "necessária. Não gera inconsistência; peso indireto 0,25.",
+    }
+    for tipo, info in RELATION_TYPES.items():
+        rels = [r for r in RELATIONS if r["tipo"] == tipo]
+        st.markdown(f"**{info['label']}** ({len(rels)}) — {descricoes[tipo]}")
+        st.dataframe(
+            [{
+                "ID": r["id"],
+                "Origem": r["origem"],
+                "Itens IPO (origem)": r["itens_origem"] or "—",
+                "Destino": r["destino"],
+                "Itens IPO (destino)": r["itens_destino"] or "—",
+                "Evidência": r["evidencia"],
+                "Justificativa": r["justificativa"],
+            } for r in rels],
+            hide_index=True,
+        )
+    st.caption("Causalidade ainda não é modelada.")
+
+    with st.expander("Itens do IPO associados a cada habilidade do formulário"):
+        st.dataframe(
+            [{
+                "Código": info["codigo"],
+                "Habilidade": skill,
+                "Itens do IPO (faixa etária)": ", ".join(info["itens"]) or "—",
+                "Observação": info["observacao"],
+            } for skill, info in SKILL_IPO.items()],
+            hide_index=True,
+        )
+        st.caption("A = Autocuidados, M = Desenvolvimento Motor. A numeração deve "
+                   "ser conferida na edição do Manual usada no TCC.")
 
     st.markdown("### Como transformar isso em um modelo formal")
     st.write(
         "Cada habilidade pode ser um nó do grafo. Arestas representam "
-        "relações de dependência/apoio. Tratamentos são nós conectados "
+        "relações tipadas (pré-requisito, facilitação, composição). Tratamentos são nós conectados "
         "às habilidades que trabalham. As respostas do formulário "
         "atribuem pesos às habilidades e o motor de regras percorre "
         "essas relações para produzir uma ordenação explicável."
@@ -502,6 +599,15 @@ if active_tab_index == 3:
             f'[{edge_style}{edge_label}];'
         )
 
+    graph_inconsistencies = detect_inconsistencies(graph_answers)
+    for item in graph_inconsistencies:
+        color = "#DC2626" if item["severity"] == "Alta" else "#D97706"
+        dot_lines.append(
+            f'  "{dot_text(item["origem"])}" -> "{dot_text(item["destino"])}" '
+            f'[color="{color}", fontcolor="{color}", penwidth=2.5, style=bold, '
+            f'constraint=false, label="⚠ {item["relation"]["id"]}"];'
+        )
+
     dot_lines.append("}")
     st.graphviz_chart("\n".join(dot_lines), use_container_width=True)
 
@@ -517,7 +623,9 @@ if active_tab_index == 3:
         )
     st.caption(
         "As setas verdes mostram contribuições positivas. As setas tracejadas "
-        "representam habilidades sem contribuição para esta intervenção."
+        "representam habilidades sem contribuição para esta intervenção. "
+        "Setas vermelhas (alta) ou laranja (moderada) marcadas com ⚠ ligam "
+        "habilidades com respostas inconsistentes."
     )
 
     st.markdown("**Legenda**")

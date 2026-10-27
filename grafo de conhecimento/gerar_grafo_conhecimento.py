@@ -4,7 +4,9 @@ Gera o GRAFO DE CONHECIMENTO INSTANCIADO do protótipo SIGAMAES (TCC2).
     Ontologia (TBox)  ->  diagrama uml/grafo.png / grafo.tonto (OntoUML),
                           com as extensões de grafo.corrigido.tonto
     Instâncias (ABox) ->  dados e regras de ../motor_regras.py (os mesmos
-                          usados pelo app.py) + pacientes fictícios
+                          usados pelo app.py), relações entre habilidades de
+                          ../base_conhecimento/*.csv (derivadas do Inventário
+                          Portage Operacionalizado) + pacientes fictícios
 
 Saídas (pasta ./saida):
     grafo_conhecimento.ttl      TBox (em gUFO) + ABox, em RDF/Turtle
@@ -107,7 +109,11 @@ ROTULOS = {
     "Recomendacao": ("Recomendação", "Recommendation"),
     "Especialista": ("Especialista", "Specialist"),
     "Conhecimento": ("Conhecimento", "Knowledge"),
-    "DependenciaHabilidade": ("Dependência entre Habilidades", "Skill Dependency"),
+    "RelacaoHabilidade": ("Relação entre Habilidades", "Skill Relation"),
+    "PreRequisito": ("Pré-requisito", "Prerequisite"),
+    "Facilitacao": ("Facilitação", "Facilitation"),
+    "Composicao": ("Composição", "Composition"),
+    "Inconsistencia": ("Inconsistência", "Inconsistency"),
     "ConhecimentoSimples": ("Conhecimento Simples", "Simple Knowledge"),
     "ConhecimentoComposto": ("Conhecimento Composto", "Composite Knowledge"),
 }
@@ -208,6 +214,20 @@ PACIENTES = {
             "MO04": A, "MO06": A, "MO09": N, "MO12": A, "MO13": N, "MO14": A,
         },
     },
+    "P005": {
+        "nome": "Paciente fictício E", "nascimento": date(2020, 1, 30),
+        "prontuario": "PRT-2026-005", "data_avaliacao": date(2026, 9, 19),
+        "data_recomendacao": date(2026, 9, 26),
+        "perfil": "formulário com respostas inconsistentes",
+        "respostas": {c: I for c in SKILL_CATALOG} | {
+            "MO06": N, "AC02": I,                 # sem pinça, mas escova sozinho
+            "AC09": N, "AC08": I,                 # sem fechos, mas veste-se sozinho
+            "MO03": A, "MO01": I,                 # equilíbrio com auxílio, anda sozinho
+            "AC01": A, "AC03": A, "AC05": A, "MO04": A,
+            "MO07": A, "MO08": A, "MO09": N, "MO10": N, "MO11": A,
+            "MO12": N, "MO13": N, "MO14": N, "MO15": A,
+        },
+    },
 }
 
 
@@ -260,7 +280,14 @@ def construir_tbox(g: Graph) -> None:
         classe(s, "SubKind", "HabilidadeMotora")
     for r in ["AvaliacaoHabilidade", "Recomendacao", "Conhecimento"]:
         classe(r, "Kind", gufo_super="Relator")
-    classe("DependenciaHabilidade", "Kind", gufo_super="Relator", extensao=True)
+    classe("RelacaoHabilidade", "Kind", gufo_super="Relator", extensao=True)
+    for tipo in motor.RELATION_TYPES:
+        classe(tipo, "SubKind", "RelacaoHabilidade", extensao=True)
+    tipos = list(motor.RELATION_TYPES)
+    for i, a in enumerate(tipos):
+        for b in tipos[i + 1:]:
+            g.add((TCC[a], OWL.disjointWith, TCC[b]))
+    classe("Inconsistencia", "Kind", gufo_super="Relator", extensao=True)
     classe("ConhecimentoSimples", "SubKind", "Conhecimento", extensao=True)
     classe("ConhecimentoComposto", "SubKind", "Conhecimento", extensao=True)
     g.add((TCC.ConhecimentoSimples, OWL.disjointWith, TCC.ConhecimentoComposto))
@@ -272,7 +299,8 @@ def construir_tbox(g: Graph) -> None:
                 g.add((TCC[a], OWL.disjointWith, TCC[b]))
 
     for enum, valores in {"NivelHabilidade": ["NaoAvaliado", "Baixo", "Moderado", "Alto"],
-                          "NivelPrioridade": ["Baixa", "Media", "Alta"]}.items():
+                          "NivelPrioridade": ["Baixa", "Media", "Alta"],
+                          "NivelInconsistencia": ["Moderada", "Alta"]}.items():
         g.add((TCC[enum], RDF.type, RDFS.Datatype))
         g.add((TCC[enum], RDFS.comment,
                Literal("Valores permitidos: " + ", ".join(valores), lang="pt-br")))
@@ -302,9 +330,17 @@ def construir_tbox(g: Graph) -> None:
     objprop("requer", "ConhecimentoComposto", "ConhecimentoSimples", mediacao=False, extensao=True,
             com="Conhecimento composto: indica o tratamento quando os conhecimentos "
                 "requeridos atingem o limiar (R5 – intervenção integrada).")
-    objprop("habilidadeBase", "DependenciaHabilidade", "Habilidade", extensao=True)
-    objprop("habilidadeApoiada", "DependenciaHabilidade", "Habilidade", extensao=True,
-            com="Habilidade que depende da habilidade base (R2).")
+    objprop("origem", "RelacaoHabilidade", "Habilidade", extensao=True,
+            com="Pré-requisito: a habilidade necessária. Composição: a parte. "
+                "Facilitação: a habilidade que facilita.")
+    objprop("destino", "RelacaoHabilidade", "Habilidade", extensao=True,
+            com="Pré-requisito: a habilidade dependente. Composição: o todo. "
+                "Facilitação: a habilidade facilitada.")
+    objprop("inconsistenciaDe", "Inconsistencia", "Pessoa", extensao=True)
+    objprop("avaliacaoOrigem", "Inconsistencia", "AvaliacaoHabilidade", extensao=True)
+    objprop("avaliacaoDestino", "Inconsistencia", "AvaliacaoHabilidade", extensao=True)
+    objprop("violaRelacao", "Inconsistencia", "RelacaoHabilidade", extensao=True,
+            com="Relação de pré-requisito ou composição contrariada pelas respostas (R7).")
     objprop("registra", "Prontuario", "Pessoa", mediacao=False, extensao=True)
 
     def dataprop(nome, alcance, com, extensao=False):
@@ -321,7 +357,6 @@ def construir_tbox(g: Graph) -> None:
     dataprop("identificador", XSD.string, "Atributo de Prontuario")
     dataprop("dataAvaliacao", XSD.date, "Atributo de AvaliacaoHabilidade")
     dataprop("nivel", XSD.string, "AvaliacaoHabilidade; valores de NivelHabilidade")
-    dataprop("descricao", XSD.string, "Atributo de Tratamento")
     dataprop("dataRecomendacao", XSD.date, "Atributo de Recomendacao")
     dataprop("justificativa", XSD.string, "Atributo de Recomendacao (R4)")
     dataprop("prioridade", XSD.string, "Recomendacao; valores de NivelPrioridade")
@@ -333,7 +368,22 @@ def construir_tbox(g: Graph) -> None:
     dataprop("minimoRequeridos", XSD.integer,
              "Conhecimento composto; quantos requeridos devem atingir o limiar (R5)",
              extensao=True)
-    dataprop("pesoIndireto", XSD.decimal, "DependenciaHabilidade (R2)", extensao=True)
+    dataprop("pesoIndireto", XSD.decimal, "RelacaoHabilidade (R2)", extensao=True)
+    dataprop("itemIPO", XSD.string,
+             "Habilidade; item do Inventário Portage Operacionalizado e faixa etária",
+             extensao=True)
+    dataprop("idadeInicialIPO", XSD.integer,
+             "Habilidade; limite inferior da faixa etária do primeiro item no IPO",
+             extensao=True)
+    dataprop("fundamentacao", XSD.string,
+             "RelacaoHabilidade; justificativa com base nos itens do IPO", extensao=True)
+    dataprop("evidencia", XSD.string,
+             "RelacaoHabilidade; tipo de evidência (conteúdo do item, sequência etária, funcional)",
+             extensao=True)
+    dataprop("statusValidacao", XSD.string, "RelacaoHabilidade", extensao=True)
+    dataprop("severidade", XSD.string, "Inconsistencia; valores de NivelInconsistencia",
+             extensao=True)
+    dataprop("descricao", XSD.string, "Atributo de Tratamento e Inconsistencia")
 
 
 # =====================================================================
@@ -358,6 +408,13 @@ def construir_abox(g: Graph) -> dict:
         g.add((h, RDF.type, TCC[subkind_de(code)]))
         g.add((h, RDF.type, OWL.NamedIndividual))
         g.add((h, TCC.nome, Literal(nome)))
+        ipo = motor.SKILL_IPO[nome]
+        for item in ipo["itens"]:
+            g.add((h, TCC.itemIPO, Literal(item)))
+        if ipo["idade_inicial"] is not None:
+            g.add((h, TCC.idadeInicialIPO, Literal(ipo["idade_inicial"], datatype=XSD.integer)))
+        if ipo["observacao"]:
+            g.add((h, RDFS.comment, Literal(ipo["observacao"], lang="pt-br")))
         lbl(h, f"{code} – {nome}")
     for code, (sub, nome) in HABILIDADES_FORA_DO_FORMULARIO.items():
         h = hab_iri(code)
@@ -369,13 +426,17 @@ def construir_abox(g: Graph) -> dict:
         lbl(h, f"{code} – {nome}")
 
     # --- Dependências -------------------------------------------------
-    for i, (src, tgt) in enumerate(motor.DEPENDENCIES, start=1):
-        d = INST[f"dep_{i:02d}"]
-        g.add((d, RDF.type, TCC.DependenciaHabilidade))
-        g.add((d, TCC.habilidadeBase, hab_iri(NAME_TO_CODE[src])))
-        g.add((d, TCC.habilidadeApoiada, hab_iri(NAME_TO_CODE[tgt])))
-        g.add((d, TCC.pesoIndireto, dec(motor.PESO_INDIRETO)))
-        lbl(d, f"{src} apoia {tgt}")
+    for rel in motor.RELATIONS:
+        d = INST[f"rel_{rel['id']}"]
+        g.add((d, RDF.type, TCC[rel["tipo"]]))
+        g.add((d, TCC.origem, hab_iri(NAME_TO_CODE[rel["origem"]])))
+        g.add((d, TCC.destino, hab_iri(NAME_TO_CODE[rel["destino"]])))
+        g.add((d, TCC.pesoIndireto, dec(rel["peso"])))
+        g.add((d, TCC.fundamentacao, Literal(rel["justificativa"])))
+        g.add((d, TCC.evidencia, Literal(rel["evidencia"])))
+        g.add((d, TCC.statusValidacao, Literal(rel["status"])))
+        lbl(d, f"{rel['id']}: {rel['origem']} "
+               f"{motor.RELATION_TYPES[rel['tipo']]['verbo']} {rel['destino']}")
 
     # --- Especialistas, tratamentos e conhecimento -------------------
     for e, nome in ESPECIALISTAS.items():
@@ -433,6 +494,18 @@ def construir_abox(g: Graph) -> dict:
             g.add((av, TCC.nivel, Literal(nivel)))
             lbl(av, f"Avaliação {pid}/{code}: {nivel}")
 
+        for item in motor.detect_inconsistencies(respostas_por_nome(pid)):
+            rel = item["relation"]
+            inc = INST[f"inc_{pid}_{rel['id']}"]
+            g.add((inc, RDF.type, TCC.Inconsistencia))
+            g.add((inc, TCC.inconsistenciaDe, pe))
+            g.add((inc, TCC.avaliacaoOrigem, INST[f"aval_{pid}_{NAME_TO_CODE[item['origem']]}"]))
+            g.add((inc, TCC.avaliacaoDestino, INST[f"aval_{pid}_{NAME_TO_CODE[item['destino']]}"]))
+            g.add((inc, TCC.violaRelacao, INST[f"rel_{rel['id']}"]))
+            g.add((inc, TCC.severidade, Literal(item["severity"])))
+            g.add((inc, TCC.descricao, Literal(item["message"])))
+            lbl(inc, f"Inconsistência {pid}/{rel['id']} ({item['severity']})")
+
         ranking = motor.calculate_recommendations(respostas_por_nome(pid))
         resultados[pid] = ranking
         indicados = [r for r in ranking if r["indicated"]]
@@ -476,7 +549,7 @@ SELECT ?pessoa ?trat (SUM(?pts) AS ?soma) (SUM(?mx) AS ?maximo) WHERE {
     ?k tcc:refereSe ?h ; tcc:podeIndicar ?trat .               # R1 (fator 1)
     BIND(1 AS ?f)
   } UNION {
-    ?d tcc:habilidadeBase ?h ; tcc:habilidadeApoiada ?h2 ; tcc:pesoIndireto ?f .
+    ?d tcc:origem ?h ; tcc:destino ?h2 ; tcc:pesoIndireto ?f .
     ?k tcc:refereSe ?h2 ; tcc:podeIndicar ?trat .              # R2 (fator = peso indireto)
   }
   BIND(?w * ?f AS ?pts)
@@ -489,6 +562,18 @@ PREFIX tcc: <http://example.org/sigamaes/ontologia#>
 SELECT ?trat ?limiar ?minimo ?requerido WHERE {
   ?k tcc:podeIndicar ?trat ; tcc:limiarIndicacao ?limiar .
   OPTIONAL { ?k tcc:minimoRequeridos ?minimo ; tcc:requer/tcc:podeIndicar ?requerido . }
+}
+"""
+
+
+SPARQL_INCONSISTENCIAS = """
+PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+SELECT ?pessoa ?rel ?sev WHERE {
+  { ?rel a tcc:PreRequisito } UNION { ?rel a tcc:Composicao }
+  ?rel tcc:origem ?ho ; tcc:destino ?hd .
+  ?ao tcc:avalia ?ho ; tcc:pertenceA ?pessoa ; tcc:nivel ?no .
+  ?ad tcc:avalia ?hd ; tcc:pertenceA ?pessoa ; tcc:nivel "Alto" .
+  VALUES (?no ?sev) { ("Baixo" "Alta") ("Moderado" "Moderada") }
 }
 """
 
@@ -573,7 +658,9 @@ def dot_camada_conhecimento() -> str:
         skills = motor.TREATMENTS[trat]["skills"]
         for s in skills:
             c = NAME_TO_CODE[s]
-            L.append(f'    hab_{c} [label={q(c + " – " + s + "\\n«" + subkind_de(c) + "»")}, '
+            idade = motor.SKILL_IPO[s]["idade_inicial"]
+            ipo = f"\\nIPO desde {idade}-{idade + 1} anos" if idade is not None else "\\nsem item no IPO"
+            L.append(f'    hab_{c} [label={q(c + " – " + s + "\\n«" + subkind_de(c) + "»" + ipo)}, '
                      f'fillcolor="{COR["subkind"]}"];')
         L.append("  }")
         ancora = NAME_TO_CODE[skills[len(skills) // 2]]
@@ -585,9 +672,56 @@ def dot_camada_conhecimento() -> str:
         L.append(f'    hab_{c} [label={q(c + " – " + nome + "\\n«" + sub + "»")}, '
                  f'fillcolor="{COR["subkind"]}"];')
     L.append("  }")
-    for i, (s, t) in enumerate(motor.DEPENDENCIES, start=1):
-        L.append(f'  hab_{NAME_TO_CODE[s]} -> hab_{NAME_TO_CODE[t]} [label="dep_{i:02d} apoia", '
-                 'color="#B45309", fontcolor="#B45309", constraint=false];')
+    estilo = {
+        "PreRequisito": 'color="#DC2626", fontcolor="#DC2626", penwidth=1.4',
+        "Composicao": 'color="#7C3AED", fontcolor="#7C3AED", penwidth=1.4, '
+                      'arrowhead=diamond',
+        "Facilitacao": 'color="#D97706", fontcolor="#D97706", style=dashed',
+    }
+    for rel in motor.RELATIONS:
+        L.append(f'  hab_{NAME_TO_CODE[rel["origem"]]} -> hab_{NAME_TO_CODE[rel["destino"]]} '
+                 f'[label="{rel["id"]}", {estilo[rel["tipo"]]}, constraint=false, fontsize=7];')
+    L.append('  legrel [shape=note, fillcolor="#FFFFFF", fontsize=9, label="Relações (IPO):\\l'
+             '— vermelho: pré-requisito (PR)\\l◆ roxo: composição (CO), losango no lado do todo\\l'
+             '- - laranja: facilitação (FA)\\l"];')
+    L.append("}")
+    return "\n".join(L)
+
+
+def dot_relacoes() -> str:
+    """Somente as relações entre as 25 habilidades (pré-requisito, composição, facilitação)."""
+    L = ["digraph relacoes {",
+         '  graph [rankdir=LR, fontname="Helvetica", nodesep=0.25, ranksep=0.9, newrank=true, '
+         'label="Relações entre habilidades derivadas do Inventário Portage Operacionalizado (IPO)", '
+         'labelloc=t, fontsize=18];',
+         '  node [fontname="Helvetica", fontsize=10, style="filled,rounded", shape=box, color="#555555"];',
+         '  edge [fontname="Helvetica", fontsize=8];']
+    grupos = [("autocuidado", "Autocuidado", "#FFE4E6", "Treino de habilidades de autocuidado"),
+              ("grosso", "Motor grosso", "#E0F2FE", "Treino de habilidades motoras grossas"),
+              ("fino", "Motor fino", "#EDE9FE", "Treino de habilidades motoras finas")]
+    for gid, titulo, cor, trat in grupos:
+        L.append(f'  subgraph cluster_{gid} {{ label={q(titulo)}; style="rounded,dashed"; '
+                 'color="#999999"; fontsize=12;')
+        for skill in motor.TREATMENTS[trat]["skills"]:
+            c = NAME_TO_CODE[skill]
+            ipo = motor.SKILL_IPO[skill]
+            itens = ", ".join(ipo["itens"][:3]) + (" …" if len(ipo["itens"]) > 3 else "")
+            L.append(f'    hab_{c} [label={q(skill + "\\n" + (itens or "sem item no IPO"))}, '
+                     f'fillcolor="{cor}"];')
+        L.append("  }")
+    estilo = {
+        "PreRequisito": 'color="#DC2626", fontcolor="#DC2626", penwidth=1.6',
+        "Composicao": 'color="#7C3AED", fontcolor="#7C3AED", penwidth=1.8, arrowhead=diamond',
+        "Facilitacao": 'color="#D97706", fontcolor="#D97706", style=dashed, constraint=false',
+    }
+    for rel in motor.RELATIONS:
+        L.append(f'  hab_{NAME_TO_CODE[rel["origem"]]} -> hab_{NAME_TO_CODE[rel["destino"]]} '
+                 f'[label="{rel["id"]}", {estilo[rel["tipo"]]}];')
+    L.append('  leg [shape=note, fillcolor="#FFFFFF", fontsize=10, label="Legenda\\l'
+             '— vermelho (PR): pré-requisito — origem é condição para o destino\\l'
+             '◆ roxo (CO): composição — origem é parte do destino (losango no todo)\\l'
+             '- - laranja (FA): facilitação — origem favorece o destino\\l'
+             'Itens: A = Autocuidados, M = Desenvolvimento Motor (faixa etária)\\l"];')
     L.append("}")
     return "\n".join(L)
 
@@ -664,6 +798,17 @@ def dot_paciente(pid: str, ranking) -> str:
         L.append(f'  naoind [shape=note, fillcolor="#F9FAFB", fontsize=9, '
                  f'label={q("Não indicados (sem Recomendação):\\l" + linhas + "\\l")}];')
         L.append("  { rank=same; naoind; prontuario; }")
+    for item in motor.detect_inconsistencies(respostas_por_nome(pid)):
+        rel = item["relation"]
+        cor = "#DC2626" if item["severity"] == "Alta" else "#D97706"
+        nid = f"inc_{rel['id']}"
+        rotulo = (f"«Inconsistência» {item['severity']}\\nviolaRelacao {rel['id']} "
+                  f"({motor.RELATION_TYPES[rel['tipo']]['label']})")
+        L.append(f'  {nid} [label={q(rotulo)}, shape=box, style="filled,rounded,bold", '
+                 f'fillcolor="#FFF1F2", color="{cor}", fontcolor="{cor}", fontsize=9];')
+        for papel, skill in (("avaliacaoOrigem", item["origem"]), ("avaliacaoDestino", item["destino"])):
+            L.append(f'  {nid} -> av_{NAME_TO_CODE[skill]} [label="{papel}", color="{cor}", '
+                     f'fontcolor="{cor}", style=bold, fontsize=7];')
     L.append('  leg [shape=note, fillcolor="#FFFFFF", fontsize=9, label="Arestas coloridas '
              'Recomendação → Avaliação = baseadaEm\\nCores das avaliações: vermelho = Baixo, '
              'amarelo = Moderado,\\nverde = Alto, cinza = NaoAvaliado"];')
@@ -737,9 +882,36 @@ def main() -> None:
                           f"sparql={s_q:6.1%}  {status:<30} {'OK' if ok else 'DIVERGE'}")
     linhas.append(f"\nDivergências: {divergencias}")
     print(f"Divergências SPARQL x motor: {divergencias}")
+
+    linhas.append("\n== Base de conhecimento (relações derivadas do IPO) ==")
+    contagem = {t: sum(r["tipo"] == t for r in motor.RELATIONS) for t in motor.RELATION_TYPES}
+    linhas.append("Relações: " + ", ".join(f"{motor.RELATION_TYPES[t]['label']} = {n}"
+                                           for t, n in contagem.items()))
+    problemas = motor.validate_knowledge_base()
+    linhas += [f"  PROBLEMA: {x}" for x in problemas] or ["  Sem problemas (ciclos, duplicatas, "
+                                                           "ordem das faixas etárias do IPO)."]
+    print(f"Problemas na base de conhecimento: {len(problemas)}")
+
+    linhas.append("\n== Inconsistências (R7): SPARQL sobre o grafo x motor ==")
+    via_sparql = {(str(r.pessoa).split("_")[-1], str(r.rel).split("rel_")[-1], str(r.sev))
+                  for r in g.query(SPARQL_INCONSISTENCIAS)}
+    via_motor = set()
+    for pid in PACIENTES:
+        for item in motor.detect_inconsistencies(respostas_por_nome(pid)):
+            via_motor.add((pid, item["relation"]["id"], item["severity"]))
+    for pid in PACIENTES:
+        itens = sorted(x for x in via_motor if x[0] == pid)
+        linhas.append(f"{pid}: {len(itens)} inconsistência(s)")
+        for _, rid, sev in itens:
+            rel = next(r for r in motor.RELATIONS if r["id"] == rid)
+            linhas.append(f"  [{sev}] {rid} {rel['origem']} → {rel['destino']}")
+    dif_inc = via_sparql ^ via_motor
+    linhas.append(f"Divergências: {len(dif_inc)}")
+    print(f"Divergências de inconsistências SPARQL x motor: {len(dif_inc)}")
     (SAIDA / "relatorio_validacao.txt").write_text("\n".join(linhas), encoding="utf-8")
 
     renderizar("grafo_camada_conhecimento", dot_camada_conhecimento())
+    renderizar("grafo_relacoes_habilidades", dot_relacoes())
     for pid, ranking in resultados.items():
         renderizar(f"grafo_paciente_{pid}", dot_paciente(pid, ranking))
     print("Figuras geradas em", SAIDA)

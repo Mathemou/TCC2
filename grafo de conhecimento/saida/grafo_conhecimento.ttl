@@ -61,6 +61,13 @@ inst:aval_P001_MO08 a tcc:AvaliacaoHabilidade ;
     tcc:nivel "Alto" ;
     tcc:pertenceA inst:pessoa_P001 .
 
+inst:aval_P001_MO09 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P001/MO09: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO09 ;
+    tcc:dataAvaliacao "2026-09-15"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P001 .
+
 inst:aval_P001_MO10 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P001/MO10: NaoAvaliado"@pt-br ;
     tcc:avalia inst:hab_MO10 ;
@@ -82,19 +89,19 @@ inst:aval_P001_MO12 a tcc:AvaliacaoHabilidade ;
     tcc:nivel "Alto" ;
     tcc:pertenceA inst:pessoa_P001 .
 
+inst:aval_P001_MO13 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P001/MO13: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO13 ;
+    tcc:dataAvaliacao "2026-09-15"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P001 .
+
 inst:aval_P001_MO14 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P001/MO14: NaoAvaliado"@pt-br ;
     tcc:avalia inst:hab_MO14 ;
     tcc:dataAvaliacao "2026-09-15"^^xsd:date ;
     tcc:nivel "NaoAvaliado" ;
     tcc:pertenceA inst:pessoa_P001 .
-
-inst:aval_P002_AC02 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P002/AC02: Alto"@pt-br ;
-    tcc:avalia inst:hab_AC02 ;
-    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
-    tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P002 .
 
 inst:aval_P002_AC03 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P002/AC03: NaoAvaliado"@pt-br ;
@@ -110,13 +117,6 @@ inst:aval_P002_AC04 a tcc:AvaliacaoHabilidade ;
     tcc:nivel "Alto" ;
     tcc:pertenceA inst:pessoa_P002 .
 
-inst:aval_P002_AC05 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P002/AC05: Alto"@pt-br ;
-    tcc:avalia inst:hab_AC05 ;
-    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
-    tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P002 .
-
 inst:aval_P002_AC06 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P002/AC06: Alto"@pt-br ;
     tcc:avalia inst:hab_AC06 ;
@@ -127,13 +127,6 @@ inst:aval_P002_AC06 a tcc:AvaliacaoHabilidade ;
 inst:aval_P002_AC07 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P002/AC07: Alto"@pt-br ;
     tcc:avalia inst:hab_AC07 ;
-    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
-    tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P002 .
-
-inst:aval_P002_AC10 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P002/AC10: Alto"@pt-br ;
-    tcc:avalia inst:hab_AC10 ;
     tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
     tcc:nivel "Alto" ;
     tcc:pertenceA inst:pessoa_P002 .
@@ -348,13 +341,6 @@ inst:aval_P003_MO15 a tcc:AvaliacaoHabilidade ;
     tcc:nivel "Alto" ;
     tcc:pertenceA inst:pessoa_P003 .
 
-inst:aval_P004_AC01 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/AC01: Alto"@pt-br ;
-    tcc:avalia inst:hab_AC01 ;
-    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
-    tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P004 .
-
 inst:aval_P004_AC04 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P004/AC04: Alto"@pt-br ;
     tcc:avalia inst:hab_AC04 ;
@@ -372,13 +358,6 @@ inst:aval_P004_AC06 a tcc:AvaliacaoHabilidade ;
 inst:aval_P004_AC07 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P004/AC07: Alto"@pt-br ;
     tcc:avalia inst:hab_AC07 ;
-    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
-    tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P004 .
-
-inst:aval_P004_AC10 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/AC10: Alto"@pt-br ;
-    tcc:avalia inst:hab_AC10 ;
     tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
     tcc:nivel "Alto" ;
     tcc:pertenceA inst:pessoa_P004 .
@@ -418,118 +397,47 @@ inst:aval_P004_MO05 a tcc:AvaliacaoHabilidade ;
     tcc:nivel "Alto" ;
     tcc:pertenceA inst:pessoa_P004 .
 
-inst:aval_P004_MO07 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/MO07: Alto"@pt-br ;
-    tcc:avalia inst:hab_MO07 ;
-    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+inst:aval_P005_AC04 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC04: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC04 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
     tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P004 .
+    tcc:pertenceA inst:pessoa_P005 .
 
-inst:aval_P004_MO08 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/MO08: Alto"@pt-br ;
-    tcc:avalia inst:hab_MO08 ;
-    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+inst:aval_P005_AC06 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC06: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC06 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
     tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P004 .
+    tcc:pertenceA inst:pessoa_P005 .
 
-inst:aval_P004_MO10 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/MO10: Alto"@pt-br ;
-    tcc:avalia inst:hab_MO10 ;
-    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+inst:aval_P005_AC07 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC07: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC07 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
     tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P004 .
+    tcc:pertenceA inst:pessoa_P005 .
 
-inst:aval_P004_MO11 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/MO11: Alto"@pt-br ;
-    tcc:avalia inst:hab_MO11 ;
-    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+inst:aval_P005_AC10 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC10: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC10 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
     tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P004 .
+    tcc:pertenceA inst:pessoa_P005 .
 
-inst:aval_P004_MO15 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/MO15: Alto"@pt-br ;
-    tcc:avalia inst:hab_MO15 ;
-    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+inst:aval_P005_MO02 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO02: Alto"@pt-br ;
+    tcc:avalia inst:hab_MO02 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
     tcc:nivel "Alto" ;
-    tcc:pertenceA inst:pessoa_P004 .
+    tcc:pertenceA inst:pessoa_P005 .
 
-inst:dep_01 a tcc:DependenciaHabilidade ;
-    rdfs:label "Cuidado com as mãos apoia Alimentação"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_AC01 ;
-    tcc:habilidadeBase inst:hab_AC07 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_02 a tcc:DependenciaHabilidade ;
-    rdfs:label "Cuidado com as mãos apoia Fio dental"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_AC03 ;
-    tcc:habilidadeBase inst:hab_AC07 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_03 a tcc:DependenciaHabilidade ;
-    rdfs:label "Preensão apoia Alimentação"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_AC01 ;
-    tcc:habilidadeBase inst:hab_MO06 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_04 a tcc:DependenciaHabilidade ;
-    rdfs:label "Preensão apoia Vestuário"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_AC08 ;
-    tcc:habilidadeBase inst:hab_MO06 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_05 a tcc:DependenciaHabilidade ;
-    rdfs:label "Locomoção geral apoia Tarefas de banheiro"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_AC10 ;
-    tcc:habilidadeBase inst:hab_MO01 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_06 a tcc:DependenciaHabilidade ;
-    rdfs:label "Locomoção geral apoia Vestuário"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_AC08 ;
-    tcc:habilidadeBase inst:hab_MO01 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_07 a tcc:DependenciaHabilidade ;
-    rdfs:label "Equilíbrio dinâmico apoia Locomoção específica"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_MO02 ;
-    tcc:habilidadeBase inst:hab_MO04 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_08 a tcc:DependenciaHabilidade ;
-    rdfs:label "Equilíbrio estático apoia Vestuário"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_AC08 ;
-    tcc:habilidadeBase inst:hab_MO03 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_09 a tcc:DependenciaHabilidade ;
-    rdfs:label "Preensão e controle de lápis apoia Escrita, cópia de letras e desenho"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_MO13 ;
-    tcc:habilidadeBase inst:hab_MO12 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_10 a tcc:DependenciaHabilidade ;
-    rdfs:label "Preensão apoia Encaixe de pinos e argolas"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_MO07 ;
-    tcc:habilidadeBase inst:hab_MO06 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_11 a tcc:DependenciaHabilidade ;
-    rdfs:label "Preensão apoia Enfiagem de contas"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_MO09 ;
-    tcc:habilidadeBase inst:hab_MO06 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_12 a tcc:DependenciaHabilidade ;
-    rdfs:label "Preensão apoia Uso de tesoura"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_MO14 ;
-    tcc:habilidadeBase inst:hab_MO06 ;
-    tcc:pesoIndireto 0.5 .
-
-inst:dep_13 a tcc:DependenciaHabilidade ;
-    rdfs:label "Manipulação de fechos, trincos e maçanetas apoia Vestuário"@pt-br ;
-    tcc:habilidadeApoiada inst:hab_AC08 ;
-    tcc:habilidadeBase inst:hab_MO15 ;
-    tcc:pesoIndireto 0.5 .
+inst:aval_P005_MO05 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO05: Alto"@pt-br ;
+    tcc:avalia inst:hab_MO05 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P005 .
 
 inst:esp_FISIO a tcc:Especialista ;
     rdfs:label "Fisioterapeuta (equipe AMAES – fictício)"@pt-br ;
@@ -565,6 +473,123 @@ inst:hab_EX04 a tcc:Engatinhar,
     tcc:nome "Engatinhar" ;
     rdfs:comment "Subkind da ontologia ainda não presente no formulário do protótipo."@pt-br .
 
+inst:inc_P002_CO02 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P002/CO02 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P002_AC10 ;
+    tcc:avaliacaoOrigem inst:aval_P002_AC08 ;
+    tcc:descricao "Tarefas de banheiro está como \"Independente\", mas a parte Vestuário está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P002 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_CO02 .
+
+inst:inc_P002_PR01 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P002/PR01 (Alta)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P002_AC02 ;
+    tcc:avaliacaoOrigem inst:aval_P002_MO06 ;
+    tcc:descricao "Escovação está como \"Independente\", mas o pré-requisito Preensão está como \"Não realiza\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P002 ;
+    tcc:severidade "Alta" ;
+    tcc:violaRelacao inst:rel_PR01 .
+
+inst:inc_P002_PR04 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P002/PR04 (Alta)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P002_AC05 ;
+    tcc:avaliacaoOrigem inst:aval_P002_MO06 ;
+    tcc:descricao "Cuidado com o cabelo está como \"Independente\", mas o pré-requisito Preensão está como \"Não realiza\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P002 ;
+    tcc:severidade "Alta" ;
+    tcc:violaRelacao inst:rel_PR04 .
+
+inst:inc_P004_CO02 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P004/CO02 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P004_AC10 ;
+    tcc:avaliacaoOrigem inst:aval_P004_AC08 ;
+    tcc:descricao "Tarefas de banheiro está como \"Independente\", mas a parte Vestuário está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P004 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_CO02 .
+
+inst:inc_P004_PR02 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P004/PR02 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P004_AC01 ;
+    tcc:avaliacaoOrigem inst:aval_P004_MO06 ;
+    tcc:descricao "Alimentação está como \"Independente\", mas o pré-requisito Preensão está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P004 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_PR02 .
+
+inst:inc_P004_PR08 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P004/PR08 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P004_MO07 ;
+    tcc:avaliacaoOrigem inst:aval_P004_MO06 ;
+    tcc:descricao "Encaixe de pinos e argolas está como \"Independente\", mas o pré-requisito Preensão está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P004 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_PR08 .
+
+inst:inc_P004_PR09 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P004/PR09 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P004_MO08 ;
+    tcc:avaliacaoOrigem inst:aval_P004_MO06 ;
+    tcc:descricao "Empilhar peças está como \"Independente\", mas o pré-requisito Preensão está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P004 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_PR09 .
+
+inst:inc_P004_PR11 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P004/PR11 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P004_MO10 ;
+    tcc:avaliacaoOrigem inst:aval_P004_MO06 ;
+    tcc:descricao "Dobrar papel está como \"Independente\", mas o pré-requisito Preensão está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P004 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_PR11 .
+
+inst:inc_P004_PR12 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P004/PR12 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P004_MO11 ;
+    tcc:avaliacaoOrigem inst:aval_P004_MO06 ;
+    tcc:descricao "Montagem de quebra-cabeças está como \"Independente\", mas o pré-requisito Preensão está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P004 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_PR12 .
+
+inst:inc_P004_PR14 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P004/PR14 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P004_MO15 ;
+    tcc:avaliacaoOrigem inst:aval_P004_MO06 ;
+    tcc:descricao "Manipulação de fechos, trincos e maçanetas está como \"Independente\", mas o pré-requisito Preensão está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P004 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_PR14 .
+
+inst:inc_P005_CO01 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P005/CO01 (Alta)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P005_AC08 ;
+    tcc:avaliacaoOrigem inst:aval_P005_AC09 ;
+    tcc:descricao "Vestuário está como \"Independente\", mas a parte Manuseio de ajustes está como \"Não realiza\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P005 ;
+    tcc:severidade "Alta" ;
+    tcc:violaRelacao inst:rel_CO01 .
+
+inst:inc_P005_PR01 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P005/PR01 (Alta)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P005_AC02 ;
+    tcc:avaliacaoOrigem inst:aval_P005_MO06 ;
+    tcc:descricao "Escovação está como \"Independente\", mas o pré-requisito Preensão está como \"Não realiza\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P005 ;
+    tcc:severidade "Alta" ;
+    tcc:violaRelacao inst:rel_PR01 .
+
+inst:inc_P005_PR15 a tcc:Inconsistencia ;
+    rdfs:label "Inconsistência P005/PR15 (Moderada)"@pt-br ;
+    tcc:avaliacaoDestino inst:aval_P005_MO01 ;
+    tcc:avaliacaoOrigem inst:aval_P005_MO03 ;
+    tcc:descricao "Locomoção geral está como \"Independente\", mas o pré-requisito Equilíbrio estático está como \"Realiza com auxílio\"." ;
+    tcc:inconsistenciaDe inst:pessoa_P005 ;
+    tcc:severidade "Moderada" ;
+    tcc:violaRelacao inst:rel_PR15 .
+
 inst:prontuario_P001 a tcc:Prontuario ;
     rdfs:label "Prontuário PRT-2026-001"@pt-br ;
     tcc:identificador "PRT-2026-001" ;
@@ -585,6 +610,11 @@ inst:prontuario_P004 a tcc:Prontuario ;
     tcc:identificador "PRT-2026-004" ;
     tcc:registra inst:pessoa_P004 .
 
+inst:prontuario_P005 a tcc:Prontuario ;
+    rdfs:label "Prontuário PRT-2026-005"@pt-br ;
+    tcc:identificador "PRT-2026-005" ;
+    tcc:registra inst:pessoa_P005 .
+
 inst:rec_P001_1 a tcc:Recomendacao ;
     rdfs:label "Recomendação P001 nº1: Treino de habilidades de autocuidado"@pt-br ;
     tcc:baseadaEm inst:aval_P001_AC01,
@@ -600,25 +630,35 @@ inst:rec_P001_1 a tcc:Recomendacao ;
         inst:aval_P001_MO15 ;
     tcc:dataRecomendacao "2026-09-22"^^xsd:date ;
     tcc:destinadaA inst:pessoa_P001 ;
-    tcc:justificativa "1º de 2 indicados; pontuação 58.9% = 16.5/28 (R3). Contribuições R1/R2: Alimentação: Realiza com auxílio (peso 1); Escovação: Não realiza (peso 2); Fio dental: Não realiza (peso 2); Cuidado com o corpo: Realiza com auxílio (peso 1); Cuidado com o cabelo: Não realiza (peso 2); Cuidado com o rosto: Realiza com auxílio (peso 1); Cuidado com as mãos: Realiza com auxílio (peso 1); Vestuário: Não realiza (peso 2); Manuseio de ajustes: Não realiza (peso 2); Tarefas de banheiro: Realiza com auxílio (peso 1); Cuidado com as mãos apoia Alimentação: Realiza com auxílio (peso indireto 0.5); Cuidado com as mãos apoia Fio dental: Realiza com auxílio (peso indireto 0.5); Manipulação de fechos, trincos e maçanetas apoia Vestuário: Realiza com auxílio (peso indireto 0.5)." ;
-    tcc:pontuacao 0.5893 ;
+    tcc:justificativa "1º de 1 indicados; pontuação 60.5% = 17.25/28.5 (R3). Contribuições R1/R2: Alimentação: Realiza com auxílio (peso 1); Escovação: Não realiza (peso 2); Fio dental: Não realiza (peso 2); Cuidado com o corpo: Realiza com auxílio (peso 1); Cuidado com o cabelo: Não realiza (peso 2); Cuidado com o rosto: Realiza com auxílio (peso 1); Cuidado com as mãos: Realiza com auxílio (peso 1); Vestuário: Não realiza (peso 2); Manuseio de ajustes: Não realiza (peso 2); Tarefas de banheiro: Realiza com auxílio (peso 1); Manuseio de ajustes é parte de Vestuário [CO01]: Não realiza (peso indireto 1); Vestuário é parte de Tarefas de banheiro [CO02]: Não realiza (peso indireto 1); Manipulação de fechos, trincos e maçanetas facilita Manuseio de ajustes [FA04]: Realiza com auxílio (peso indireto 0.25)." ;
+    tcc:pontuacao 0.6053 ;
     tcc:prioridade "Alta" ;
     tcc:recomenda inst:trat_autocuidado .
 
-inst:rec_P001_2 a tcc:Recomendacao ;
-    rdfs:label "Recomendação P001 nº2: Treino de habilidades motoras finas"@pt-br ;
-    tcc:baseadaEm inst:aval_P001_MO09,
-        inst:aval_P001_MO13,
-        inst:aval_P001_MO15 ;
-    tcc:dataRecomendacao "2026-09-22"^^xsd:date ;
-    tcc:destinadaA inst:pessoa_P001 ;
-    tcc:justificativa "2º de 2 indicados; pontuação 15.0% = 3/20 (R3). Contribuições R1/R2: Enfiagem de contas: Realiza com auxílio (peso 1); Escrita, cópia de letras e desenho: Realiza com auxílio (peso 1); Manipulação de fechos, trincos e maçanetas: Realiza com auxílio (peso 1)." ;
-    tcc:pontuacao 0.15 ;
-    tcc:prioridade "Media" ;
-    tcc:recomenda inst:trat_motor_fino .
-
 inst:rec_P002_1 a tcc:Recomendacao ;
-    rdfs:label "Recomendação P002 nº1: Treino de habilidades motoras finas"@pt-br ;
+    rdfs:label "Recomendação P002 nº1: Intervenção integrada autocuidado + motor"@pt-br ;
+    tcc:baseadaEm inst:aval_P002_AC01,
+        inst:aval_P002_AC08,
+        inst:aval_P002_AC09,
+        inst:aval_P002_MO06,
+        inst:aval_P002_MO07,
+        inst:aval_P002_MO08,
+        inst:aval_P002_MO09,
+        inst:aval_P002_MO10,
+        inst:aval_P002_MO11,
+        inst:aval_P002_MO12,
+        inst:aval_P002_MO13,
+        inst:aval_P002_MO14,
+        inst:aval_P002_MO15 ;
+    tcc:dataRecomendacao "2026-09-23"^^xsd:date ;
+    tcc:destinadaA inst:pessoa_P002 ;
+    tcc:justificativa "1º de 3 indicados; pontuação 34.9% (R5, menor pontuação entre os tratamentos combinados). Treino de habilidades de autocuidado: 35% (≥ limiar 30%); Treino de habilidades motoras finas: 86% (≥ limiar 30%)." ;
+    tcc:pontuacao 0.3491 ;
+    tcc:prioridade "Alta" ;
+    tcc:recomenda inst:trat_integrado .
+
+inst:rec_P002_2 a tcc:Recomendacao ;
+    rdfs:label "Recomendação P002 nº2: Treino de habilidades motoras finas"@pt-br ;
     tcc:baseadaEm inst:aval_P002_MO06,
         inst:aval_P002_MO07,
         inst:aval_P002_MO08,
@@ -631,13 +671,13 @@ inst:rec_P002_1 a tcc:Recomendacao ;
         inst:aval_P002_MO15 ;
     tcc:dataRecomendacao "2026-09-23"^^xsd:date ;
     tcc:destinadaA inst:pessoa_P002 ;
-    tcc:justificativa "1º de 2 indicados; pontuação 83.3% = 20/24 (R3). Contribuições R1/R2: Preensão: Não realiza (peso 2); Encaixe de pinos e argolas: Não realiza (peso 2); Empilhar peças: Realiza com auxílio (peso 1); Enfiagem de contas: Não realiza (peso 2); Dobrar papel: Realiza com auxílio (peso 1); Montagem de quebra-cabeças: Realiza com auxílio (peso 1); Preensão e controle de lápis: Não realiza (peso 2); Escrita, cópia de letras e desenho: Não realiza (peso 2); Uso de tesoura: Não realiza (peso 2); Manipulação de fechos, trincos e maçanetas: Realiza com auxílio (peso 1); Preensão e controle de lápis apoia Escrita, cópia de letras e desenho: Não realiza (peso indireto 1); Preensão apoia Encaixe de pinos e argolas: Não realiza (peso indireto 1); Preensão apoia Enfiagem de contas: Não realiza (peso indireto 1); Preensão apoia Uso de tesoura: Não realiza (peso indireto 1)." ;
-    tcc:pontuacao 0.8333 ;
-    tcc:prioridade "Alta" ;
+    tcc:justificativa "2º de 3 indicados; pontuação 86.1% = 26.25/30.5 (R3). Contribuições R1/R2: Preensão: Não realiza (peso 2); Encaixe de pinos e argolas: Não realiza (peso 2); Empilhar peças: Realiza com auxílio (peso 1); Enfiagem de contas: Não realiza (peso 2); Dobrar papel: Realiza com auxílio (peso 1); Montagem de quebra-cabeças: Realiza com auxílio (peso 1); Preensão e controle de lápis: Não realiza (peso 2); Escrita, cópia de letras e desenho: Não realiza (peso 2); Uso de tesoura: Não realiza (peso 2); Manipulação de fechos, trincos e maçanetas: Realiza com auxílio (peso 1); Preensão é pré-requisito de Preensão e controle de lápis [PR06]: Não realiza (peso indireto 1); Preensão e controle de lápis é pré-requisito de Escrita, cópia de letras e desenho [PR07]: Não realiza (peso indireto 1); Preensão é pré-requisito de Encaixe de pinos e argolas [PR08]: Não realiza (peso indireto 1); Preensão é pré-requisito de Empilhar peças [PR09]: Não realiza (peso indireto 1); Preensão é pré-requisito de Enfiagem de contas [PR10]: Não realiza (peso indireto 1); Preensão é pré-requisito de Dobrar papel [PR11]: Não realiza (peso indireto 1); Preensão é pré-requisito de Montagem de quebra-cabeças [PR12]: Não realiza (peso indireto 1); Preensão é pré-requisito de Uso de tesoura [PR13]: Não realiza (peso indireto 1); Preensão é pré-requisito de Manipulação de fechos, trincos e maçanetas [PR14]: Não realiza (peso indireto 1); Preensão e controle de lápis facilita Uso de tesoura [FA05]: Não realiza (peso indireto 0.5); Empilhar peças facilita Montagem de quebra-cabeças [FA06]: Realiza com auxílio (peso indireto 0.25); Encaixe de pinos e argolas facilita Montagem de quebra-cabeças [FA07]: Não realiza (peso indireto 0.5)." ;
+    tcc:pontuacao 0.8607 ;
+    tcc:prioridade "Media" ;
     tcc:recomenda inst:trat_motor_fino .
 
-inst:rec_P002_2 a tcc:Recomendacao ;
-    rdfs:label "Recomendação P002 nº2: Treino de habilidades de autocuidado"@pt-br ;
+inst:rec_P002_3 a tcc:Recomendacao ;
+    rdfs:label "Recomendação P002 nº3: Treino de habilidades de autocuidado"@pt-br ;
     tcc:baseadaEm inst:aval_P002_AC01,
         inst:aval_P002_AC08,
         inst:aval_P002_AC09,
@@ -645,9 +685,9 @@ inst:rec_P002_2 a tcc:Recomendacao ;
         inst:aval_P002_MO15 ;
     tcc:dataRecomendacao "2026-09-23"^^xsd:date ;
     tcc:destinadaA inst:pessoa_P002 ;
-    tcc:justificativa "2º de 2 indicados; pontuação 21.1% = 5.5/26 (R3). Contribuições R1/R2: Alimentação: Realiza com auxílio (peso 1); Vestuário: Realiza com auxílio (peso 1); Manuseio de ajustes: Realiza com auxílio (peso 1); Preensão apoia Alimentação: Não realiza (peso indireto 1); Preensão apoia Vestuário: Não realiza (peso indireto 1); Manipulação de fechos, trincos e maçanetas apoia Vestuário: Realiza com auxílio (peso indireto 0.5)." ;
-    tcc:pontuacao 0.2115 ;
-    tcc:prioridade "Media" ;
+    tcc:justificativa "3º de 3 indicados; pontuação 34.9% = 9.25/26.5 (R3). Contribuições R1/R2: Alimentação: Realiza com auxílio (peso 1); Vestuário: Realiza com auxílio (peso 1); Manuseio de ajustes: Realiza com auxílio (peso 1); Preensão é pré-requisito de Escovação [PR01]: Não realiza (peso indireto 1); Preensão é pré-requisito de Alimentação [PR02]: Não realiza (peso indireto 1); Preensão é pré-requisito de Fio dental [PR03]: Não realiza (peso indireto 1); Preensão é pré-requisito de Cuidado com o cabelo [PR04]: Não realiza (peso indireto 1); Preensão é pré-requisito de Manuseio de ajustes [PR05]: Não realiza (peso indireto 1); Manuseio de ajustes é parte de Vestuário [CO01]: Realiza com auxílio (peso indireto 0.5); Vestuário é parte de Tarefas de banheiro [CO02]: Realiza com auxílio (peso indireto 0.5); Manipulação de fechos, trincos e maçanetas facilita Manuseio de ajustes [FA04]: Realiza com auxílio (peso indireto 0.25)." ;
+    tcc:pontuacao 0.3491 ;
+    tcc:prioridade "Baixa" ;
     tcc:recomenda inst:trat_autocuidado .
 
 inst:rec_P004_1 a tcc:Recomendacao ;
@@ -664,27 +704,13 @@ inst:rec_P004_1 a tcc:Recomendacao ;
         inst:aval_P004_MO14 ;
     tcc:dataRecomendacao "2026-09-25"^^xsd:date ;
     tcc:destinadaA inst:pessoa_P004 ;
-    tcc:justificativa "1º de 3 indicados; pontuação 32.1% (R5, menor pontuação entre os tratamentos combinados). Treino de habilidades de autocuidado: 32% (≥ limiar 30%); Treino de habilidades motoras finas: 38% (≥ limiar 30%)." ;
-    tcc:pontuacao 0.3214 ;
+    tcc:justificativa "1º de 3 indicados; pontuação 38.5% (R5, menor pontuação entre os tratamentos combinados). Treino de habilidades de autocuidado: 42% (≥ limiar 30%); Treino de habilidades motoras finas: 39% (≥ limiar 30%)." ;
+    tcc:pontuacao 0.3852 ;
     tcc:prioridade "Alta" ;
     tcc:recomenda inst:trat_integrado .
 
 inst:rec_P004_2 a tcc:Recomendacao ;
-    rdfs:label "Recomendação P004 nº2: Treino de habilidades motoras finas"@pt-br ;
-    tcc:baseadaEm inst:aval_P004_MO06,
-        inst:aval_P004_MO09,
-        inst:aval_P004_MO12,
-        inst:aval_P004_MO13,
-        inst:aval_P004_MO14 ;
-    tcc:dataRecomendacao "2026-09-25"^^xsd:date ;
-    tcc:destinadaA inst:pessoa_P004 ;
-    tcc:justificativa "2º de 3 indicados; pontuação 37.5% = 9/24 (R3). Contribuições R1/R2: Preensão: Realiza com auxílio (peso 1); Enfiagem de contas: Não realiza (peso 2); Preensão e controle de lápis: Realiza com auxílio (peso 1); Escrita, cópia de letras e desenho: Não realiza (peso 2); Uso de tesoura: Realiza com auxílio (peso 1); Preensão e controle de lápis apoia Escrita, cópia de letras e desenho: Realiza com auxílio (peso indireto 0.5); Preensão apoia Encaixe de pinos e argolas: Realiza com auxílio (peso indireto 0.5); Preensão apoia Enfiagem de contas: Realiza com auxílio (peso indireto 0.5); Preensão apoia Uso de tesoura: Realiza com auxílio (peso indireto 0.5)." ;
-    tcc:pontuacao 0.375 ;
-    tcc:prioridade "Media" ;
-    tcc:recomenda inst:trat_motor_fino .
-
-inst:rec_P004_3 a tcc:Recomendacao ;
-    rdfs:label "Recomendação P004 nº3: Treino de habilidades de autocuidado"@pt-br ;
+    rdfs:label "Recomendação P004 nº2: Treino de habilidades de autocuidado"@pt-br ;
     tcc:baseadaEm inst:aval_P004_AC02,
         inst:aval_P004_AC03,
         inst:aval_P004_AC05,
@@ -693,10 +719,229 @@ inst:rec_P004_3 a tcc:Recomendacao ;
         inst:aval_P004_MO06 ;
     tcc:dataRecomendacao "2026-09-25"^^xsd:date ;
     tcc:destinadaA inst:pessoa_P004 ;
-    tcc:justificativa "3º de 3 indicados; pontuação 32.1% = 9/28 (R3). Contribuições R1/R2: Escovação: Realiza com auxílio (peso 1); Fio dental: Não realiza (peso 2); Cuidado com o cabelo: Não realiza (peso 2); Vestuário: Realiza com auxílio (peso 1); Manuseio de ajustes: Não realiza (peso 2); Preensão apoia Alimentação: Realiza com auxílio (peso indireto 0.5); Preensão apoia Vestuário: Realiza com auxílio (peso indireto 0.5)." ;
-    tcc:pontuacao 0.3214 ;
+    tcc:justificativa "2º de 3 indicados; pontuação 42.1% = 12/28.5 (R3). Contribuições R1/R2: Escovação: Realiza com auxílio (peso 1); Fio dental: Não realiza (peso 2); Cuidado com o cabelo: Não realiza (peso 2); Vestuário: Realiza com auxílio (peso 1); Manuseio de ajustes: Não realiza (peso 2); Preensão é pré-requisito de Escovação [PR01]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Alimentação [PR02]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Fio dental [PR03]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Cuidado com o cabelo [PR04]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Manuseio de ajustes [PR05]: Realiza com auxílio (peso indireto 0.5); Manuseio de ajustes é parte de Vestuário [CO01]: Não realiza (peso indireto 1); Vestuário é parte de Tarefas de banheiro [CO02]: Realiza com auxílio (peso indireto 0.5)." ;
+    tcc:pontuacao 0.4211 ;
+    tcc:prioridade "Media" ;
+    tcc:recomenda inst:trat_autocuidado .
+
+inst:rec_P004_3 a tcc:Recomendacao ;
+    rdfs:label "Recomendação P004 nº3: Treino de habilidades motoras finas"@pt-br ;
+    tcc:baseadaEm inst:aval_P004_MO06,
+        inst:aval_P004_MO09,
+        inst:aval_P004_MO12,
+        inst:aval_P004_MO13,
+        inst:aval_P004_MO14 ;
+    tcc:dataRecomendacao "2026-09-25"^^xsd:date ;
+    tcc:destinadaA inst:pessoa_P004 ;
+    tcc:justificativa "3º de 3 indicados; pontuação 38.5% = 11.75/30.5 (R3). Contribuições R1/R2: Preensão: Realiza com auxílio (peso 1); Enfiagem de contas: Não realiza (peso 2); Preensão e controle de lápis: Realiza com auxílio (peso 1); Escrita, cópia de letras e desenho: Não realiza (peso 2); Uso de tesoura: Realiza com auxílio (peso 1); Preensão é pré-requisito de Preensão e controle de lápis [PR06]: Realiza com auxílio (peso indireto 0.5); Preensão e controle de lápis é pré-requisito de Escrita, cópia de letras e desenho [PR07]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Encaixe de pinos e argolas [PR08]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Empilhar peças [PR09]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Enfiagem de contas [PR10]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Dobrar papel [PR11]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Montagem de quebra-cabeças [PR12]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Uso de tesoura [PR13]: Realiza com auxílio (peso indireto 0.5); Preensão é pré-requisito de Manipulação de fechos, trincos e maçanetas [PR14]: Realiza com auxílio (peso indireto 0.5); Preensão e controle de lápis facilita Uso de tesoura [FA05]: Realiza com auxílio (peso indireto 0.25)." ;
+    tcc:pontuacao 0.3852 ;
+    tcc:prioridade "Baixa" ;
+    tcc:recomenda inst:trat_motor_fino .
+
+inst:rec_P005_1 a tcc:Recomendacao ;
+    rdfs:label "Recomendação P005 nº1: Intervenção integrada autocuidado + motor"@pt-br ;
+    tcc:baseadaEm inst:aval_P005_AC01,
+        inst:aval_P005_AC03,
+        inst:aval_P005_AC05,
+        inst:aval_P005_AC09,
+        inst:aval_P005_MO03,
+        inst:aval_P005_MO06,
+        inst:aval_P005_MO07,
+        inst:aval_P005_MO08,
+        inst:aval_P005_MO09,
+        inst:aval_P005_MO10,
+        inst:aval_P005_MO11,
+        inst:aval_P005_MO12,
+        inst:aval_P005_MO13,
+        inst:aval_P005_MO14,
+        inst:aval_P005_MO15 ;
+    tcc:dataRecomendacao "2026-09-26"^^xsd:date ;
+    tcc:destinadaA inst:pessoa_P005 ;
+    tcc:justificativa "1º de 4 indicados; pontuação 40.4% (R5, menor pontuação entre os tratamentos combinados). Treino de habilidades de autocuidado: 40% (≥ limiar 30%); Treino de habilidades motoras finas: 85% (≥ limiar 30%)." ;
+    tcc:pontuacao 0.4035 ;
+    tcc:prioridade "Alta" ;
+    tcc:recomenda inst:trat_integrado .
+
+inst:rec_P005_2 a tcc:Recomendacao ;
+    rdfs:label "Recomendação P005 nº2: Treino de habilidades motoras finas"@pt-br ;
+    tcc:baseadaEm inst:aval_P005_MO06,
+        inst:aval_P005_MO07,
+        inst:aval_P005_MO08,
+        inst:aval_P005_MO09,
+        inst:aval_P005_MO10,
+        inst:aval_P005_MO11,
+        inst:aval_P005_MO12,
+        inst:aval_P005_MO13,
+        inst:aval_P005_MO14,
+        inst:aval_P005_MO15 ;
+    tcc:dataRecomendacao "2026-09-26"^^xsd:date ;
+    tcc:destinadaA inst:pessoa_P005 ;
+    tcc:justificativa "2º de 4 indicados; pontuação 85.2% = 26/30.5 (R3). Contribuições R1/R2: Preensão: Não realiza (peso 2); Encaixe de pinos e argolas: Realiza com auxílio (peso 1); Empilhar peças: Realiza com auxílio (peso 1); Enfiagem de contas: Não realiza (peso 2); Dobrar papel: Não realiza (peso 2); Montagem de quebra-cabeças: Realiza com auxílio (peso 1); Preensão e controle de lápis: Não realiza (peso 2); Escrita, cópia de letras e desenho: Não realiza (peso 2); Uso de tesoura: Não realiza (peso 2); Manipulação de fechos, trincos e maçanetas: Realiza com auxílio (peso 1); Preensão é pré-requisito de Preensão e controle de lápis [PR06]: Não realiza (peso indireto 1); Preensão e controle de lápis é pré-requisito de Escrita, cópia de letras e desenho [PR07]: Não realiza (peso indireto 1); Preensão é pré-requisito de Encaixe de pinos e argolas [PR08]: Não realiza (peso indireto 1); Preensão é pré-requisito de Empilhar peças [PR09]: Não realiza (peso indireto 1); Preensão é pré-requisito de Enfiagem de contas [PR10]: Não realiza (peso indireto 1); Preensão é pré-requisito de Dobrar papel [PR11]: Não realiza (peso indireto 1); Preensão é pré-requisito de Montagem de quebra-cabeças [PR12]: Não realiza (peso indireto 1); Preensão é pré-requisito de Uso de tesoura [PR13]: Não realiza (peso indireto 1); Preensão é pré-requisito de Manipulação de fechos, trincos e maçanetas [PR14]: Não realiza (peso indireto 1); Preensão e controle de lápis facilita Uso de tesoura [FA05]: Não realiza (peso indireto 0.5); Empilhar peças facilita Montagem de quebra-cabeças [FA06]: Realiza com auxílio (peso indireto 0.25); Encaixe de pinos e argolas facilita Montagem de quebra-cabeças [FA07]: Realiza com auxílio (peso indireto 0.25)." ;
+    tcc:pontuacao 0.8525 ;
+    tcc:prioridade "Media" ;
+    tcc:recomenda inst:trat_motor_fino .
+
+inst:rec_P005_3 a tcc:Recomendacao ;
+    rdfs:label "Recomendação P005 nº3: Treino de habilidades de autocuidado"@pt-br ;
+    tcc:baseadaEm inst:aval_P005_AC01,
+        inst:aval_P005_AC03,
+        inst:aval_P005_AC05,
+        inst:aval_P005_AC09,
+        inst:aval_P005_MO03,
+        inst:aval_P005_MO06,
+        inst:aval_P005_MO15 ;
+    tcc:dataRecomendacao "2026-09-26"^^xsd:date ;
+    tcc:destinadaA inst:pessoa_P005 ;
+    tcc:justificativa "3º de 4 indicados; pontuação 40.4% = 11.5/28.5 (R3). Contribuições R1/R2: Alimentação: Realiza com auxílio (peso 1); Fio dental: Realiza com auxílio (peso 1); Cuidado com o cabelo: Realiza com auxílio (peso 1); Manuseio de ajustes: Não realiza (peso 2); Preensão é pré-requisito de Escovação [PR01]: Não realiza (peso indireto 1); Preensão é pré-requisito de Alimentação [PR02]: Não realiza (peso indireto 1); Preensão é pré-requisito de Fio dental [PR03]: Não realiza (peso indireto 1); Preensão é pré-requisito de Cuidado com o cabelo [PR04]: Não realiza (peso indireto 1); Preensão é pré-requisito de Manuseio de ajustes [PR05]: Não realiza (peso indireto 1); Manuseio de ajustes é parte de Vestuário [CO01]: Não realiza (peso indireto 1); Equilíbrio estático facilita Vestuário [FA02]: Realiza com auxílio (peso indireto 0.25); Manipulação de fechos, trincos e maçanetas facilita Manuseio de ajustes [FA04]: Realiza com auxílio (peso indireto 0.25)." ;
+    tcc:pontuacao 0.4035 ;
     tcc:prioridade "Baixa" ;
     tcc:recomenda inst:trat_autocuidado .
+
+inst:rec_P005_4 a tcc:Recomendacao ;
+    rdfs:label "Recomendação P005 nº4: Treino de habilidades motoras grossas"@pt-br ;
+    tcc:baseadaEm inst:aval_P005_MO03,
+        inst:aval_P005_MO04 ;
+    tcc:dataRecomendacao "2026-09-26"^^xsd:date ;
+    tcc:destinadaA inst:pessoa_P005 ;
+    tcc:justificativa "4º de 4 indicados; pontuação 24.1% = 3.25/13.5 (R3). Contribuições R1/R2: Equilíbrio estático: Realiza com auxílio (peso 1); Equilíbrio dinâmico: Realiza com auxílio (peso 1); Equilíbrio estático é pré-requisito de Locomoção geral [PR15]: Realiza com auxílio (peso indireto 0.5); Equilíbrio estático é pré-requisito de Equilíbrio dinâmico [PR17]: Realiza com auxílio (peso indireto 0.5); Equilíbrio dinâmico facilita Locomoção específica [FA01]: Realiza com auxílio (peso indireto 0.25)." ;
+    tcc:pontuacao 0.2407 ;
+    tcc:prioridade "Baixa" ;
+    tcc:recomenda inst:trat_motor_grosso .
+
+inst:rel_FA01 a tcc:Facilitacao ;
+    rdfs:label "FA01: Equilíbrio dinâmico facilita Locomoção específica"@pt-br ;
+    tcc:destino inst:hab_MO02 ;
+    tcc:evidencia "Sequência etária" ;
+    tcc:fundamentacao "Equilíbrio dinâmico favorece subir e descer escadas alternando os pés e saltar em um pé, mas não é condição única." ;
+    tcc:origem inst:hab_MO04 ;
+    tcc:pesoIndireto 0.25 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_FA02 a tcc:Facilitacao ;
+    rdfs:label "FA02: Equilíbrio estático facilita Vestuário"@pt-br ;
+    tcc:destino inst:hab_AC08 ;
+    tcc:evidencia "Funcional" ;
+    tcc:fundamentacao "Ficar em pé e apoiado em um pé facilita vestir calças e sapatos (A-20), que também podem ser feitos sentado." ;
+    tcc:origem inst:hab_MO03 ;
+    tcc:pesoIndireto 0.25 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_FA03 a tcc:Facilitacao ;
+    rdfs:label "FA03: Locomoção geral facilita Tarefas de banheiro"@pt-br ;
+    tcc:destino inst:hab_AC10 ;
+    tcc:evidencia "Conteúdo do item" ;
+    tcc:fundamentacao "A-85 inclui 'vai ao banheiro a tempo': a locomoção facilita a tarefa, mas pode ser compensada com auxílio para o deslocamento." ;
+    tcc:origem inst:hab_MO01 ;
+    tcc:pesoIndireto 0.25 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_FA04 a tcc:Facilitacao ;
+    rdfs:label "FA04: Manipulação de fechos, trincos e maçanetas facilita Manuseio de ajustes"@pt-br ;
+    tcc:destino inst:hab_AC09 ;
+    tcc:evidencia "Sequência etária" ;
+    tcc:fundamentacao "Manipular trincos e roscas exercita a mesma coordenação dos dedos usada em botões e zíperes, que aparecem depois." ;
+    tcc:origem inst:hab_MO15 ;
+    tcc:pesoIndireto 0.25 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_FA05 a tcc:Facilitacao ;
+    rdfs:label "FA05: Preensão e controle de lápis facilita Uso de tesoura"@pt-br ;
+    tcc:destino inst:hab_MO14 ;
+    tcc:evidencia "Sequência etária" ;
+    tcc:fundamentacao "Controlar uma ferramenta com os dedos (lápis) favorece o uso da tesoura." ;
+    tcc:origem inst:hab_MO12 ;
+    tcc:pesoIndireto 0.25 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_FA06 a tcc:Facilitacao ;
+    rdfs:label "FA06: Empilhar peças facilita Montagem de quebra-cabeças"@pt-br ;
+    tcc:destino inst:hab_MO11 ;
+    tcc:evidencia "Sequência etária" ;
+    tcc:fundamentacao "Empilhar blocos treina a coordenação visomotora usada no quebra-cabeça." ;
+    tcc:origem inst:hab_MO08 ;
+    tcc:pesoIndireto 0.25 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_FA07 a tcc:Facilitacao ;
+    rdfs:label "FA07: Encaixe de pinos e argolas facilita Montagem de quebra-cabeças"@pt-br ;
+    tcc:destino inst:hab_MO11 ;
+    tcc:evidencia "Sequência etária" ;
+    tcc:fundamentacao "Encaixar pinos e aros treina o encaixe de formas usado no quebra-cabeça." ;
+    tcc:origem inst:hab_MO07 ;
+    tcc:pesoIndireto 0.25 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR03 a tcc:PreRequisito ;
+    rdfs:label "PR03: Preensão é pré-requisito de Fio dental"@pt-br ;
+    tcc:destino inst:hab_AC03 ;
+    tcc:evidencia "Funcional" ;
+    tcc:fundamentacao "Manusear o fio dental exige pinça fina. O IPO não tem item de fio dental." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Sem item no IPO – relação funcional, validar" .
+
+inst:rel_PR05 a tcc:PreRequisito ;
+    rdfs:label "PR05: Preensão é pré-requisito de Manuseio de ajustes"@pt-br ;
+    tcc:destino inst:hab_AC09 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Puxar o zíper (A-24) e abotoar (A-66) exigem pinça entre polegar e indicador." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR06 a tcc:PreRequisito ;
+    rdfs:label "PR06: Preensão é pré-requisito de Preensão e controle de lápis"@pt-br ;
+    tcc:destino inst:hab_MO12 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "M-78 descreve segurar o lápis entre polegar e indicador, ou seja, a própria preensão de pinça (M-32) aplicada ao lápis." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR07 a tcc:PreRequisito ;
+    rdfs:label "PR07: Preensão e controle de lápis é pré-requisito de Escrita, cópia de letras e desenho"@pt-br ;
+    tcc:destino inst:hab_MO13 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Desenhar e escrever (M-94, M-112, M-117) só é possível segurando e controlando o lápis (M-54, M-78), que surgem antes." ;
+    tcc:origem inst:hab_MO12 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR10 a tcc:PreRequisito ;
+    rdfs:label "PR10: Preensão é pré-requisito de Enfiagem de contas"@pt-br ;
+    tcc:destino inst:hab_MO09 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Enfiar contas em um cordão (M-64) exige pinça nas duas mãos." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR13 a tcc:PreRequisito ;
+    rdfs:label "PR13: Preensão é pré-requisito de Uso de tesoura"@pt-br ;
+    tcc:destino inst:hab_MO14 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Cortar com tesoura (M-82) exige segurar a tesoura e abrir e fechar os dedos." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR16 a tcc:PreRequisito ;
+    rdfs:label "PR16: Locomoção geral é pré-requisito de Locomoção específica"@pt-br ;
+    tcc:destino inst:hab_MO02 ;
+    tcc:evidencia "Sequência etária" ;
+    tcc:fundamentacao "Descer e subir escadas sem ajuda e saltar (M-68, M-91, M-99) pressupõem marcha independente (M-55)." ;
+    tcc:origem inst:hab_MO01 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR17 a tcc:PreRequisito ;
+    rdfs:label "PR17: Equilíbrio estático é pré-requisito de Equilíbrio dinâmico"@pt-br ;
+    tcc:destino inst:hab_MO04 ;
+    tcc:evidencia "Sequência etária" ;
+    tcc:fundamentacao "Equilíbrio em movimento (andar na ponta dos pés, M-85; andar na viga, M-98) pressupõe equilíbrio em pé (M-37)." ;
+    tcc:origem inst:hab_MO03 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
 
 <http://example.org/sigamaes/ontologia> a owl:Ontology ;
     rdfs:label "Ontologia SIGAMAES – recomendação de tratamentos para pessoas com TEA"@pt-br ;
@@ -704,6 +949,9 @@ inst:rec_P004_3 a tcc:Recomendacao ;
 
 tcc:NivelHabilidade a rdfs:Datatype ;
     rdfs:comment "Valores permitidos: NaoAvaliado, Baixo, Moderado, Alto"@pt-br .
+
+tcc:NivelInconsistencia a rdfs:Datatype ;
+    rdfs:comment "Valores permitidos: Moderada, Alta"@pt-br .
 
 tcc:NivelPrioridade a rdfs:Datatype ;
     rdfs:comment "Valores permitidos: Baixa, Media, Alta"@pt-br .
@@ -717,6 +965,20 @@ tcc:avalia a owl:ObjectProperty ;
     rdfs:label "avalia" ;
     rdfs:domain tcc:AvaliacaoHabilidade ;
     rdfs:range tcc:Habilidade ;
+    rdfs:subPropertyOf gufo:mediates .
+
+tcc:avaliacaoDestino a owl:ObjectProperty ;
+    rdfs:label "avaliacaoDestino" ;
+    tcc:extensaoProposta true ;
+    rdfs:domain tcc:Inconsistencia ;
+    rdfs:range tcc:AvaliacaoHabilidade ;
+    rdfs:subPropertyOf gufo:mediates .
+
+tcc:avaliacaoOrigem a owl:ObjectProperty ;
+    rdfs:label "avaliacaoOrigem" ;
+    tcc:extensaoProposta true ;
+    rdfs:domain tcc:Inconsistencia ;
+    rdfs:range tcc:AvaliacaoHabilidade ;
     rdfs:subPropertyOf gufo:mediates .
 
 tcc:baseadaEm a owl:ObjectProperty ;
@@ -742,7 +1004,7 @@ tcc:dataRecomendacao a owl:DatatypeProperty ;
 
 tcc:descricao a owl:DatatypeProperty ;
     rdfs:label "descricao" ;
-    rdfs:comment "Atributo de Tratamento"@pt-br ;
+    rdfs:comment "Atributo de Tratamento e Inconsistencia"@pt-br ;
     rdfs:range xsd:string .
 
 tcc:destinadaA a owl:ObjectProperty ;
@@ -751,26 +1013,50 @@ tcc:destinadaA a owl:ObjectProperty ;
     rdfs:range tcc:Pessoa ;
     rdfs:subPropertyOf gufo:mediates .
 
+tcc:destino a owl:ObjectProperty ;
+    rdfs:label "destino" ;
+    tcc:extensaoProposta true ;
+    rdfs:comment "Pré-requisito: a habilidade dependente. Composição: o todo. Facilitação: a habilidade facilitada."@pt-br ;
+    rdfs:domain tcc:RelacaoHabilidade ;
+    rdfs:range tcc:Habilidade ;
+    rdfs:subPropertyOf gufo:mediates .
+
+tcc:evidencia a owl:DatatypeProperty ;
+    rdfs:label "evidencia" ;
+    tcc:extensaoProposta true ;
+    rdfs:comment "RelacaoHabilidade; tipo de evidência (conteúdo do item, sequência etária, funcional)"@pt-br ;
+    rdfs:range xsd:string .
+
 tcc:extensaoProposta a owl:AnnotationProperty .
 
-tcc:habilidadeApoiada a owl:ObjectProperty ;
-    rdfs:label "habilidadeApoiada" ;
+tcc:fundamentacao a owl:DatatypeProperty ;
+    rdfs:label "fundamentacao" ;
     tcc:extensaoProposta true ;
-    rdfs:comment "Habilidade que depende da habilidade base (R2)."@pt-br ;
-    rdfs:domain tcc:DependenciaHabilidade ;
-    rdfs:range tcc:Habilidade ;
-    rdfs:subPropertyOf gufo:mediates .
+    rdfs:comment "RelacaoHabilidade; justificativa com base nos itens do IPO"@pt-br ;
+    rdfs:range xsd:string .
 
-tcc:habilidadeBase a owl:ObjectProperty ;
-    rdfs:label "habilidadeBase" ;
+tcc:idadeInicialIPO a owl:DatatypeProperty ;
+    rdfs:label "idadeInicialIPO" ;
     tcc:extensaoProposta true ;
-    rdfs:domain tcc:DependenciaHabilidade ;
-    rdfs:range tcc:Habilidade ;
-    rdfs:subPropertyOf gufo:mediates .
+    rdfs:comment "Habilidade; limite inferior da faixa etária do primeiro item no IPO"@pt-br ;
+    rdfs:range xsd:integer .
 
 tcc:identificador a owl:DatatypeProperty ;
     rdfs:label "identificador" ;
     rdfs:comment "Atributo de Prontuario"@pt-br ;
+    rdfs:range xsd:string .
+
+tcc:inconsistenciaDe a owl:ObjectProperty ;
+    rdfs:label "inconsistenciaDe" ;
+    tcc:extensaoProposta true ;
+    rdfs:domain tcc:Inconsistencia ;
+    rdfs:range tcc:Pessoa ;
+    rdfs:subPropertyOf gufo:mediates .
+
+tcc:itemIPO a owl:DatatypeProperty ;
+    rdfs:label "itemIPO" ;
+    tcc:extensaoProposta true ;
+    rdfs:comment "Habilidade; item do Inventário Portage Operacionalizado e faixa etária"@pt-br ;
     rdfs:range xsd:string .
 
 tcc:justificativa a owl:DatatypeProperty ;
@@ -800,6 +1086,14 @@ tcc:nome a owl:DatatypeProperty ;
     rdfs:comment "Atributo de Pessoa, Habilidade e Tratamento"@pt-br ;
     rdfs:range xsd:string .
 
+tcc:origem a owl:ObjectProperty ;
+    rdfs:label "origem" ;
+    tcc:extensaoProposta true ;
+    rdfs:comment "Pré-requisito: a habilidade necessária. Composição: a parte. Facilitação: a habilidade que facilita."@pt-br ;
+    rdfs:domain tcc:RelacaoHabilidade ;
+    rdfs:range tcc:Habilidade ;
+    rdfs:subPropertyOf gufo:mediates .
+
 tcc:pertenceA a owl:ObjectProperty ;
     rdfs:label "pertenceA" ;
     rdfs:domain tcc:AvaliacaoHabilidade ;
@@ -809,7 +1103,7 @@ tcc:pertenceA a owl:ObjectProperty ;
 tcc:pesoIndireto a owl:DatatypeProperty ;
     rdfs:label "pesoIndireto" ;
     tcc:extensaoProposta true ;
-    rdfs:comment "DependenciaHabilidade (R2)"@pt-br ;
+    rdfs:comment "RelacaoHabilidade (R2)"@pt-br ;
     rdfs:range xsd:decimal .
 
 tcc:podeIndicar a owl:ObjectProperty ;
@@ -855,6 +1149,26 @@ tcc:requer a owl:ObjectProperty ;
     rdfs:comment "Conhecimento composto: indica o tratamento quando os conhecimentos requeridos atingem o limiar (R5 – intervenção integrada)."@pt-br ;
     rdfs:domain tcc:ConhecimentoComposto ;
     rdfs:range tcc:ConhecimentoSimples .
+
+tcc:severidade a owl:DatatypeProperty ;
+    rdfs:label "severidade" ;
+    tcc:extensaoProposta true ;
+    rdfs:comment "Inconsistencia; valores de NivelInconsistencia"@pt-br ;
+    rdfs:range xsd:string .
+
+tcc:statusValidacao a owl:DatatypeProperty ;
+    rdfs:label "statusValidacao" ;
+    tcc:extensaoProposta true ;
+    rdfs:comment "RelacaoHabilidade"@pt-br ;
+    rdfs:range xsd:string .
+
+tcc:violaRelacao a owl:ObjectProperty ;
+    rdfs:label "violaRelacao" ;
+    tcc:extensaoProposta true ;
+    rdfs:comment "Relação de pré-requisito ou composição contrariada pelas respostas (R7)."@pt-br ;
+    rdfs:domain tcc:Inconsistencia ;
+    rdfs:range tcc:RelacaoHabilidade ;
+    rdfs:subPropertyOf gufo:mediates .
 
 inst:aval_P001_AC01 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P001/AC01: Moderado"@pt-br ;
@@ -926,30 +1240,229 @@ inst:aval_P001_AC10 a tcc:AvaliacaoHabilidade ;
     tcc:nivel "Moderado" ;
     tcc:pertenceA inst:pessoa_P001 .
 
-inst:aval_P001_MO09 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P001/MO09: Moderado"@pt-br ;
-    tcc:avalia inst:hab_MO09 ;
+inst:aval_P001_MO15 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P001/MO15: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO15 ;
     tcc:dataAvaliacao "2026-09-15"^^xsd:date ;
     tcc:nivel "Moderado" ;
     tcc:pertenceA inst:pessoa_P001 .
 
-inst:aval_P001_MO13 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P001/MO13: Moderado"@pt-br ;
-    tcc:avalia inst:hab_MO13 ;
-    tcc:dataAvaliacao "2026-09-15"^^xsd:date ;
+inst:aval_P002_AC02 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P002/AC02: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC02 ;
+    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P002 .
+
+inst:aval_P002_AC05 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P002/AC05: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC05 ;
+    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P002 .
+
+inst:aval_P002_AC10 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P002/AC10: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC10 ;
+    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P002 .
+
+inst:aval_P004_AC01 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/AC01: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC01 ;
+    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P004_AC10 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/AC10: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC10 ;
+    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P004_MO07 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/MO07: Alto"@pt-br ;
+    tcc:avalia inst:hab_MO07 ;
+    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P004_MO08 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/MO08: Alto"@pt-br ;
+    tcc:avalia inst:hab_MO08 ;
+    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P004_MO10 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/MO10: Alto"@pt-br ;
+    tcc:avalia inst:hab_MO10 ;
+    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P004_MO11 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/MO11: Alto"@pt-br ;
+    tcc:avalia inst:hab_MO11 ;
+    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P004_MO15 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/MO15: Alto"@pt-br ;
+    tcc:avalia inst:hab_MO15 ;
+    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P005_AC02 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC02: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC02 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_AC08 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC08: Alto"@pt-br ;
+    tcc:avalia inst:hab_AC08 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO01 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO01: Alto"@pt-br ;
+    tcc:avalia inst:hab_MO01 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Alto" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO04 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO04: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO04 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
     tcc:nivel "Moderado" ;
-    tcc:pertenceA inst:pessoa_P001 .
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:con_integrado a tcc:ConhecimentoComposto ;
+    rdfs:label "Indica Intervenção integrada autocuidado + motor quando ≥ 2 conhecimentos requeridos atingem 30% (R5)"@pt-br ;
+    tcc:limiarIndicacao 0.3 ;
+    tcc:minimoRequeridos 2 ;
+    tcc:podeIndicar inst:trat_integrado ;
+    tcc:requer inst:con_autocuidado,
+        inst:con_motor_fino,
+        inst:con_motor_grosso .
+
+inst:rel_CO01 a tcc:Composicao ;
+    rdfs:label "CO01: Manuseio de ajustes é parte de Vestuário"@pt-br ;
+    tcc:destino inst:hab_AC08 ;
+    tcc:evidencia "Conteúdo do item" ;
+    tcc:fundamentacao "Os itens de vestir do IPO ressalvam os fechos (A-54/A-58: 'exceto botões/zíper'; A-81: 'mas não dá laços'), ou seja, manusear ajustes é parte do vestir-se completo." ;
+    tcc:origem inst:hab_AC09 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR02 a tcc:PreRequisito ;
+    rdfs:label "PR02: Preensão é pré-requisito de Alimentação"@pt-br ;
+    tcc:destino inst:hab_AC01 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Alimentar-se com os dedos (A-10) e com a colher (A-14) exige pegar o alimento ou o talher; a preensão vem antes ou na mesma faixa." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR04 a tcc:PreRequisito ;
+    rdfs:label "PR04: Preensão é pré-requisito de Cuidado com o cabelo"@pt-br ;
+    tcc:destino inst:hab_AC05 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Pentear ou escovar o cabelo (A-86) exige segurar o pente ou a escova." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR08 a tcc:PreRequisito ;
+    rdfs:label "PR08: Preensão é pré-requisito de Encaixe de pinos e argolas"@pt-br ;
+    tcc:destino inst:hab_MO07 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Colocar aros na estaca (M-50) e encaixar pinos (M-52) exige pegar objetos pequenos." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR09 a tcc:PreRequisito ;
+    rdfs:label "PR09: Preensão é pré-requisito de Empilhar peças"@pt-br ;
+    tcc:destino inst:hab_MO08 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Construir torre de blocos (M-53) exige segurar e soltar blocos (M-29)." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR11 a tcc:PreRequisito ;
+    rdfs:label "PR11: Preensão é pré-requisito de Dobrar papel"@pt-br ;
+    tcc:destino inst:hab_MO10 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Dobrar papel ao meio (M-73) exige pegar e alinhar a borda do papel com os dedos." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR12 a tcc:PreRequisito ;
+    rdfs:label "PR12: Preensão é pré-requisito de Montagem de quebra-cabeças"@pt-br ;
+    tcc:destino inst:hab_MO11 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Montar quebra-cabeça (M-81) exige pegar e posicionar as peças." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR14 a tcc:PreRequisito ;
+    rdfs:label "PR14: Preensão é pré-requisito de Manipulação de fechos, trincos e maçanetas"@pt-br ;
+    tcc:destino inst:hab_MO15 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Virar maçanetas (M-65) e desenroscar (M-75) exigem preensão do objeto." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR15 a tcc:PreRequisito ;
+    rdfs:label "PR15: Equilíbrio estático é pré-requisito de Locomoção geral"@pt-br ;
+    tcc:destino inst:hab_MO01 ;
+    tcc:evidencia "Sequência etária" ;
+    tcc:fundamentacao "Manter-se em pé sozinho por 1 minuto (M-37) antecede andar sozinho (M-55)." ;
+    tcc:origem inst:hab_MO03 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+tcc:Alimentacao a gufo:SubKind,
+        owl:Class ;
+    rdfs:label "Feeding"@en,
+        "Alimentação"@pt-br ;
+    rdfs:subClassOf tcc:HabilidadeAutocuidado ;
+    owl:disjointWith tcc:Calcados,
+        tcc:HigieneBucal,
+        tcc:HigieneCabelos,
+        tcc:HigieneCorporal,
+        tcc:HigieneMaos,
+        tcc:HigieneRosto,
+        tcc:UsoBanheiro,
+        tcc:Vestuario .
+
+tcc:Caminhar a gufo:SubKind,
+        owl:Class ;
+    rdfs:label "Walking"@en,
+        "Caminhar"@pt-br ;
+    rdfs:subClassOf tcc:HabilidadeMotora ;
+    owl:disjointWith tcc:Correr,
+        tcc:Engatinhar,
+        tcc:Rolar,
+        tcc:Sentar,
+        tcc:SubirEscadas .
 
 inst:aval_P002_AC01 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P002/AC01: Moderado"@pt-br ;
     tcc:avalia inst:hab_AC01 ;
-    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
-    tcc:nivel "Moderado" ;
-    tcc:pertenceA inst:pessoa_P002 .
-
-inst:aval_P002_AC08 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P002/AC08: Moderado"@pt-br ;
-    tcc:avalia inst:hab_AC08 ;
     tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
     tcc:nivel "Moderado" ;
     tcc:pertenceA inst:pessoa_P002 .
@@ -1017,66 +1530,6 @@ inst:aval_P002_MO14 a tcc:AvaliacaoHabilidade ;
     tcc:nivel "Baixo" ;
     tcc:pertenceA inst:pessoa_P002 .
 
-inst:con_integrado a tcc:ConhecimentoComposto ;
-    rdfs:label "Indica Intervenção integrada autocuidado + motor quando ≥ 2 conhecimentos requeridos atingem 30% (R5)"@pt-br ;
-    tcc:limiarIndicacao 0.3 ;
-    tcc:minimoRequeridos 2 ;
-    tcc:podeIndicar inst:trat_integrado ;
-    tcc:requer inst:con_autocuidado,
-        inst:con_motor_fino,
-        inst:con_motor_grosso .
-
-inst:trat_motor_grosso a tcc:Tratamento ;
-    rdfs:label "Treino de habilidades motoras grossas"@pt-br ;
-    tcc:descricao "Intervenção voltada à locomoção, equilíbrio e atividades com bola." ;
-    tcc:nome "Treino de habilidades motoras grossas" .
-
-tcc:Alimentacao a gufo:SubKind,
-        owl:Class ;
-    rdfs:label "Feeding"@en,
-        "Alimentação"@pt-br ;
-    rdfs:subClassOf tcc:HabilidadeAutocuidado ;
-    owl:disjointWith tcc:Calcados,
-        tcc:HigieneBucal,
-        tcc:HigieneCabelos,
-        tcc:HigieneCorporal,
-        tcc:HigieneMaos,
-        tcc:HigieneRosto,
-        tcc:UsoBanheiro,
-        tcc:Vestuario .
-
-tcc:Caminhar a gufo:SubKind,
-        owl:Class ;
-    rdfs:label "Walking"@en,
-        "Caminhar"@pt-br ;
-    rdfs:subClassOf tcc:HabilidadeMotora ;
-    owl:disjointWith tcc:Correr,
-        tcc:Engatinhar,
-        tcc:Rolar,
-        tcc:Sentar,
-        tcc:SubirEscadas .
-
-inst:aval_P001_MO15 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P001/MO15: Moderado"@pt-br ;
-    tcc:avalia inst:hab_MO15 ;
-    tcc:dataAvaliacao "2026-09-15"^^xsd:date ;
-    tcc:nivel "Moderado" ;
-    tcc:pertenceA inst:pessoa_P001 .
-
-inst:aval_P002_MO06 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P002/MO06: Baixo"@pt-br ;
-    tcc:avalia inst:hab_MO06 ;
-    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
-    tcc:nivel "Baixo" ;
-    tcc:pertenceA inst:pessoa_P002 .
-
-inst:aval_P002_MO15 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P002/MO15: Moderado"@pt-br ;
-    tcc:avalia inst:hab_MO15 ;
-    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
-    tcc:nivel "Moderado" ;
-    tcc:pertenceA inst:pessoa_P002 .
-
 inst:aval_P004_AC02 a tcc:AvaliacaoHabilidade ;
     rdfs:label "Avaliação P004/AC02: Moderado"@pt-br ;
     tcc:avalia inst:hab_AC02 ;
@@ -1096,13 +1549,6 @@ inst:aval_P004_AC05 a tcc:AvaliacaoHabilidade ;
     tcc:avalia inst:hab_AC05 ;
     tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
     tcc:nivel "Baixo" ;
-    tcc:pertenceA inst:pessoa_P004 .
-
-inst:aval_P004_AC08 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/AC08: Moderado"@pt-br ;
-    tcc:avalia inst:hab_AC08 ;
-    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
-    tcc:nivel "Moderado" ;
     tcc:pertenceA inst:pessoa_P004 .
 
 inst:aval_P004_AC09 a tcc:AvaliacaoHabilidade ;
@@ -1139,6 +1585,83 @@ inst:aval_P004_MO14 a tcc:AvaliacaoHabilidade ;
     tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
     tcc:nivel "Moderado" ;
     tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P005_AC01 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC01: Moderado"@pt-br ;
+    tcc:avalia inst:hab_AC01 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_AC03 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC03: Moderado"@pt-br ;
+    tcc:avalia inst:hab_AC03 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_AC05 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC05: Moderado"@pt-br ;
+    tcc:avalia inst:hab_AC05 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO07 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO07: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO07 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO08 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO08: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO08 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO09 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO09: Baixo"@pt-br ;
+    tcc:avalia inst:hab_MO09 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Baixo" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO10 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO10: Baixo"@pt-br ;
+    tcc:avalia inst:hab_MO10 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Baixo" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO11 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO11: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO11 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO12 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO12: Baixo"@pt-br ;
+    tcc:avalia inst:hab_MO12 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Baixo" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO13 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO13: Baixo"@pt-br ;
+    tcc:avalia inst:hab_MO13 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Baixo" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO14 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO14: Baixo"@pt-br ;
+    tcc:avalia inst:hab_MO14 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Baixo" ;
+    tcc:pertenceA inst:pessoa_P005 .
 
 inst:con_autocuidado a tcc:ConhecimentoSimples ;
     rdfs:label "Dificuldade nas habilidades-alvo indica Treino de habilidades de autocuidado (a partir de 15%)"@pt-br ;
@@ -1180,10 +1703,28 @@ inst:con_motor_grosso a tcc:ConhecimentoSimples ;
         inst:hab_MO04,
         inst:hab_MO05 .
 
-inst:trat_integrado a tcc:Tratamento ;
-    rdfs:label "Intervenção integrada autocuidado + motor"@pt-br ;
-    tcc:descricao "Programa multiprofissional que combina objetivos de autocuidado e de desenvolvimento motor." ;
-    tcc:nome "Intervenção integrada autocuidado + motor" .
+inst:rel_CO02 a tcc:Composicao ;
+    rdfs:label "CO02: Vestuário é parte de Tarefas de banheiro"@pt-br ;
+    tcc:destino inst:hab_AC10 ;
+    tcc:evidencia "Conteúdo do item" ;
+    tcc:fundamentacao "A-85 define usar o banheiro de forma independente incluindo 'retira a roupa' e 'veste-se sem ajuda': vestir-se é parte da tarefa." ;
+    tcc:origem inst:hab_AC08 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:rel_PR01 a tcc:PreRequisito ;
+    rdfs:label "PR01: Preensão é pré-requisito de Escovação"@pt-br ;
+    tcc:destino inst:hab_AC02 ;
+    tcc:evidencia "Conteúdo do item + sequência etária" ;
+    tcc:fundamentacao "Segurar e movimentar a escova exige preensão com os dedos; a pinça (M-32) surge na faixa 0-1, antes de escovar imitando o adulto (A-36, 2-3)." ;
+    tcc:origem inst:hab_MO06 ;
+    tcc:pesoIndireto 0.5 ;
+    tcc:statusValidacao "Derivada do IPO – validar com as orientadoras" .
+
+inst:trat_motor_grosso a tcc:Tratamento ;
+    rdfs:label "Treino de habilidades motoras grossas"@pt-br ;
+    tcc:descricao "Intervenção voltada à locomoção, equilíbrio e atividades com bola." ;
+    tcc:nome "Treino de habilidades motoras grossas" .
 
 tcc:Correr a gufo:SubKind,
         owl:Class ;
@@ -1208,12 +1749,48 @@ tcc:HigieneCorporal a gufo:SubKind,
         tcc:UsoBanheiro,
         tcc:Vestuario .
 
-inst:aval_P004_MO06 a tcc:AvaliacaoHabilidade ;
-    rdfs:label "Avaliação P004/MO06: Moderado"@pt-br ;
-    tcc:avalia inst:hab_MO06 ;
+inst:aval_P002_AC08 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P002/AC08: Moderado"@pt-br ;
+    tcc:avalia inst:hab_AC08 ;
+    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P002 .
+
+inst:aval_P002_MO15 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P002/MO15: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO15 ;
+    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P002 .
+
+inst:aval_P004_AC08 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/AC08: Moderado"@pt-br ;
+    tcc:avalia inst:hab_AC08 ;
     tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
     tcc:nivel "Moderado" ;
     tcc:pertenceA inst:pessoa_P004 .
+
+inst:aval_P005_AC09 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/AC09: Baixo"@pt-br ;
+    tcc:avalia inst:hab_AC09 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Baixo" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO15 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO15: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO15 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+tcc:Composicao a gufo:SubKind,
+        owl:Class ;
+    rdfs:label "Composition"@en,
+        "Composição"@pt-br ;
+    tcc:extensaoProposta true ;
+    rdfs:subClassOf tcc:RelacaoHabilidade ;
+    owl:disjointWith tcc:Facilitacao .
 
 tcc:ConhecimentoComposto a gufo:SubKind,
         owl:Class ;
@@ -1237,10 +1814,24 @@ tcc:SubirEscadas a gufo:SubKind,
         tcc:Rolar,
         tcc:Sentar .
 
-inst:trat_autocuidado a tcc:Tratamento ;
-    rdfs:label "Treino de habilidades de autocuidado"@pt-br ;
-    tcc:descricao "Intervenção voltada às atividades de vida diária: alimentação, higiene, vestuário e uso do banheiro." ;
-    tcc:nome "Treino de habilidades de autocuidado" .
+inst:aval_P005_MO03 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO03: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO03 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:aval_P005_MO06 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P005/MO06: Baixo"@pt-br ;
+    tcc:avalia inst:hab_MO06 ;
+    tcc:dataAvaliacao "2026-09-19"^^xsd:date ;
+    tcc:nivel "Baixo" ;
+    tcc:pertenceA inst:pessoa_P005 .
+
+inst:trat_integrado a tcc:Tratamento ;
+    rdfs:label "Intervenção integrada autocuidado + motor"@pt-br ;
+    tcc:descricao "Programa multiprofissional que combina objetivos de autocuidado e de desenvolvimento motor." ;
+    tcc:nome "Intervenção integrada autocuidado + motor" .
 
 inst:trat_motor_fino a tcc:Tratamento ;
     rdfs:label "Treino de habilidades motoras finas"@pt-br ;
@@ -1284,50 +1875,17 @@ tcc:Rolar a gufo:SubKind,
     owl:disjointWith tcc:Engatinhar,
         tcc:Sentar .
 
-inst:hab_AC02 a tcc:HigieneBucal,
-        owl:NamedIndividual ;
-    rdfs:label "AC02 – Escovação"@pt-br ;
-    tcc:nome "Escovação" .
+inst:aval_P002_MO06 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P002/MO06: Baixo"@pt-br ;
+    tcc:avalia inst:hab_MO06 ;
+    tcc:dataAvaliacao "2026-09-16"^^xsd:date ;
+    tcc:nivel "Baixo" ;
+    tcc:pertenceA inst:pessoa_P002 .
 
-inst:hab_AC04 a tcc:HigieneCorporal,
-        owl:NamedIndividual ;
-    rdfs:label "AC04 – Cuidado com o corpo"@pt-br ;
-    tcc:nome "Cuidado com o corpo" .
-
-inst:hab_AC05 a tcc:HigieneCabelos,
-        owl:NamedIndividual ;
-    rdfs:label "AC05 – Cuidado com o cabelo"@pt-br ;
-    tcc:nome "Cuidado com o cabelo" .
-
-inst:hab_AC06 a tcc:HigieneRosto,
-        owl:NamedIndividual ;
-    rdfs:label "AC06 – Cuidado com o rosto"@pt-br ;
-    tcc:nome "Cuidado com o rosto" .
-
-inst:hab_AC09 a tcc:Calcados,
-        owl:NamedIndividual ;
-    rdfs:label "AC09 – Manuseio de ajustes"@pt-br ;
-    tcc:nome "Manuseio de ajustes" .
-
-inst:hab_MO05 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO05 – Arremessar, receber, rolar e chutar bolas"@pt-br ;
-    tcc:nome "Arremessar, receber, rolar e chutar bolas" .
-
-inst:hab_MO08 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO08 – Empilhar peças"@pt-br ;
-    tcc:nome "Empilhar peças" .
-
-inst:hab_MO10 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO10 – Dobrar papel"@pt-br ;
-    tcc:nome "Dobrar papel" .
-
-inst:hab_MO11 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO11 – Montagem de quebra-cabeças"@pt-br ;
-    tcc:nome "Montagem de quebra-cabeças" .
+inst:trat_autocuidado a tcc:Tratamento ;
+    rdfs:label "Treino de habilidades de autocuidado"@pt-br ;
+    tcc:descricao "Intervenção voltada às atividades de vida diária: alimentação, higiene, vestuário e uso do banheiro." ;
+    tcc:nome "Treino de habilidades de autocuidado" .
 
 tcc:ConhecimentoSimples a gufo:SubKind,
         owl:Class ;
@@ -1347,12 +1905,6 @@ tcc:HigieneRosto a gufo:SubKind,
         tcc:UsoBanheiro,
         tcc:Vestuario .
 
-tcc:Prontuario a gufo:Kind,
-        owl:Class ;
-    rdfs:label "Medical Record"@en,
-        "Prontuário"@pt-br ;
-    rdfs:subClassOf gufo:FunctionalComplex .
-
 tcc:Sentar a gufo:SubKind,
         owl:Class ;
     rdfs:label "Sitting"@en,
@@ -1360,60 +1912,53 @@ tcc:Sentar a gufo:SubKind,
     rdfs:subClassOf tcc:HabilidadeMotora ;
     owl:disjointWith tcc:Engatinhar .
 
-inst:hab_AC03 a tcc:HigieneBucal,
+inst:hab_AC04 a tcc:HigieneCorporal,
         owl:NamedIndividual ;
-    rdfs:label "AC03 – Fio dental"@pt-br ;
-    tcc:nome "Fio dental" .
+    rdfs:label "AC04 – Cuidado com o corpo"@pt-br ;
+    tcc:idadeInicialIPO 2 ;
+    tcc:itemIPO "A-49 (2-3)",
+        "A-78 (4-5)",
+        "A-97 (5-6)" ;
+    tcc:nome "Cuidado com o corpo" .
 
-inst:hab_AC10 a tcc:UsoBanheiro,
+inst:hab_AC06 a tcc:HigieneRosto,
         owl:NamedIndividual ;
-    rdfs:label "AC10 – Tarefas de banheiro"@pt-br ;
-    tcc:nome "Tarefas de banheiro" .
+    rdfs:label "AC06 – Cuidado com o rosto"@pt-br ;
+    tcc:idadeInicialIPO 1 ;
+    tcc:itemIPO "A-16 (1-2)",
+        "A-27 (2-3)",
+        "A-40 (2-3)",
+        "A-55 (3-4)",
+        "A-60 (3-4)",
+        "A-74 (4-5)",
+        "A-77 (4-5)" ;
+    tcc:nome "Cuidado com o rosto" .
 
-inst:hab_MO02 a tcc:SubirEscadas,
+inst:hab_AC07 a tcc:HigieneMaos,
         owl:NamedIndividual ;
-    rdfs:label "MO02 – Locomoção específica"@pt-br ;
-    tcc:nome "Locomoção específica" .
+    rdfs:label "AC07 – Cuidado com as mãos"@pt-br ;
+    tcc:idadeInicialIPO 2 ;
+    tcc:itemIPO "A-27 (2-3)",
+        "A-31 (2-3)",
+        "A-39 (2-3)",
+        "A-40 (2-3)",
+        "A-74 (4-5)" ;
+    tcc:nome "Cuidado com as mãos" .
 
-inst:hab_MO03 a tcc:HabilidadeMotora,
+inst:hab_MO05 a tcc:HabilidadeMotora,
         owl:NamedIndividual ;
-    rdfs:label "MO03 – Equilíbrio estático"@pt-br ;
-    tcc:nome "Equilíbrio estático" .
-
-inst:hab_MO04 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO04 – Equilíbrio dinâmico"@pt-br ;
-    tcc:nome "Equilíbrio dinâmico" .
-
-inst:hab_MO07 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO07 – Encaixe de pinos e argolas"@pt-br ;
-    tcc:nome "Encaixe de pinos e argolas" .
-
-inst:hab_MO09 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO09 – Enfiagem de contas"@pt-br ;
-    tcc:nome "Enfiagem de contas" .
-
-inst:hab_MO12 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO12 – Preensão e controle de lápis"@pt-br ;
-    tcc:nome "Preensão e controle de lápis" .
-
-inst:hab_MO13 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO13 – Escrita, cópia de letras e desenho"@pt-br ;
-    tcc:nome "Escrita, cópia de letras e desenho" .
-
-inst:hab_MO14 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO14 – Uso de tesoura"@pt-br ;
-    tcc:nome "Uso de tesoura" .
-
-inst:hab_MO15 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO15 – Manipulação de fechos, trincos e maçanetas"@pt-br ;
-    tcc:nome "Manipulação de fechos, trincos e maçanetas" .
+    rdfs:label "MO05 – Arremessar, receber, rolar e chutar bolas"@pt-br ;
+    tcc:idadeInicialIPO 1 ;
+    tcc:itemIPO "M-102 (4-5)",
+        "M-120 (5-6)",
+        "M-127 (5-6)",
+        "M-129 (5-6)",
+        "M-48 (1-2)",
+        "M-69 (2-3)",
+        "M-76 (2-3)",
+        "M-84 (3-4)",
+        "M-93 (3-4)" ;
+    tcc:nome "Arremessar, receber, rolar e chutar bolas" .
 
 tcc:Engatinhar a gufo:SubKind,
         owl:Class ;
@@ -1436,6 +1981,19 @@ tcc:HigieneMaos a gufo:SubKind,
         tcc:UsoBanheiro,
         tcc:Vestuario .
 
+tcc:Prontuario a gufo:Kind,
+        owl:Class ;
+    rdfs:label "Medical Record"@en,
+        "Prontuário"@pt-br ;
+    rdfs:subClassOf gufo:FunctionalComplex .
+
+tcc:RelacaoHabilidade a gufo:Kind,
+        owl:Class ;
+    rdfs:label "Skill Relation"@en,
+        "Relação entre Habilidades"@pt-br ;
+    tcc:extensaoProposta true ;
+    rdfs:subClassOf gufo:Relator .
+
 tcc:Tratamento a gufo:Kind,
         owl:Class ;
     rdfs:label "Treatment"@en,
@@ -1445,23 +2003,67 @@ tcc:Tratamento a gufo:Kind,
 inst:hab_AC01 a tcc:Alimentacao,
         owl:NamedIndividual ;
     rdfs:label "AC01 – Alimentação"@pt-br ;
+    tcc:idadeInicialIPO 0 ;
+    tcc:itemIPO "A-10 (0-1)",
+        "A-100 (5-6)",
+        "A-12 (0-1)",
+        "A-14 (1-2)",
+        "A-26 (2-3)",
+        "A-29 (2-3)",
+        "A-46 (2-3)",
+        "A-53 (3-4)",
+        "A-75 (4-5)",
+        "A-79 (4-5)" ;
     tcc:nome "Alimentação" .
 
-inst:hab_AC07 a tcc:HigieneMaos,
+inst:hab_AC02 a tcc:HigieneBucal,
         owl:NamedIndividual ;
-    rdfs:label "AC07 – Cuidado com as mãos"@pt-br ;
-    tcc:nome "Cuidado com as mãos" .
+    rdfs:label "AC02 – Escovação"@pt-br ;
+    tcc:idadeInicialIPO 2 ;
+    tcc:itemIPO "A-36 (2-3)",
+        "A-63 (3-4)",
+        "A-84 (4-5)" ;
+    tcc:nome "Escovação" .
 
-inst:hab_MO01 a tcc:Caminhar,
+inst:hab_AC03 a tcc:HigieneBucal,
         owl:NamedIndividual ;
-    rdfs:label "MO01 – Locomoção geral"@pt-br ;
-    tcc:nome "Locomoção geral" .
+    rdfs:label "AC03 – Fio dental"@pt-br ;
+    tcc:nome "Fio dental" ;
+    rdfs:comment "Sem item correspondente no IPO: relações desta habilidade são apenas funcionais"@pt-br .
 
-tcc:Pessoa a gufo:Kind,
-        owl:Class ;
-    rdfs:label "Person"@en,
-        "Pessoa"@pt-br ;
-    rdfs:subClassOf gufo:FunctionalComplex .
+inst:hab_AC05 a tcc:HigieneCabelos,
+        owl:NamedIndividual ;
+    rdfs:label "AC05 – Cuidado com o cabelo"@pt-br ;
+    tcc:idadeInicialIPO 4 ;
+    tcc:itemIPO "A-86 (4-5)" ;
+    tcc:nome "Cuidado com o cabelo" .
+
+inst:hab_MO09 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO09 – Enfiagem de contas"@pt-br ;
+    tcc:idadeInicialIPO 2 ;
+    tcc:itemIPO "M-64 (2-3)" ;
+    tcc:nome "Enfiagem de contas" .
+
+inst:hab_MO10 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO10 – Dobrar papel"@pt-br ;
+    tcc:idadeInicialIPO 2 ;
+    tcc:itemIPO "M-126 (5-6)",
+        "M-73 (2-3)" ;
+    tcc:nome "Dobrar papel" .
+
+inst:hab_MO13 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO13 – Escrita, cópia de letras e desenho"@pt-br ;
+    tcc:idadeInicialIPO 3 ;
+    tcc:itemIPO "M-110 (4-5)",
+        "M-112 (5-6)",
+        "M-117 (5-6)",
+        "M-124 (5-6)",
+        "M-137 (5-6)",
+        "M-94 (3-4)" ;
+    tcc:nome "Escrita, cópia de letras e desenho" .
 
 tcc:Vestuario a gufo:SubKind,
         owl:Class ;
@@ -1471,6 +2073,89 @@ tcc:Vestuario a gufo:SubKind,
     owl:disjointWith tcc:Calcados,
         tcc:UsoBanheiro .
 
+inst:hab_AC10 a tcc:UsoBanheiro,
+        owl:NamedIndividual ;
+    rdfs:label "AC10 – Tarefas de banheiro"@pt-br ;
+    tcc:idadeInicialIPO 1 ;
+    tcc:itemIPO "A-101 (5-6)",
+        "A-17 (1-2)",
+        "A-25 (1-2)",
+        "A-32 (2-3)",
+        "A-34 (2-3)",
+        "A-38 (2-3)",
+        "A-41 (2-3)",
+        "A-56 (3-4)",
+        "A-76 (4-5)",
+        "A-85 (4-5)" ;
+    tcc:nome "Tarefas de banheiro" .
+
+inst:hab_MO02 a tcc:SubirEscadas,
+        owl:NamedIndividual ;
+    rdfs:label "MO02 – Locomoção específica"@pt-br ;
+    tcc:idadeInicialIPO 1 ;
+    tcc:itemIPO "M-106 (4-5)",
+        "M-108 (4-5)",
+        "M-118 (5-6)",
+        "M-46 (1-2)",
+        "M-56 (1-2)",
+        "M-61 (1-2)",
+        "M-66 (2-3)",
+        "M-68 (2-3)",
+        "M-83 (3-4)",
+        "M-89 (3-4)",
+        "M-91 (3-4)",
+        "M-99 (4-5)" ;
+    tcc:nome "Locomoção específica" ;
+    rdfs:comment "Escadas, saltos e escorregador"@pt-br .
+
+inst:hab_MO04 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO04 – Equilíbrio dinâmico"@pt-br ;
+    tcc:idadeInicialIPO 3 ;
+    tcc:itemIPO "M-113 (5-6)",
+        "M-85 (3-4)",
+        "M-98 (4-5)" ;
+    tcc:nome "Equilíbrio dinâmico" .
+
+inst:hab_MO07 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO07 – Encaixe de pinos e argolas"@pt-br ;
+    tcc:idadeInicialIPO 1 ;
+    tcc:itemIPO "M-50 (1-2)",
+        "M-51 (1-2)",
+        "M-52 (1-2)",
+        "M-80 (2-3)" ;
+    tcc:nome "Encaixe de pinos e argolas" .
+
+inst:hab_MO08 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO08 – Empilhar peças"@pt-br ;
+    tcc:idadeInicialIPO 1 ;
+    tcc:itemIPO "M-53 (1-2)",
+        "M-70 (2-3)" ;
+    tcc:nome "Empilhar peças" .
+
+inst:hab_MO14 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO14 – Uso de tesoura"@pt-br ;
+    tcc:idadeInicialIPO 3 ;
+    tcc:itemIPO "M-104 (4-5)",
+        "M-109 (4-5)",
+        "M-111 (4-5)",
+        "M-122 (5-6)",
+        "M-82 (3-4)",
+        "M-95 (3-4)" ;
+    tcc:nome "Uso de tesoura" .
+
+inst:hab_MO15 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO15 – Manipulação de fechos, trincos e maçanetas"@pt-br ;
+    tcc:idadeInicialIPO 2 ;
+    tcc:itemIPO "M-105 (4-5)",
+        "M-65 (2-3)",
+        "M-75 (2-3)" ;
+    tcc:nome "Manipulação de fechos, trincos e maçanetas" .
+
 tcc:Calcados a gufo:SubKind,
         owl:Class ;
     rdfs:label "Footwear"@en,
@@ -1478,10 +2163,95 @@ tcc:Calcados a gufo:SubKind,
     rdfs:subClassOf tcc:HabilidadeAutocuidado ;
     owl:disjointWith tcc:UsoBanheiro .
 
+inst:aval_P004_MO06 a tcc:AvaliacaoHabilidade ;
+    rdfs:label "Avaliação P004/MO06: Moderado"@pt-br ;
+    tcc:avalia inst:hab_MO06 ;
+    tcc:dataAvaliacao "2026-09-18"^^xsd:date ;
+    tcc:nivel "Moderado" ;
+    tcc:pertenceA inst:pessoa_P004 .
+
 inst:hab_AC08 a tcc:Vestuario,
         owl:NamedIndividual ;
     rdfs:label "AC08 – Vestuário"@pt-br ;
+    tcc:idadeInicialIPO 0 ;
+    tcc:itemIPO "A-13 (0-1)",
+        "A-18 (1-2)",
+        "A-19 (1-2)",
+        "A-20 (1-2)",
+        "A-22 (1-2)",
+        "A-23 (1-2)",
+        "A-37 (2-3)",
+        "A-50 (2-3)",
+        "A-51 (2-3)",
+        "A-54 (3-4)",
+        "A-58 (3-4)",
+        "A-64 (3-4)",
+        "A-81 (4-5)",
+        "A-92 (5-6)" ;
     tcc:nome "Vestuário" .
+
+inst:hab_AC09 a tcc:Calcados,
+        owl:NamedIndividual ;
+    rdfs:label "AC09 – Manuseio de ajustes"@pt-br ;
+    tcc:idadeInicialIPO 1 ;
+    tcc:itemIPO "A-105 (5-6)",
+        "A-24 (1-2)",
+        "A-48 (2-3)",
+        "A-59 (3-4)",
+        "A-65 (3-4)",
+        "A-66 (3-4)",
+        "A-70 (4-5)",
+        "A-71 (4-5)",
+        "A-73 (4-5)",
+        "A-80 (4-5)",
+        "A-89 (4-5)",
+        "A-90 (4-5)" ;
+    tcc:nome "Manuseio de ajustes" ;
+    rdfs:comment "Botões, zíper, colchetes, fivelas e laços"@pt-br .
+
+inst:hab_MO01 a tcc:Caminhar,
+        owl:NamedIndividual ;
+    rdfs:label "MO01 – Locomoção geral"@pt-br ;
+    tcc:idadeInicialIPO 0 ;
+    tcc:itemIPO "M-44 (0-1)",
+        "M-45 (0-1)",
+        "M-55 (1-2)",
+        "M-67 (2-3)",
+        "M-86 (3-4)",
+        "M-97 (4-5)" ;
+    tcc:nome "Locomoção geral" .
+
+inst:hab_MO03 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO03 – Equilíbrio estático"@pt-br ;
+    tcc:idadeInicialIPO 0 ;
+    tcc:itemIPO "M-139 (5-6)",
+        "M-37 (0-1)",
+        "M-96 (4-5)" ;
+    tcc:nome "Equilíbrio estático" .
+
+inst:hab_MO11 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO11 – Montagem de quebra-cabeças"@pt-br ;
+    tcc:idadeInicialIPO 3 ;
+    tcc:itemIPO "M-81 (3-4)" ;
+    tcc:nome "Montagem de quebra-cabeças" .
+
+inst:hab_MO12 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO12 – Preensão e controle de lápis"@pt-br ;
+    tcc:idadeInicialIPO 1 ;
+    tcc:itemIPO "M-123 (5-6)",
+        "M-54 (1-2)",
+        "M-78 (2-3)" ;
+    tcc:nome "Preensão e controle de lápis" .
+
+tcc:Facilitacao a gufo:SubKind,
+        owl:Class ;
+    rdfs:label "Facilitation"@en,
+        "Facilitação"@pt-br ;
+    tcc:extensaoProposta true ;
+    rdfs:subClassOf tcc:RelacaoHabilidade .
 
 tcc:HabilidadeAutocuidado a gufo:SubKind,
         owl:Class ;
@@ -1490,16 +2260,17 @@ tcc:HabilidadeAutocuidado a gufo:SubKind,
     rdfs:subClassOf tcc:Habilidade ;
     owl:disjointWith tcc:HabilidadeMotora .
 
+tcc:Pessoa a gufo:Kind,
+        owl:Class ;
+    rdfs:label "Person"@en,
+        "Pessoa"@pt-br ;
+    rdfs:subClassOf gufo:FunctionalComplex .
+
 tcc:UsoBanheiro a gufo:SubKind,
         owl:Class ;
     rdfs:label "Toileting"@en,
         "Uso do Banheiro"@pt-br ;
     rdfs:subClassOf tcc:HabilidadeAutocuidado .
-
-inst:hab_MO06 a tcc:HabilidadeMotora,
-        owl:NamedIndividual ;
-    rdfs:label "MO06 – Preensão"@pt-br ;
-    tcc:nome "Preensão" .
 
 tcc:Recomendacao a gufo:Kind,
         owl:Class ;
@@ -1507,12 +2278,32 @@ tcc:Recomendacao a gufo:Kind,
         "Recomendação"@pt-br ;
     rdfs:subClassOf gufo:Relator .
 
-tcc:DependenciaHabilidade a gufo:Kind,
+tcc:Inconsistencia a gufo:Kind,
         owl:Class ;
-    rdfs:label "Skill Dependency"@en,
-        "Dependência entre Habilidades"@pt-br ;
+    rdfs:label "Inconsistency"@en,
+        "Inconsistência"@pt-br ;
     tcc:extensaoProposta true ;
     rdfs:subClassOf gufo:Relator .
+
+tcc:PreRequisito a gufo:SubKind,
+        owl:Class ;
+    rdfs:label "Prerequisite"@en,
+        "Pré-requisito"@pt-br ;
+    tcc:extensaoProposta true ;
+    rdfs:subClassOf tcc:RelacaoHabilidade ;
+    owl:disjointWith tcc:Composicao,
+        tcc:Facilitacao .
+
+inst:hab_MO06 a tcc:HabilidadeMotora,
+        owl:NamedIndividual ;
+    rdfs:label "MO06 – Preensão"@pt-br ;
+    tcc:idadeInicialIPO 0 ;
+    tcc:itemIPO "M-02 (0-1)",
+        "M-28 (0-1)",
+        "M-29 (0-1)",
+        "M-32 (0-1)" ;
+    tcc:nome "Preensão" ;
+    rdfs:comment "M-32 = preensão de pinça"@pt-br .
 
 tcc:HabilidadeMotora a gufo:SubKind,
         owl:Class ;
@@ -1534,6 +2325,11 @@ inst:pessoa_P002 a tcc:Pessoa ;
     rdfs:label "Paciente fictício B (P002)"@pt-br ;
     tcc:dataDeNascimento "2020-08-02"^^xsd:date ;
     tcc:nome "Paciente fictício B" .
+
+inst:pessoa_P005 a tcc:Pessoa ;
+    rdfs:label "Paciente fictício E (P005)"@pt-br ;
+    tcc:dataDeNascimento "2020-01-30"^^xsd:date ;
+    tcc:nome "Paciente fictício E" .
 
 inst:pessoa_P004 a tcc:Pessoa ;
     rdfs:label "Paciente fictício D (P004)"@pt-br ;

@@ -87,7 +87,7 @@ digraph paciente_P001 {
   hab_MO14 [label="Uso de tesoura  «HabilidadeMotora»", fillcolor="#FFD9DD", fontsize=9];
   av_MO14 -> hab_MO14 [label="avalia", fontsize=7];
   { rank=same; pessoa; prontuario; }
-  rec1 [label="«Recomendação» nº1\nprioridade = Alta\npontuacao = 58.9% (R3)", fillcolor="#9CF59C", penwidth=2.2, color="#166534"];
+  rec1 [label="«Recomendação» nº1\nprioridade = Alta\npontuacao = 60.5% (R3)", fillcolor="#9CF59C", penwidth=2.2, color="#166534"];
   trat_autocuidado [label="«Tratamento»\nTreino de habilidades de autocuidado", fillcolor="#FF9AA2", color="#166534", penwidth=2];
   trat_autocuidado -> rec1 [dir=back, label="recomenda", color="#166534", fontcolor="#166534", penwidth=2];
   rec1 -> pessoa [label="destinadaA", color="#166534", fontcolor="#166534", style=dotted, constraint=false];
@@ -102,14 +102,7 @@ digraph paciente_P001 {
   rec1 -> av_AC09 [color="#166534", arrowsize=0.5, penwidth=0.9];
   rec1 -> av_AC10 [color="#166534", arrowsize=0.5, penwidth=0.9];
   rec1 -> av_AC08 [color="#166534", arrowsize=0.5, penwidth=0.9];
-  rec2 [label="«Recomendação» nº2\nprioridade = Media\npontuacao = 15.0% (R3)", fillcolor="#9CF59C", penwidth=2.2, color="#2563EB"];
-  trat_motor_fino [label="«Tratamento»\nTreino de habilidades motoras finas", fillcolor="#FF9AA2", color="#2563EB", penwidth=2];
-  trat_motor_fino -> rec2 [dir=back, label="recomenda", color="#2563EB", fontcolor="#2563EB", penwidth=2];
-  rec2 -> pessoa [label="destinadaA", color="#2563EB", fontcolor="#2563EB", style=dotted, constraint=false];
-  rec2 -> av_MO09 [color="#2563EB", arrowsize=0.5, penwidth=0.9];
-  rec2 -> av_MO13 [color="#2563EB", arrowsize=0.5, penwidth=0.9];
-  rec2 -> av_MO15 [color="#2563EB", arrowsize=0.5, penwidth=0.9];
-  naoind [shape=note, fillcolor="#F9FAFB", fontsize=9, label="Não indicados (sem Recomendação):\lTreino de habilidades motoras grossas: 13.6%\lIntervenção integrada autocuidado + motor: R5 não satisfeita\l"];
+  naoind [shape=note, fillcolor="#F9FAFB", fontsize=9, label="Não indicados (sem Recomendação):\lTreino de habilidades motoras finas: 11.3%\lTreino de habilidades motoras grossas: 9.3%\lIntervenção integrada autocuidado + motor: R5 não satisfeita\l"];
   { rank=same; naoind; prontuario; }
   leg [shape=note, fillcolor="#FFFFFF", fontsize=9, label="Arestas coloridas Recomendação → Avaliação = baseadaEm\nCores das avaliações: vermelho = Baixo, amarelo = Moderado,\nverde = Alto, cinza = NaoAvaliado"];
   { rank=same; leg; prontuario; }

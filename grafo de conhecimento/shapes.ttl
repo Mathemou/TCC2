@@ -120,7 +120,7 @@ shp:Recomendacao a sh:NodeShape ;
                   ?k tcc:podeIndicar ?t ; tcc:requer? ?kh .
                   { ?kh tcc:refereSe ?h }
                   UNION
-                  { ?d tcc:habilidadeBase ?h ; tcc:habilidadeApoiada ?h2 . ?kh tcc:refereSe ?h2 }
+                  { ?d tcc:origem ?h ; tcc:destino ?h2 . ?kh tcc:refereSe ?h2 }
                 }
               )
             }""" ] ;
@@ -162,10 +162,99 @@ shp:ConhecimentoComposto a sh:NodeShape ;
     sh:property [ sh:path tcc:refereSe ; sh:maxCount 0 ] ;
     sh:property [ sh:path tcc:minimoRequeridos ; sh:minCount 1 ; sh:maxCount 1 ; sh:minInclusive 1 ] .
 
-shp:DependenciaHabilidade a sh:NodeShape ;
-    sh:targetClass tcc:DependenciaHabilidade ;
-    sh:property [ sh:path tcc:habilidadeBase ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Habilidade ] ;
-    sh:property [ sh:path tcc:habilidadeApoiada ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Habilidade ;
-                  sh:disjoint tcc:habilidadeBase ] ;
+# =====================================================================
+# Relações entre habilidades (base: Inventário Portage Operacionalizado)
+# =====================================================================
+shp:RelacaoHabilidade a sh:NodeShape ;
+    sh:targetClass tcc:RelacaoHabilidade ;
+    sh:xone ( [ sh:class tcc:PreRequisito ] [ sh:class tcc:Facilitacao ] [ sh:class tcc:Composicao ] ) ;
+    sh:property [ sh:path tcc:origem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Habilidade ] ;
+    sh:property [ sh:path tcc:destino ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Habilidade ;
+                  sh:disjoint tcc:origem ] ;
     sh:property [ sh:path tcc:pesoIndireto ; sh:minCount 1 ; sh:maxCount 1 ;
-                  sh:minExclusive 0 ; sh:maxInclusive 1 ] .
+                  sh:minExclusive 0 ; sh:maxInclusive 1 ] ;
+    sh:property [ sh:path tcc:fundamentacao ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:property [ sh:path tcc:evidencia ; sh:minCount 1 ; sh:maxCount 1 ] ;
+    sh:sparql [
+        sh:message "Par de habilidades com mais de uma relação." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this WHERE {
+              $this tcc:origem ?a ; tcc:destino ?b .
+              ?o tcc:origem ?a ; tcc:destino ?b . FILTER (?o != $this)
+            }""" ] .
+
+# Pré-requisito não pode surgir no IPO depois da habilidade que depende dele
+shp:PreRequisito a sh:NodeShape ;
+    sh:targetClass tcc:PreRequisito ;
+    sh:sparql [
+        sh:message "Pré-requisito aparece no IPO em faixa etária posterior à da habilidade dependente." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this WHERE {
+              $this tcc:origem/tcc:idadeInicialIPO ?a ; tcc:destino/tcc:idadeInicialIPO ?b .
+              FILTER (?a > ?b)
+            }""" ] ;
+    # completude de R7: toda violação deste pré-requisito está registrada
+    sh:sparql [
+        sh:message "Violação de pré-requisito sem Inconsistencia registrada (R7)." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this ?value WHERE {
+              $this tcc:origem ?ho ; tcc:destino ?hd .
+              ?ao tcc:avalia ?ho ; tcc:pertenceA ?value ; tcc:nivel ?no .
+              ?ad tcc:avalia ?hd ; tcc:pertenceA ?value ; tcc:nivel "Alto" .
+              FILTER (?no IN ("Baixo", "Moderado"))
+              FILTER NOT EXISTS { ?i tcc:violaRelacao $this ; tcc:inconsistenciaDe ?value }
+            }""" ] .
+
+shp:Composicao a sh:NodeShape ;
+    sh:targetClass tcc:Composicao ;
+    sh:sparql [
+        sh:message "Violação de composição sem Inconsistencia registrada (R7)." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this ?value WHERE {
+              $this tcc:origem ?ho ; tcc:destino ?hd .
+              ?ao tcc:avalia ?ho ; tcc:pertenceA ?value ; tcc:nivel ?no .
+              ?ad tcc:avalia ?hd ; tcc:pertenceA ?value ; tcc:nivel "Alto" .
+              FILTER (?no IN ("Baixo", "Moderado"))
+              FILTER NOT EXISTS { ?i tcc:violaRelacao $this ; tcc:inconsistenciaDe ?value }
+            }""" ] .
+
+# =====================================================================
+# Inconsistências (R7): só são válidas se as respostas de fato contradizem
+# um pré-requisito ou uma composição; facilitação nunca gera inconsistência
+# =====================================================================
+shp:Inconsistencia a sh:NodeShape ;
+    sh:targetClass tcc:Inconsistencia ;
+    sh:property [ sh:path tcc:inconsistenciaDe ; sh:minCount 1 ; sh:maxCount 1 ; sh:class tcc:Pessoa ] ;
+    sh:property [ sh:path tcc:avaliacaoOrigem ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:class tcc:AvaliacaoHabilidade ] ;
+    sh:property [ sh:path tcc:avaliacaoDestino ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:class tcc:AvaliacaoHabilidade ] ;
+    sh:property [ sh:path tcc:violaRelacao ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:class tcc:RelacaoHabilidade ] ;
+    sh:property [ sh:path tcc:severidade ; sh:minCount 1 ; sh:maxCount 1 ;
+                  sh:in ( "Moderada" "Alta" ) ] ;
+    sh:sparql [
+        sh:message "Inconsistência não corresponde às respostas, à relação ou à severidade (R7)." ;
+        sh:select """
+            PREFIX tcc: <http://example.org/sigamaes/ontologia#>
+            SELECT $this WHERE {
+              $this tcc:inconsistenciaDe ?p ; tcc:violaRelacao ?r ; tcc:severidade ?sev ;
+                    tcc:avaliacaoOrigem ?ao ; tcc:avaliacaoDestino ?ad .
+              FILTER NOT EXISTS {
+                { ?r a tcc:PreRequisito } UNION { ?r a tcc:Composicao }
+                ?r tcc:origem ?ho ; tcc:destino ?hd .
+                ?ao tcc:avalia ?ho ; tcc:pertenceA ?p ; tcc:nivel ?no .
+                ?ad tcc:avalia ?hd ; tcc:pertenceA ?p ; tcc:nivel "Alto" .
+                FILTER ((?no = "Baixo" && ?sev = "Alta") || (?no = "Moderado" && ?sev = "Moderada"))
+              }
+            }""" ] .
+
+shp:HabilidadeIPO a sh:NodeShape ;
+    sh:targetClass tcc:Habilidade ;
+    sh:property [ sh:path tcc:itemIPO ; sh:pattern "^[AM]-[0-9]+ \\([0-5]-[1-6]\\)$" ;
+                  sh:message "Item do IPO fora do formato 'A-36 (2-3)'." ] ;
+    sh:property [ sh:path tcc:idadeInicialIPO ; sh:maxCount 1 ; sh:minInclusive 0 ; sh:maxInclusive 5 ] .
